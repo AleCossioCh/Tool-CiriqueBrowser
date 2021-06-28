@@ -3,7 +3,7 @@ I am a browser for the SmallLint Critics of a rule.
 "
 Class {
 	#name : #SingleCodeCriticResultList,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'rule',
 		'criticsModel',
@@ -21,15 +21,13 @@ Class {
 
 { #category : #specs }
 SingleCodeCriticResultList class >> defaultSpec [
-	<spec>
 	
-	^ SpecLayout composed
-		newColumn: [:c |
-			c 
+	^ SpBoxLayout  newTopToBottom 
 				add: #criticsModel;
 				add: #toolbarModel height: 25;
-				addSplitter;
-				add: #textModel ]
+				add: #textModel;
+				yourself  
+				
 ]
 
 { #category : #icons }
@@ -258,7 +256,7 @@ SingleCodeCriticResultList >> initialize [
 SingleCodeCriticResultList >> initializeActionToPerformOnTextModel [
 	
 	| selectedItem |
-	sourceCodeModel acceptBlock:  [ :text | 	
+	sourceCodeModel acceptDrop:  [ :text | 	
 		selectedItem := criticsModel selectedItem sourceAnchor entity.
 		(selectedItem isCompiledMethod and: [ rule isTransformationRule not ])
 			ifTrue: [ selectedItem methodClass compile: text ] 
@@ -299,10 +297,10 @@ SingleCodeCriticResultList >> initializeTextInputFieldModel [
 	|critics|
 	textInputFieldModel 
 		autoAccept: true;
-		ghostText: 'Search field';
+		placeholder: 'Search field';
 		text: ' ';
 		removeEntryCompletion.	
-	textInputFieldModel acceptBlock: [ :text | |matchText|
+	textInputFieldModel acceptDrop: [ :text | |matchText|
 		critics :=cache criticsOf: rule.
 		matchText := '*', text, '*'.
 		criticsModel items: (text isEmpty 
@@ -323,7 +321,8 @@ SingleCodeCriticResultList >> initializeToolBar [
 
 { #category : #initialization }
 SingleCodeCriticResultList >> initializeWidgets [
-	criticsModel := self newIconList.
+
+	criticsModel := self newList.
 	sourceCodeModel := self newCode.
 	toolbarModel := self instantiate: CriticToolbar.
 	textInputFieldModel := self newTextInput.
@@ -332,17 +331,16 @@ SingleCodeCriticResultList >> initializeWidgets [
 	self initializeTextInputFieldModel.
 	self initializeToolBar.
 	self initializeActionToPerformOnTextModel.
-	criticsModel displayBlock: [:selec |
-		self initializeDisplayCritic: selec forRule: rule]. 
-	
-	criticsModel menu: [ :a :b | self menu: a shifted: b ].
-	criticsModel icons: [ :item | self iconFor: item ].
-	
+	criticsModel display: [ :selec | 
+		self initializeDisplayCritic: selec forRule: rule ].
+
+	criticsModel contextMenu: [ :a :b | self menu: a shifted: b ].
+	criticsModel displayIcon: [ :item | self iconFor: item ].
+
 	self focusOrder
 		add: criticsModel;
 		add: toolbarModel;
-		add: sourceCodeModel.
-
+		add: sourceCodeModel
 ]
 
 { #category : #menu }
@@ -520,7 +518,7 @@ SingleCodeCriticResultList >> updateList [
 { #category : #initialization }
 SingleCodeCriticResultList >> whenSelectedItemChangesOnListModel [
 
-	criticsModel whenSelectedItemChanged: [ :critique |
+	criticsModel whenSelectionChangedDo: [ :critique |
 		sourceCodeModel setSelection: (0 to: 0). 	
 		rule ifNotNil: [
 			critique
