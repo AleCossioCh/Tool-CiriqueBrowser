@@ -12,7 +12,7 @@ env := (RBPackageEnvironment packageName: 'Manifest-Core').
 "
 Class {
 	#name : #CriticBrowser,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'criticModel',
 		'rulesModel',
@@ -42,28 +42,26 @@ CriticBrowser class >> criticsBrowserMenuOn: aBuilder [
 
 { #category : #specs }
 CriticBrowser class >> defaultSpec [
+
 	<spec>
-	
-	^ SpecLayout composed 
-		newColumn: [:c |
-			c 
-				newRow: [:r |
-					r 
-						newColumn: [:c1 |
-							c1 add: #rulesModel.
-							c1 newRow: [:c2 |
-								c2 add: #resetButton.
-								c2 add: #updateButton.
-								c2 add: #logButton
-							] height: 25
-						];
-						newColumn: [:c1 |
-							c1 
-								add: #(criticModel textInputFieldModel) height: 20;
-								add: #(criticModel criticsModel);
-								add: #(criticModel toolbarModel) height: 25 ]];
-				addSplitter;
-				add: #(criticModel textModel) ]
+	^ SpBoxLayout newTopToBottom
+		  add: (SpBoxLayout newLeftToRight
+				   add: (SpBoxLayout newTopToBottom
+						    add: #rulesModel;
+						    add: (SpBoxLayout newLeftToRight
+								     add: #resetButton;
+								     add: #updateButton;
+								     add: #logButton;
+								     yourself)
+						    height: 25;
+						    yourself);
+				   add: (SpBoxLayout newTopToBottom
+						    add: #( criticModel textInputFieldModel ) height: 20;
+						    add: #( criticModel criticsModel );
+						    add: #( criticModel toolbarModel ) height: 25;
+						    yourself);yourself);
+		  add: #( criticModel textModel );
+		  yourself
 ]
 
 { #category : #icons }
@@ -100,7 +98,7 @@ CriticBrowser class >> openOnRule: aRule onEnvironment: aEnv [
 		environment: aEnv;
 		removeTestCase: false;
 		yourself.
-
+		
 	cbr openWithSpec.
 	cbr applyRules. 
 	cbr rulesModel changed:  #listElementAt:
@@ -318,14 +316,15 @@ CriticBrowser >> initialize [
 
 { #category : #initialization }
 CriticBrowser >> initializePresenter [
-	rulesModel
-		whenSelectedItemChanged: [ :rule | 
-			(rule isNil or: [ rule isComposite ])
-				ifFalse: [ criticModel
-						resetSelection;
-						rule: rule;
-						setTextModelForNil ].
-			self setTitle: (rule ifNil: [ self defaultTitle ] ifNotNil: [ rule name ]) ]
+
+	rulesModel whenSelectedItemChangedDo: [ :rule | 
+		(rule isNil or: [ rule isComposite ]) ifFalse: [ 
+			criticModel
+				resetSelection;
+				rule: rule;
+				setTextModelForNil ].
+		self setTitle:
+			(rule ifNil: [ self defaultTitle ] ifNotNil: [ rule name ]) ]
 ]
 
 { #category : #initialization }
@@ -342,14 +341,14 @@ CriticBrowser >> initializeWidgets [
 	self setUpdateButton.
 	 
 	criticModel := SingleCodeCriticResultList new.
-	rulesModel childrenBlock: [ :rule | 
+	rulesModel children: [ :rule | 
 		rule isComposite 
 			ifTrue: [ rule rules ]
 			ifFalse: [ #() ]]. 
 
-	rulesModel displayBlock: [ :rule | self stringMorphForRule: rule ].
+	rulesModel display: [ :rule | self stringMorphForRule: rule ].
 	
-	rulesModel menu: [ :aMenu :shifted | self menu: aMenu shifted: shifted ].	
+	rulesModel contextMenu: [ :aMenu :shifted | self menu: aMenu shifted: shifted ].	
 	
 	self focusOrder
 		add: rulesModel;
@@ -519,13 +518,11 @@ CriticBrowser >> resetButton [
 
 { #category : #accessing }
 CriticBrowser >> rules: rulesCollection [
-
-	self rulesModel roots: ((
-		(rulesCollection groupedBy: #group) associations collect: [ :as |
-			CriticBrowserRulesGroup
-				named: as key
-				rules: as value ])
-					sorted: [ :a :b | a name < b name ])
+	self rulesModel roots:
+		(((rulesCollection groupedBy: #group) associations collect: [ :as | 
+			  CriticBrowserRulesGroup named: as key rules: as value ]) sorted: [ 
+			 :a 
+			 :b | a name < b name ])
 ]
 
 { #category : #accessing }
@@ -580,8 +577,9 @@ CriticBrowser >> setTitle: aTitle [
 
 	title := aTitle.
 	
-	self window updateTitle 
-	
+	self update
+
+
 ]
 
 { #category : #initialization }
@@ -636,5 +634,5 @@ CriticBrowser >> updateButton [
 { #category : #thread }
 CriticBrowser >> updateTree [
 	criticModel updateList. 
-	rulesModel updateTree
+	rulesModel update
 ]
