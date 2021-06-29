@@ -72,8 +72,8 @@ SelectRuleBrowser >> environment: aEnv [
 SelectRuleBrowser >> initialize [
 	| wrappingBlock selectedRulesChildrenBlock rulesToSelectChildrenBlock |
 	super initialize.
-	toSelectModel := self instantiate: TreePresenter.
-	selectedModel := self instantiate: TreePresenter.
+	toSelectModel := self instantiate: SpTreePresenter.
+	selectedModel := self instantiate: SpTreePresenter.
 	selectedRules := Set new.
 	selectedRulesChildrenBlock := [ :rule | 
 		rule isComposite

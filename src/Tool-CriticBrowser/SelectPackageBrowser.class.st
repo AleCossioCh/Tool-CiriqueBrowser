@@ -14,28 +14,21 @@ Class {
 
 { #category : #specs }
 SelectPackageBrowser class >> defaultSpec [
-
-		<spec>
 	
-	^ SpecLayout composed
-		newColumn: [:c |
-			c
-			newRow: [:r |
-				r 
+	^ (SpBoxLayout newTopToBottom
+		add:	(SpBoxLayout newLeftToRight
 					add: #toSelectModel; 
-					addSplitter;
-					add:  #selectedModel];
-			newRow: [:r |
-				r
+					add: #selectedModel; yourself);
+		add: (SpBoxLayout newLeftToRight 
 					add: #removeTestPackageModel; 
-					add: #addTestCaseClasses]  height: 25;
-			newRow: [:r |
-				r 
-					add:#addButtonModel;
-					add:#addAllButtonModel;
-					add:#removeButtonModel;
-					add:#removeAllButtonModel;
-					add: #nextButtonModel ] height: 25]	
+					add: #addTestCaseClasses; yourself) height: 25;
+		add: (SpBoxLayout newLeftToRight 
+					add: #addButtonModel;
+					add: #addAllButtonModel;
+					add: #removeButtonModel;
+					add: #removeAllButtonModel;
+					add: #nextButtonModel; yourself ) height: 25;
+		yourself )
 ]
 
 { #category : #'instance creation' }
@@ -83,24 +76,23 @@ SelectPackageBrowser >> addTestCaseClasses [
 SelectPackageBrowser >> initialize [
 
 	| wrappingBlock |
-	super initialize.	
-	toSelectModel := self instantiate: ListPresenter.
-	selectedModel := self instantiate: ListPresenter.
+	toSelectModel := self instantiate: SpListPresenter.
+	selectedModel := self instantiate: SpListPresenter.
 	selectedModel beMultipleSelection.
 	toSelectModel beMultipleSelection.
 	testPackage := OrderedCollection new.
 	wrappingBlock := [ :package | package packageName ].
-	toSelectModel displayBlock: wrappingBlock.
-	selectedModel displayBlock: wrappingBlock
+	toSelectModel display: wrappingBlock.
+	selectedModel display: wrappingBlock
 ]
 
 { #category : #initialization }
-SelectPackageBrowser >> initializeWidgets [
+SelectPackageBrowser >> initializePresenters [
 
-	super initializeWidgets.	
+	super initializePresenters.
 	addTestCaseClassesModel := self newCheckBox.
 	removeTestPackageModel := self newButton.
-	self setRemoveTestPackageModel.		
+	self setRemoveTestPackageModel.
 	addTestCaseClassesModel label: 'remove all TestCase Classes'.
 	addTestCaseClassesModel state: true
 ]

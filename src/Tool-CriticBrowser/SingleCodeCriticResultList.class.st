@@ -21,13 +21,12 @@ Class {
 
 { #category : #specs }
 SingleCodeCriticResultList class >> defaultSpec [
-	
-	^ SpBoxLayout  newTopToBottom 
-				add: #criticsModel;
-				add: #toolbarModel height: 25;
-				add: #textModel;
-				yourself  
-				
+
+	^ SpBoxLayout newTopToBottom
+		  add: #criticsModel;
+		  add: #toolbarModel height: 25;
+		  add: #sourceCodeModel;
+		  yourself
 ]
 
 { #category : #icons }
@@ -284,6 +283,30 @@ SingleCodeCriticResultList >> initializePresenter [
 	
 
 
+]
+
+{ #category : #initialization }
+SingleCodeCriticResultList >> initializePresenters [ 
+
+	criticsModel := self newList.
+	sourceCodeModel := self newCode.
+	toolbarModel := self instantiate: CriticToolbar.
+	textInputFieldModel := self newTextInput.
+
+	criticsModel beMultipleSelection.
+	self initializeTextInputFieldModel.
+	self initializeToolBar.
+	self initializeActionToPerformOnTextModel.
+	criticsModel display: [ :selec | 
+		self initializeDisplayCritic: selec forRule: rule ].
+
+	criticsModel contextMenu: [ :a :b | self menu: a shifted: b ].
+	criticsModel displayIcon: [ :item | self iconFor: item ].
+
+	self focusOrder
+		add: criticsModel;
+		add: toolbarModel;
+		add: sourceCodeModel
 ]
 
 { #category : #initialization }

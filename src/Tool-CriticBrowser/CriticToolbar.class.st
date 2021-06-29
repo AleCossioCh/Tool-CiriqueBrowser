@@ -41,12 +41,14 @@ Class {
 { #category : #specs }
 CriticToolbar class >> defaultSpec [
 
-	^SpBoxLayout  newLeftToRight 
-		add: #browseModel;
-		add: #transformModel;
-		add: #falsepositiveModel;
-		height: 25;
-		yourself 
+	^ 
+	SpBoxLayout newTopToBottom
+	 		add: (SpBoxLayout newLeftToRight
+			   add: #browseModel;
+			   add: #transformModel;
+			   add: #falsepositiveModel;
+			   yourself) height: 25;
+			yourself 
 ]
 
 { #category : #private }
@@ -80,9 +82,9 @@ CriticToolbar >> initialize [
 	super initialize.
 	criticHolder := nil asValueHolder.
 	ruleHolder := nil asValueHolder.
-	browseModel := self instantiate: ButtonPresenter.
-	transformModel := self instantiate: ButtonPresenter.
-	falsepositiveModel := self instantiate: ButtonPresenter.
+	browseModel := self instantiate: SpButtonPresenter.
+	transformModel := self instantiate: SpButtonPresenter.
+	falsepositiveModel := self instantiate: SpButtonPresenter.
 	self setFocusOrder.	
 	self setBrowseModel.
 	self setTransformModel.

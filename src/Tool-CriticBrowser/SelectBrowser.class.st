@@ -3,7 +3,7 @@ A simple selection browser.
 "
 Class {
 	#name : #SelectBrowser,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'toSelectModel',
 		'selectedModel',
@@ -18,24 +18,18 @@ Class {
 
 { #category : #specs }
 SelectBrowser class >> defaultSpec [
-
-		<spec>
 	
-	^ SpecLayout composed
-		newColumn: [:c |
-			c
-			newRow: [:r |
-				r 
+	^ SpBoxLayout newTopToBottom
+		add: (SpBoxLayout newLeftToRight
 					add: #toSelectModel;
-					addSplitter;
-					add:  #selectedModel];
-			newRow: [:r |
-				r 
-					add:#addButtonModel;
-					add:#addAllButtonModel;
-					add:#removeButtonModel;
-					add:#removeAllButtonModel;
-					add: #nextButtonModel ] height: 25]	
+					add: #selectedModel; yourself); 
+		add: (SpBoxLayout newLeftToRight
+					add: #addButtonModel;
+					add: #addAllButtonModel;
+					add: #removeButtonModel;
+					add: #removeAllButtonModel;
+					add: #nextButtonModel; yourself) height: 25;
+		yourself 
 ]
 
 { #category : #accessing }
@@ -60,27 +54,26 @@ SelectBrowser >> initialExtent [
 ]
 
 { #category : #initialization }
-SelectBrowser >> initializeWidgets [
+SelectBrowser >> initializePresenters [
 
 	addButtonModel := self newButton.
-	addAllButtonModel := self newButton. 
+	addAllButtonModel := self newButton.
 	removeButtonModel := self newButton.
 	removeAllButtonModel := self newButton.
 	nextButtonModel := self newButton.
-		
+
 	self setFocusOrder.
 
-	self setAddButtonModel. 
-	self setAddAllButtonModel. 
-	self setRemoveButtonModel. 
-	self setRemoveAllButtonModel. 
-	self setNextButtonModel. 
+	self setAddButtonModel.
+	self setAddAllButtonModel.
+	self setRemoveButtonModel.
+	self setRemoveAllButtonModel.
+	self setNextButtonModel
 ]
 
 { #category : #accessing }
 SelectBrowser >> items: aCollection [
 	"Set the elements to be analysed"
-	
 	toSelectModel items: (self sort: aCollection)
 
 ]

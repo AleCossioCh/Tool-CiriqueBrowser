@@ -74,9 +74,11 @@ ResetWindow >> setFocusOrder [
 
 { #category : #initialization }
 ResetWindow >> setResetModel [
-	resetModel 
+
+	resetModel
 		state: false;
 		label: 'Reset Current Configurartion';
-		action: [ SelectPackageBrowser open. 
-				self delete ]
+		action: [ 
+			SelectPackageBrowser open.
+			self delete ]
 ]

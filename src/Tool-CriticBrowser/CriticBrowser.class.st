@@ -23,7 +23,8 @@ Class {
 		'cache',
 		'resetButton',
 		'logButton',
-		'updateButton'
+		'updateButton',
+		'textInputFieldModel'
 	],
 	#category : #'Tool-CriticBrowser-Base'
 }
@@ -42,8 +43,6 @@ CriticBrowser class >> criticsBrowserMenuOn: aBuilder [
 
 { #category : #specs }
 CriticBrowser class >> defaultSpec [
-
-	<spec>
 	^ SpBoxLayout newTopToBottom
 		  add: (SpBoxLayout newLeftToRight
 				   add: (SpBoxLayout newTopToBottom
@@ -56,10 +55,11 @@ CriticBrowser class >> defaultSpec [
 						    height: 25;
 						    yourself);
 				   add: (SpBoxLayout newTopToBottom
-						    add: #( criticModel textInputFieldModel ) height: 20;
+						    add: #textInputFieldModel height: 20;
 						    add: #( criticModel criticsModel );
 						    add: #( criticModel toolbarModel ) height: 25;
-						    yourself);yourself);
+						    yourself);
+				   yourself);
 		  add: #( criticModel textModel );
 		  yourself
 ]
@@ -329,27 +329,29 @@ CriticBrowser >> initializePresenter [
 
 { #category : #initialization }
 CriticBrowser >> initializeWidgets [
-	
+
 	title := self defaultTitle.
 	rulesModel := self newTree.
 	resetButton := self newButton.
 	updateButton := self newButton.
 	logButton := self newButton.
-	
+
 	self setLogButton.
 	self setResetButton.
 	self setUpdateButton.
-	 
+
 	criticModel := SingleCodeCriticResultList new.
-	rulesModel children: [ :rule | 
-		rule isComposite 
-			ifTrue: [ rule rules ]
-			ifFalse: [ #() ]]. 
+	textInputFieldModel := self textInputFieldModel. rulesModel children: [ 
+		                       :rule | 
+		                       rule isComposite
+			                       ifTrue: [ rule rules ]
+			                       ifFalse: [ #(  ) ] ].
 
 	rulesModel display: [ :rule | self stringMorphForRule: rule ].
-	
-	rulesModel contextMenu: [ :aMenu :shifted | self menu: aMenu shifted: shifted ].	
-	
+
+	rulesModel contextMenu: [ :aMenu :shifted | 
+		self menu: aMenu shifted: shifted ].
+
 	self focusOrder
 		add: rulesModel;
 		add: criticModel
@@ -613,6 +615,12 @@ CriticBrowser >> stringMorphForRule: rule [
 		color: (self colorForRule: rule);
 		yourself
 		
+]
+
+{ #category : #accessing }
+CriticBrowser >> textInputFieldModel [
+
+	^ criticModel textInputFieldModel
 ]
 
 { #category : #api }
