@@ -3,7 +3,7 @@ A ResetWindow is simple UI to reset the currently analysed model.
 "
 Class {
 	#name : #ResetWindow,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'resetModel',
 		'currentConfigurationModel'
@@ -13,14 +13,13 @@ Class {
 
 { #category : #specs }
 ResetWindow class >> defaultSpec [
-<spec>
 
-	^SpecLayout composed
-		newRow: [:r |
-			r 
-				add: #resetModel;
-				add: #currentConfigurationModel
-			]  height: 25
+	^SpBoxLayout newTopToBottom 
+		add: (SpBoxLayout newLeftToRight  
+					add: #resetModel;
+					add: #currentConfigurationModel;
+					yourself) 
+					height: 25 
 ]
 
 { #category : #specs }
