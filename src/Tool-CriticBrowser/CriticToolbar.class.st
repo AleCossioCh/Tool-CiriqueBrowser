@@ -27,7 +27,7 @@ transformModel
 "
 Class {
 	#name : #CriticToolbar,
-	#superclass : #ComposablePresenter,
+	#superclass : #SpPresenter,
 	#instVars : [
 		'ruleHolder',
 		'criticHolder',
@@ -40,15 +40,13 @@ Class {
 
 { #category : #specs }
 CriticToolbar class >> defaultSpec [
-<spec>
 
-	^SpecLayout composed
-		newRow: [:row |
-			row 
-				add: #browseModel;
-				add: #transformModel;
-				add: #falsepositiveModel
-			]  height: 25
+	^SpBoxLayout  newLeftToRight 
+		add: #browseModel;
+		add: #transformModel;
+		add: #falsepositiveModel;
+		height: 25;
+		yourself 
 ]
 
 { #category : #private }
