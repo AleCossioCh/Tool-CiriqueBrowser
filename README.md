@@ -1,5 +1,5 @@
 # Tool-CritiqueBrowser
-CritiqueBrowser is a graphical tool that allows a developer to select a quality rules-group that will be used to analyze a selected list of software packages.
+Tool-CritiqueBrowser was created on the basic of CriticBrowser. CriticBrowser uses a deprecated version of `SpecCore`. Tool-CritiqueBrowser uses the new version of `SpecCore2`; It is a graphical tool that allows developers to select a list of software packages and a quality rules-group. This resulting on a new list of critiques that broke the selected rules-group.
 
 ## Installation
 
@@ -9,4 +9,8 @@ In order to install this tool, perform the following code in a Playground:
       baseline:'ToolCritiqueBrowser';
       repository: 'github://AleCossioCh/Tool-CritiqueBrowser:master/src';
       load.
+      
+## About the name
 
+"It is worth mentioning that the developers of CriticBrowser confused the word critique (an instance of criticism) with critic (a person who criticizes)" (Yuriy Tymchuk's, Quality-Aware Tooling, 2017 : p.52) 
+I saw an opportunity to rename the tool :) 
