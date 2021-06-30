@@ -24,7 +24,7 @@ Class {
 SpCritiqueBrowser class >> criticsBrowserMenuOn: aBuilder [ 
 	<worldMenu>
 	
-	(aBuilder item: 'Critic Browser')
+	(aBuilder item: 'Critique Browser')
 		action: [ self openOnCurrentWorkingConfiguration];
 		order: 2;
 		parent: #Browsing;
