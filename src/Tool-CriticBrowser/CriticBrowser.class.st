@@ -231,6 +231,19 @@ CriticBrowser >> colorForRule: aRule [
 				ifFalse: [ criticModel defaultColor ]]
 ]
 
+{ #category : #initialization }
+CriticBrowser >> connectPresenters [
+
+	rulesModel whenSelectedItemChangedDo: [ :rule | 
+		(rule isNil or: [ rule isComposite ]) ifFalse: [ 
+			criticModel
+				resetSelection;
+				rule: rule;
+				setTextModelForNil ].
+		self setTitle:
+			(rule ifNil: [ self defaultTitle ] ifNotNil: [ rule name ]) ]
+]
+
 { #category : #accessing }
 CriticBrowser >> criticModel [
 	^ criticModel
@@ -325,16 +338,36 @@ CriticBrowser >> initialize [
 ]
 
 { #category : #initialization }
-CriticBrowser >> initializePresenter [
+CriticBrowser >> initializePresenters [
 
-	rulesModel whenSelectedItemChangedDo: [ :rule | 
-		(rule isNil or: [ rule isComposite ]) ifFalse: [ 
-			criticModel
-				resetSelection;
-				rule: rule;
-				setTextModelForNil ].
-		self setTitle:
-			(rule ifNil: [ self defaultTitle ] ifNotNil: [ rule name ]) ]
+	title := self defaultTitle.
+	rulesModel := self newTree.
+	resetButton := self newButton.
+	updateButton := self newButton.
+	logButton := self newButton.
+
+	self setLogButton.
+	self setResetButton.
+	self setUpdateButton.
+
+	criticModel := SingleCodeCriticResultList new.
+	textInputFieldModel := self textInputFieldModel.
+	criticsModel := self criticsModel.
+	toolbarModel := self toolbarModel.
+	textModel := self textModel.
+	rulesModel children: [ :rule | 
+		rule isComposite
+			ifTrue: [ rule rules ]
+			ifFalse: [ #(  ) ] ].
+
+	rulesModel display: [ :rule | self stringMorphForRule: rule ].
+
+	rulesModel contextMenu: [ :aMenu :shifted | 
+		self menu: aMenu shifted: shifted ].
+
+	self focusOrder
+		add: rulesModel;
+		add: criticModel
 ]
 
 { #category : #initialization }
@@ -591,10 +624,6 @@ CriticBrowser >> setResetButton [
 CriticBrowser >> setTitle: aTitle [
 
 	title := aTitle.
-	
-	self update
-
-
 ]
 
 { #category : #initialization }

@@ -14,12 +14,12 @@ Class {
 { #category : #specs }
 ResetWindow class >> defaultSpec [
 
-	^SpBoxLayout newTopToBottom 
-		add: (SpBoxLayout newLeftToRight  
-					add: #resetModel;
-					add: #currentConfigurationModel;
-					yourself) 
-					height: 25 
+	^ SpBoxLayout newTopToBottom
+		  add: (SpBoxLayout newLeftToRight
+				   add: #resetModel;
+				   add: #currentConfigurationModel;
+				   yourself)
+		  height: 25
 ]
 
 { #category : #specs }

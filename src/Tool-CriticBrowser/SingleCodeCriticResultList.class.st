@@ -167,6 +167,12 @@ SingleCodeCriticResultList >> cache:  acache [
 	cache := acache
 ]
 
+{ #category : #initialization }
+SingleCodeCriticResultList >> connectPresenters [
+
+	self whenSelectedItemChangesOnListModel
+]
+
 { #category : #accessing }
 SingleCodeCriticResultList >> criticsModel [
 	^ criticsModel
@@ -266,23 +272,16 @@ SingleCodeCriticResultList >> initializeActionToPerformOnTextModel [
 
 { #category : #initialization }
 SingleCodeCriticResultList >> initializeDisplayCritic: aCritic forRule: aRule [
-	
-	| criticRepresentation | 
+
+	| criticRepresentation |
+	self halt.
 	criticRepresentation := (self formatCritic: aCritic) asMorph.
-	^ (cache isFalsePositive: aCritic forRule: aRule) 
-			ifTrue: [ criticRepresentation color: self falsePositiveColor ]
-			ifFalse: [ (cache isToDo: aCritic forRule: aRule)
-						ifTrue: [ criticRepresentation color: self toDoColor ]
-						ifFalse: [ criticRepresentation color: self defaultColor ]]
-]
-
-{ #category : #initialization }
-SingleCodeCriticResultList >> initializePresenter [
-
-	self whenSelectedItemChangesOnListModel.
-	
-
-
+	^ (cache isFalsePositive: aCritic forRule: aRule)
+		  ifTrue: [ criticRepresentation color: self falsePositiveColor ]
+		  ifFalse: [ 
+			  (cache isToDo: aCritic forRule: aRule)
+				  ifTrue: [ criticRepresentation color: self toDoColor ]
+				  ifFalse: [ criticRepresentation color: self defaultColor ] ]
 ]
 
 { #category : #initialization }
@@ -340,30 +339,6 @@ SingleCodeCriticResultList >> initializeToolBar [
 	self toolbarModel whenFalsePositiveClickedDo: [ self addCriticToFalsePositive ].
 
 
-]
-
-{ #category : #initialization }
-SingleCodeCriticResultList >> initializeWidgets [
-
-	criticsModel := self newList.
-	sourceCodeModel := self newCode.
-	toolbarModel := self instantiate: CriticToolbar.
-	textInputFieldModel := self newTextInput.
-
-	criticsModel beMultipleSelection.
-	self initializeTextInputFieldModel.
-	self initializeToolBar.
-	self initializeActionToPerformOnTextModel.
-	criticsModel display: [ :selec | 
-		self initializeDisplayCritic: selec forRule: rule ].
-
-	criticsModel contextMenu: [ :a :b | self menu: a shifted: b ].
-	criticsModel displayIcon: [ :item | self iconFor: item ].
-
-	self focusOrder
-		add: criticsModel;
-		add: toolbarModel;
-		add: sourceCodeModel
 ]
 
 { #category : #menu }
