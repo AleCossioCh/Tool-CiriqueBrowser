@@ -24,7 +24,10 @@ Class {
 		'resetButton',
 		'logButton',
 		'updateButton',
-		'textInputFieldModel'
+		'textInputFieldModel',
+		'criticsModel',
+		'toolbarModel',
+		'textModel'
 	],
 	#category : #'Tool-CriticBrowser-Base'
 }
@@ -43,6 +46,7 @@ CriticBrowser class >> criticsBrowserMenuOn: aBuilder [
 
 { #category : #specs }
 CriticBrowser class >> defaultSpec [
+
 	^ SpBoxLayout newTopToBottom
 		  add: (SpBoxLayout newLeftToRight
 				   add: (SpBoxLayout newTopToBottom
@@ -56,11 +60,11 @@ CriticBrowser class >> defaultSpec [
 						    yourself);
 				   add: (SpBoxLayout newTopToBottom
 						    add: #textInputFieldModel height: 20;
-						    add: #( criticModel criticsModel );
-						    add: #( criticModel toolbarModel ) height: 25;
+						    add: #criticsModel;
+						    add: #toolbarModel height: 25;
 						    yourself);
 				   yourself);
-		  add: #( criticModel textModel );
+		  add: #textModel;
 		  yourself
 ]
 
@@ -232,6 +236,12 @@ CriticBrowser >> criticModel [
 	^ criticModel
 ]
 
+{ #category : #accessing }
+CriticBrowser >> criticsModel [
+
+	^ criticModel criticsModel
+]
+
 { #category : #api }
 CriticBrowser >> defaultTitle [
 
@@ -341,11 +351,14 @@ CriticBrowser >> initializeWidgets [
 	self setUpdateButton.
 
 	criticModel := SingleCodeCriticResultList new.
-	textInputFieldModel := self textInputFieldModel. rulesModel children: [ 
-		                       :rule | 
-		                       rule isComposite
-			                       ifTrue: [ rule rules ]
-			                       ifFalse: [ #(  ) ] ].
+	textInputFieldModel := self textInputFieldModel.
+	criticsModel := self criticsModel.
+	toolbarModel := self toolbarModel.
+	textModel := self textModel.
+	rulesModel children: [ :rule | 
+		rule isComposite
+			ifTrue: [ rule rules ]
+			ifFalse: [ #(  ) ] ].
 
 	rulesModel display: [ :rule | self stringMorphForRule: rule ].
 
@@ -623,9 +636,21 @@ CriticBrowser >> textInputFieldModel [
 	^ criticModel textInputFieldModel
 ]
 
+{ #category : #accessing }
+CriticBrowser >> textModel [
+
+	^ criticModel textModel
+]
+
 { #category : #api }
 CriticBrowser >> title [
 	^ title
+]
+
+{ #category : #accessing }
+CriticBrowser >> toolbarModel [
+
+	^ criticModel toolbarModel
 ]
 
 { #category : #'system annoucements' }
