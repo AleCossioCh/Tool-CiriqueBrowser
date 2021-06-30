@@ -370,39 +370,6 @@ CriticBrowser >> initializePresenters [
 		add: criticModel
 ]
 
-{ #category : #initialization }
-CriticBrowser >> initializeWidgets [
-
-	title := self defaultTitle.
-	rulesModel := self newTree.
-	resetButton := self newButton.
-	updateButton := self newButton.
-	logButton := self newButton.
-
-	self setLogButton.
-	self setResetButton.
-	self setUpdateButton.
-
-	criticModel := SingleCodeCriticResultList new.
-	textInputFieldModel := self textInputFieldModel.
-	criticsModel := self criticsModel.
-	toolbarModel := self toolbarModel.
-	textModel := self textModel.
-	rulesModel children: [ :rule | 
-		rule isComposite
-			ifTrue: [ rule rules ]
-			ifFalse: [ #(  ) ] ].
-
-	rulesModel display: [ :rule | self stringMorphForRule: rule ].
-
-	rulesModel contextMenu: [ :aMenu :shifted | 
-		self menu: aMenu shifted: shifted ].
-
-	self focusOrder
-		add: rulesModel;
-		add: criticModel
-]
-
 { #category : #accessing }
 CriticBrowser >> logButton [
 	^ logButton 
