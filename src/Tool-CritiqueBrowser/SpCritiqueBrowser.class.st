@@ -308,12 +308,6 @@ SpCritiqueBrowser >> handleMethodRemoved: anAnnouncement [
 
 ]
 
-{ #category : #api }
-SpCritiqueBrowser >> initialExtent [
-
-	^ 760@370
-]
-
 { #category : #initialization }
 SpCritiqueBrowser >> initialize [
 	
@@ -355,6 +349,14 @@ SpCritiqueBrowser >> initializePresenters [
 	self focusOrder
 		add: rulesModel;
 		add: criticModel
+]
+
+{ #category : #'user interface' }
+SpCritiqueBrowser >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter
+		title:  self title;
+		initialExtent: 760@370
 ]
 
 { #category : #accessing }
@@ -581,6 +583,7 @@ SpCritiqueBrowser >> setResetButton [
 SpCritiqueBrowser >> setTitle: aTitle [
 
 	title := aTitle.
+	self withWindowDo: [ :w | w title: aTitle ]
 ]
 
 { #category : #initialization }
