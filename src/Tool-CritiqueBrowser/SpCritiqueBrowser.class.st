@@ -329,7 +329,7 @@ SpCritiqueBrowser >> initialize [
 SpCritiqueBrowser >> initializePresenters [
 
 	title := self defaultTitle.
-	rulesModel := self newTree.
+	rulesModel := self newTreeTable.
 	resetButton := self newButton.
 	updateButton := self newButton.
 	logButton := self newButton.
@@ -345,11 +345,10 @@ SpCritiqueBrowser >> initializePresenters [
 	textModel := self textModel.
 	rulesModel children: [ :rule | 
 		rule isComposite
-			ifTrue: [ rule rules ]
+			ifTrue: [ (rule rules) asArray ]
 			ifFalse: [ #(  ) ] ].
 
-	rulesModel display: [ :rule | self stringMorphForRule: rule ].
-
+	rulesModel addColumn: (SpStringTableColumn evaluated: [ :rule | self stringMorphForRule: rule]).
 	rulesModel contextMenu: [ :aMenu :shifted | 
 		self menu: aMenu shifted: shifted ].
 

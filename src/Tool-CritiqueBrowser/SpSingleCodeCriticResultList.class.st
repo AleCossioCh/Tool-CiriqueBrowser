@@ -391,7 +391,7 @@ SpSingleCodeCriticResultList >> removeRuleToFalsePositive [
 
 { #category : #api }
 SpSingleCodeCriticResultList >> resetSelection [
-	self criticsModel resetSelection
+	self criticsModel resetListSelection
 ]
 
 { #category : #accessing }
@@ -453,7 +453,7 @@ SpSingleCodeCriticResultList >> setTextModelForNil [
 	text := rule rationale isEmpty 
 		ifTrue: [ rule name ]
 		ifFalse: [ rule rationale ]. 
-	sourceCodeModel aboutToStyle: false.
+	"sourceCodeModel aboutToStyle: false."
 	sourceCodeModel text: text.
 	sourceCodeModel behavior: nil.
 	toolbarModel critic: nil 
