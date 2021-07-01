@@ -21,18 +21,12 @@ SpResetWindow class >> defaultSpec [
 
 { #category : #specs }
 SpResetWindow class >> title [
-	^ 'Critic Browser' 
+	^ 'Critique Browser' 
 ]
 
 { #category : #accessing }
 SpResetWindow >> currentConfigurationModel [
 	^ currentConfigurationModel
-]
-
-{ #category : #api }
-SpResetWindow >> initialExtent [
-
-	^   450@30
 ]
 
 { #category : #initialization }
@@ -44,6 +38,14 @@ SpResetWindow >> initializePresenters [
 	self setFocusOrder.
 	self setResetModel.
 	self setCurrentConfigurationModel
+]
+
+{ #category : #api }
+SpResetWindow >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter
+		title:  self title;
+		initialExtent: 450@30
 ]
 
 { #category : #accessing }
