@@ -12,20 +12,20 @@ Class {
 { #category : #specs }
 SpSelectPackageBrowser class >> defaultSpec [
 	
-	^ (SpBoxLayout newTopToBottom
+	^ SpBoxLayout newTopToBottom
 		add:	(SpBoxLayout newLeftToRight
 					add: #toSelectModel; 
 					add: #selectedModel; yourself);
 		add: (SpBoxLayout newLeftToRight 
 					add: #removeTestPackageModel; 
-					add: #addTestCaseClasses; yourself) height: 25;
+					add: #addTestCaseClassesModel; yourself) height: 25;
 		add: (SpBoxLayout newLeftToRight 
 					add: #addButtonModel;
 					add: #addAllButtonModel;
 					add: #removeButtonModel;
 					add: #removeAllButtonModel;
 					add: #nextButtonModel; yourself ) height: 25;
-		yourself )
+		yourself 
 ]
 
 { #category : #'instance creation' }
@@ -45,8 +45,8 @@ SpSelectPackageBrowser class >> title [
 SpSelectPackageBrowser >> addAllItems [
 	| tmp |
 	tmp := self 
-		sort: selectedModel listItems
-		withAll: toSelectModel listItems.
+		sort: selectedModel items
+		withAll: toSelectModel items.
 	selectedModel items: tmp.
 	toSelectModel items: #().
 	toSelectModel updateList.
@@ -57,8 +57,8 @@ SpSelectPackageBrowser >> addAllItems [
 SpSelectPackageBrowser >> addItems [
 	toSelectModel selectedItems
 		ifNotNil: [ :items |  
-			selectedModel items: (self sort: selectedModel listItems withAll: items).
-			toSelectModel items: (self sort: toSelectModel listItems withoutAll: items) ].
+			selectedModel items: (self sort: selectedModel items withAll: items).
+			toSelectModel items: (self sort: toSelectModel items withoutAll: items) ].
 	toSelectModel updateList.
 	selectedModel updateList  	  
 ]
@@ -69,10 +69,17 @@ SpSelectPackageBrowser >> addTestCaseClasses [
 
 ]
 
+{ #category : #accessing }
+SpSelectPackageBrowser >> addTestCaseClassesModel [
+	^ addTestCaseClassesModel
+
+]
+
 { #category : #initialization }
 SpSelectPackageBrowser >> initialize [
-
+	
 	| wrappingBlock |
+	super initialize.
 	toSelectModel := self newList.
 	selectedModel := self newList.
 	selectedModel beMultipleSelection.
@@ -98,7 +105,7 @@ SpSelectPackageBrowser >> initializePresenters [
 SpSelectPackageBrowser >> nextAction [
 
 	| env packages |
-	packages := selectedModel listItems.
+	packages := selectedModel items.
 	env := RBPackageEnvironment new packages: packages.
 	SpSelectRuleBrowser
 		openWithEnvironment: env
@@ -110,8 +117,8 @@ SpSelectPackageBrowser >> nextAction [
 SpSelectPackageBrowser >> removeAllItems [
 	| tmp |
 	tmp := self 
-		sort: toSelectModel listItems
-		withAll: selectedModel listItems.
+		sort: toSelectModel items
+		withAll: selectedModel items.
 	toSelectModel items: tmp.
 	selectedModel items: #().
 	toSelectModel updateList.
@@ -122,8 +129,8 @@ SpSelectPackageBrowser >> removeAllItems [
 SpSelectPackageBrowser >> removeItems [
 	selectedModel selectedItems
 		ifNotNil: [:items | 
-			toSelectModel items: (self sort: toSelectModel listItems withAll: items).
-			selectedModel items: (self sort: selectedModel listItems withoutAll: items) ].
+			toSelectModel items: (self sort: toSelectModel items withAll: items).
+			selectedModel items: (self sort: selectedModel items withoutAll: items) ].
 	toSelectModel updateList.
 	selectedModel updateList 	  
 ]

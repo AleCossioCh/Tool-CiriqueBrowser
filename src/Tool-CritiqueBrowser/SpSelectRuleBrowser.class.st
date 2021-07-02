@@ -84,11 +84,11 @@ SpSelectRuleBrowser >> initialize [
 			ifTrue: [ rule rules
 				select: [:r | (self isSelected: r) not or: [ r isComposite ]]]
 			ifFalse: [ #() ]].
-	toSelectModel childrenBlock: rulesToSelectChildrenBlock.
-	selectedModel childrenBlock: selectedRulesChildrenBlock.
+	toSelectModel children: rulesToSelectChildrenBlock.
+	selectedModel children: selectedRulesChildrenBlock.
 	wrappingBlock := [:rule | rule name ].
-	toSelectModel displayBlock: wrappingBlock.
-	selectedModel displayBlock: wrappingBlock
+	toSelectModel display: wrappingBlock.
+	selectedModel display: wrappingBlock
 ]
 
 { #category : #private }

@@ -517,9 +517,11 @@ SpSingleCodeCriticResultList >> updateList [
 
 { #category : #initialization }
 SpSingleCodeCriticResultList >> whenSelectedItemChangesOnListModel [
-
-	criticsModel whenSelectionChangedDo: [ :critique |
-		sourceCodeModel setSelection: (0 to: 0). 	
+	
+	criticsModel whenSelectionChangedDo: [ :aSelection |
+		| critique |
+		critique = aSelection selectedItem.
+		sourceCodeModel selectionInterval: (0 to: 0). 	
 		rule ifNotNil: [
 			critique
 				ifNil: [ self setTextModelForNil ]
