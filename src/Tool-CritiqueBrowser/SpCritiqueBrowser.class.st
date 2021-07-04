@@ -46,14 +46,15 @@ SpCritiqueBrowser class >> defaultSpec [
 								     yourself)
 						    height: 25;
 						    yourself);
-				   add: (SpBoxLayout newTopToBottom
+				   add: ("SpPanedLayout newVertical add:("
+							SpBoxLayout newTopToBottom
 						    add: #textInputFieldModel height: 20;
 						    add: #criticsModel;
 						    add: #toolbarModel height: 25;
 						    yourself);
 				   yourself);
 		  add: #textModel;
-		  yourself
+		  yourself 
 ]
 
 { #category : #icons }
@@ -174,7 +175,7 @@ SpCritiqueBrowser >> applyRules [
 { #category : #private }
 SpCritiqueBrowser >> browseRule [
 
-	rulesModel selectedItem ifNotNil: [ :item | item content browse ]
+	rulesModel selectedItem ifNotNil: [ :item | item browse ]
 ]
 
 { #category : #'system annoucements' }
@@ -339,12 +340,12 @@ SpCritiqueBrowser >> initializePresenters [
 	textModel := self textModel.
 	rulesModel children: [ :rule | 
 		rule isComposite
-			ifTrue: [ (rule rules) asArray ]
+			ifTrue: [ rule rules asArray ]
 			ifFalse: [ #(  ) ] ].
 
-	rulesModel addColumn: (SpStringTableColumn evaluated: [ :rule | self stringMorphForRule: rule]).
-	rulesModel contextMenu: [ :aMenu :shifted | 
-		self menu: aMenu shifted: shifted ].
+	rulesModel addColumn: (SpStringTableColumn evaluated: [ :rule | 
+			 self stringMorphForRule: rule ]).
+	rulesModel contextMenu: self ruleMenu.
 
 	self focusOrder
 		add: rulesModel;
@@ -367,31 +368,6 @@ SpCritiqueBrowser >> logButton [
 { #category : #private }
 SpCritiqueBrowser >> logInManifest [
 	cache logInManifest
-]
-
-{ #category : #menu }
-SpCritiqueBrowser >> menu: aMenu shifted: aBoolean [
-	aMenu
-		addGroup:[ :group | 
-			group addItem: [ :item |
-				item 
-					name: 'Browse rule' translated;
-					action: [ self browseRule ]].
-			group addItem: [ :item |
-				item 
-					name: 'Reapply this rule' translated;
-					action: [ self reapplyThisRule ] ] ];
-		addGroup:[ :group | 
-			group addItem: [ :item |
-				item 
-					name: 'Ban from selected packages' translated;
-					action: [ self addRuleToFalsePositive ]].
-			group addItem: [ :item |
-				item 
-					name: 'Unban from selected packages' translated;
-					action: [ self removeRuleToFalsePositive ] ] ].
-		
-	 ^ aMenu
 ]
 
 { #category : #'system annoucements' }
@@ -475,7 +451,7 @@ SpCritiqueBrowser >> reapplyThisRule [
 
 	| rule |
 	rulesModel selectedItem ifNil: [ ^ self ].
-	rule := rulesModel selectedItem content.
+	rule := rulesModel selectedItem.
 	rule isComposite 
 		ifTrue: [ rule rules do: [ :each | self reapplyRule: each ] ]
 		ifFalse: [ self reapplyRule: rule ]
@@ -518,6 +494,31 @@ SpCritiqueBrowser >> removeTestCase: aBoolean [
 { #category : #accessing }
 SpCritiqueBrowser >> resetButton [
 	^ resetButton 
+]
+
+{ #category : #private }
+SpCritiqueBrowser >> ruleMenu [
+
+	^ SpMenuPresenter new
+		  addGroup: [ :group | 
+			  group addItem: [ :item | 
+					  item
+						  name: 'Browse rule' translated;
+						  action: [ self browseRule ] ].
+			  group addItem: [ :item | 
+				  item
+					  name: 'Reapply this rule' translated;
+					  action: [ self reapplyThisRule ] ] ];
+		  addGroup: [ :group | 
+			  group addItem: [ :item | 
+				  item
+					  name: 'Ban from selected packages' translated;
+					  action: [ self addRuleToFalsePositive ] ].
+			  group addItem: [ :item | 
+				  item
+					  name: 'Unban from selected packages' translated;
+					  action: [ self removeRuleToFalsePositive ] ] ];
+		  yourself
 ]
 
 { #category : #accessing }

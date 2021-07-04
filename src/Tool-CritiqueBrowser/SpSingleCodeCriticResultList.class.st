@@ -170,6 +170,32 @@ SpSingleCodeCriticResultList >> connectPresenters [
 	self whenSelectedItemChangesOnListModel
 ]
 
+{ #category : #menu }
+SpSingleCodeCriticResultList >> criticMenu [
+
+	| aMenu |
+	aMenu := SpMenuPresenter new.
+	"(rule notNil and: [ criticsModel selectedItems notEmpty ]) ifFalse: [ 
+		^ aMenu ]."
+
+	self addNavigationMenuItemsTo: aMenu.
+	self addMarkingMenuItemsTo: aMenu.
+
+	criticsModel selectedItem ifNotNil: [ :critique | 
+		critique actions ifNotEmpty: [ :actions | 
+			aMenu addLine.
+			actions do: [ :action | 
+				aMenu
+					add: action description
+					target: action
+					selector: #actOnCritic:ofEntity:
+					argumentList: { 
+							critique.
+							critique sourceAnchor entity } ] ] ].
+
+	^ aMenu
+]
+
 { #category : #accessing }
 SpSingleCodeCriticResultList >> criticsModel [
 	^ criticsModel
@@ -295,7 +321,7 @@ SpSingleCodeCriticResultList >> initializePresenters [
 	criticsModel display: [ :selec | 
 		self initializeDisplayCritic: selec forRule: rule ].
 
-	criticsModel contextMenu: [ :a :b | self menu: a shifted: b ].
+	criticsModel contextMenu: self criticMenu.
 	criticsModel displayIcon: [ :item | self iconFor: item ].
 
 	self focusOrder
