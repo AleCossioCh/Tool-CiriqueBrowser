@@ -15,7 +15,7 @@ Class {
 		'textInputFieldModel',
 		'criticsModel',
 		'toolbarModel',
-		'textModel'
+		'sourceCodeModel'
 	],
 	#category : #'Tool-CritiqueBrowser-Base'
 }
@@ -46,15 +46,14 @@ SpCritiqueBrowser class >> defaultSpec [
 								     yourself)
 						    height: 25;
 						    yourself);
-				   add: ("SpPanedLayout newVertical add:("
-							SpBoxLayout newTopToBottom
+				   add: (SpBoxLayout newTopToBottom
 						    add: #textInputFieldModel height: 20;
 						    add: #criticsModel;
 						    add: #toolbarModel height: 25;
 						    yourself);
 				   yourself);
-		  add: #textModel;
-		  yourself 
+		  add: #sourceCodeModel;
+		  yourself
 ]
 
 { #category : #icons }
@@ -130,11 +129,11 @@ SpCritiqueBrowser >> addModelItemsToWindowMenu: aMenu [
 
 { #category : #private }
 SpCritiqueBrowser >> addRuleToFalsePositive [
-	rulesModel selectedItem ifNotNil: [ :rule |
-		rule leaves do: [ :r |
-			rbEnvironment packages do: [ :package |
-				cache addFalsePositiveRule: r forPackage: package ]]].
-	
+
+	rulesModel selectedItem ifNotNil: [ :rule | 
+		rule leaves do: [ :r | 
+			rbEnvironment packages do: [ :package | 
+				cache addFalsePositiveRule: r forPackage: package ] ] ]
 ]
 
 { #category : #private }
@@ -337,7 +336,7 @@ SpCritiqueBrowser >> initializePresenters [
 	textInputFieldModel := self textInputFieldModel.
 	criticsModel := self criticsModel.
 	toolbarModel := self toolbarModel.
-	textModel := self textModel.
+	sourceCodeModel := self sourceCodeModel.
 	rulesModel children: [ :rule | 
 		rule isComposite
 			ifTrue: [ rule rules asArray ]
@@ -596,6 +595,12 @@ SpCritiqueBrowser >> setUpdateButton [
 		action: self setActionUpdateButton.
 ]
 
+{ #category : #accessing }
+SpCritiqueBrowser >> sourceCodeModel [
+
+	^ criticModel sourceCodeModel
+]
+
 { #category : #private }
 SpCritiqueBrowser >> stringMorphForRule: rule [
 	| unclassified falsePositives toDos text total |
@@ -624,12 +629,6 @@ SpCritiqueBrowser >> stringMorphForRule: rule [
 SpCritiqueBrowser >> textInputFieldModel [
 
 	^ criticModel textInputFieldModel
-]
-
-{ #category : #accessing }
-SpCritiqueBrowser >> textModel [
-
-	^ criticModel textModel
 ]
 
 { #category : #api }

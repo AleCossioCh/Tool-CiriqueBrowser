@@ -309,6 +309,7 @@ SpSingleCodeCriticResultList >> initializeDisplayCritic: aCritic forRule: aRule 
 { #category : #initialization }
 SpSingleCodeCriticResultList >> initializePresenters [
 
+	| name |
 	criticsModel := self newList.
 	sourceCodeModel := self newCode.
 	toolbarModel := self instantiate: SpCriticToolbar.
@@ -320,10 +321,9 @@ SpSingleCodeCriticResultList >> initializePresenters [
 	self initializeActionToPerformOnTextModel.
 	criticsModel display: [ :selec | 
 		self initializeDisplayCritic: selec forRule: rule ].
-
+	name := criticsModel selectedItems.
 	criticsModel contextMenu: self criticMenu.
 	criticsModel displayIcon: [ :item | self iconFor: item ].
-
 	self focusOrder
 		add: criticsModel;
 		add: toolbarModel;
@@ -361,31 +361,6 @@ SpSingleCodeCriticResultList >> initializeToolBar [
 	self toolbarModel whenFalsePositiveClickedDo: [ self addCriticToFalsePositive ].
 
 
-]
-
-{ #category : #menu }
-SpSingleCodeCriticResultList >> menu: aMenu shifted: aBoolean [
-	(rule notNil and: [ criticsModel selectedItems notEmpty ])
-		ifFalse: [ ^ aMenu ]. 
-		
-	self addNavigationMenuItemsTo: aMenu.
-	aMenu addLine.
-	self addMarkingMenuItemsTo: aMenu.
-			
-	criticsModel selectedItem
-		ifNotNil: [ :critique |
-		critique actions ifNotEmpty: [ :actions |
-			aMenu addLine.
-			actions do: [ :action |
-				aMenu
-					add: action description
-					target: action
-					selector: #actOnCritic:ofEntity:
-					argumentList: {
-						critique .
-						critique sourceAnchor entity } ] ] ].
-			
-	^ aMenu
 ]
 
 { #category : #menu }
