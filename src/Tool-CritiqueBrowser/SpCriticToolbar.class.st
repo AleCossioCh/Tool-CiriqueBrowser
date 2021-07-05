@@ -74,14 +74,13 @@ SpCriticToolbar >> initializePresenters [
 { #category : #initialization }
 SpCriticToolbar >> registerForChanges [
 
-	criticHolder whenChangedDo: [ :contents |
+	criticHolder whenChangedDo: [ :contents | 
 		| boolean |
 		boolean := contents notNil.
-		browseModel state: (boolean and: [ browseModel enabled ]).
+		browseModel state: (boolean and: [ browseModel enabled: boolean ]).
 		transformModel state: (boolean and: [ transformModel enabled ]).
-		falsepositiveModel state: (boolean and: [ falsepositiveModel enabled ]) 
-		]
-
+		falsepositiveModel state:
+			(boolean and: [ falsepositiveModel enabled ]) ]
 ]
 
 { #category : #api }

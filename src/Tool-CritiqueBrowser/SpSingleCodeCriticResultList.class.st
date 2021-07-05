@@ -439,7 +439,6 @@ SpSingleCodeCriticResultList >> setTextModelForClassOrMethod: aCritique [
 	sourceCodeModel text: ((entity respondsTo: #definition)
 			 ifTrue: [ entity definitionString ]
 			 ifFalse: [ entity asString ]).
-	sourceCodeModel aboutToStyle: true.
 	sourceCodeModel behavior: (entity isCompiledMethod
 			 ifTrue: [ entity methodClass ]
 			 ifFalse: [ nil ]).
@@ -518,17 +517,15 @@ SpSingleCodeCriticResultList >> updateList [
 
 { #category : #initialization }
 SpSingleCodeCriticResultList >> whenSelectedItemChangesOnListModel [
-	
-	criticsModel whenSelectionChangedDo: [ :aSelection |
+
+	criticsModel whenSelectionChangedDo: [ :aSelection | 
 		| critique |
-		critique = aSelection selectedItem.
-		sourceCodeModel selectionInterval: (0 to: 0). 	
-		rule ifNotNil: [
-			critique
-				ifNil: [ self setTextModelForNil ]
-				ifNotNil: [  
-					toolbarModel critic: critique.
-					critique providesChange 
+		critique := aSelection selectedItem.
+		sourceCodeModel selectionInterval: (0 to: 0).
+		rule ifNotNil: [ 
+			critique ifNil: [ self setTextModelForNil ] ifNotNil: [ 
+				toolbarModel critic: critique.
+				critique providesChange
 					ifTrue: [ self setTextModelForTransformationRule: critique ]
-					ifFalse: [ self setTextModelForClassOrMethod: critique ] ] ] ]		
+					ifFalse: [ self setTextModelForClassOrMethod: critique ] ] ] ]
 ]
