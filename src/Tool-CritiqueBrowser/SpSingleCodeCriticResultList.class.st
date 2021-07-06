@@ -160,6 +160,44 @@ SpSingleCodeCriticResultList >> browseDependencies [
 ]
 
 { #category : #accessing }
+SpSingleCodeCriticResultList >> buildMenu [
+
+	^ SpMenuPresenter new
+		  addGroup: [ :group | 
+			  group addItem: [ :item | 
+					  item
+						  name: 'Browse' translated;
+						  action: [ self browseCritic ] ].
+			  group addItem: [ :item | 
+				  item
+					  name: 'References to...' translated;
+					  action: [  ] ] ];
+		  addGroup: [ :group | 
+			  group addItem: [ :item | 
+				  item
+					  name: 'Mark as wrong' translated;
+					  action: [ self addCriticToFalsePositive ] ].
+			  group addItem: [ :item | 
+				  item
+					  name: 'Mark as TODO' translated;
+					  action: [  ] ] ];
+		  addGroup: [ :group | 
+			  group addItem: [ :item | 
+				  item
+					  name: 'View rationale behind the rule' translated;
+					  action: [  ] ].
+			  group addItem: [ :item | 
+				  item
+					  name: 'Automatically resolve the issue' translated;
+					  action: [  ] ].
+			  group addItem: [ :item | 
+				  item
+					  name: 'Ban this rule' translated;
+					  action: [  ] ] ];
+		  yourself
+]
+
+{ #category : #accessing }
 SpSingleCodeCriticResultList >> cache:  acache [ 
 	cache := acache
 ]
@@ -174,9 +212,9 @@ SpSingleCodeCriticResultList >> connectPresenters [
 SpSingleCodeCriticResultList >> criticMenu [
 
 	| aMenu |
-	aMenu := SpMenuPresenter new.
-	"(rule notNil and: [ criticsModel selectedItems notEmpty ]) ifFalse: [ 
-		^ aMenu ]."
+	aMenu := self buildMenu.
+	(rule notNil and: [ criticsModel selectedItems notEmpty ]) ifFalse: [ 
+		^ aMenu ].
 
 	self addNavigationMenuItemsTo: aMenu.
 	self addMarkingMenuItemsTo: aMenu.
