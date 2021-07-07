@@ -129,6 +129,29 @@ SpSingleCodeCriticResultList >> addRuleToFalsePositive [
 			cache addFalsePositiveRule: rule forPackage: critic mcWorkingCopy]].
 ]
 
+{ #category : #private }
+SpSingleCodeCriticResultList >> applyTransformation [
+
+	| crit changesBrowser |
+	crit := criticsModel selectedItem.
+	changesBrowser := (ChangesBrowser changes: { crit change })
+		                  extent: 500 @ 400;
+		                  setModal: SystemWindow topWindow;
+		                  yourself.
+
+	changesBrowser openDialogWithSpec
+		okAction: [ changesBrowser accept ];
+		centered
+]
+
+{ #category : #initialization }
+SpSingleCodeCriticResultList >> banRule [
+
+	| crit |
+						  crit := criticsModel selectedItem.
+						  crit guidedBan
+]
+
 { #category : #menu }
 SpSingleCodeCriticResultList >> browseCritic [
 	criticsModel selectedItem
@@ -184,13 +207,16 @@ SpSingleCodeCriticResultList >> buildMenu [
 			  group addItem: [ :item | 
 				  item
 					  name: 'View rationale behind the rule' translated;
-					  action: [ 
-						  | crit |
-						  crit := criticsModel selectedItem.
-						  crit popDescriptionUp.
-						  ReSystemAnnouncer uniqueInstance
-							  notifyCritique: crit
-							  descriptionViewedFor: crit sourceAnchor entity ] ] ];
+					  action: [ self rationaleOfRule ] ].
+			  group addItem: [ :item | 
+				  item
+					  name: 'Automatically resolve the issue' translated;
+					  "visibleIf: [ self providesChange ];"action: [ 
+						  self applyTransformation ] ].
+			  group addItem: [ :item | 
+				  item
+					  name: 'Ban this rule' translated;
+					  action: [ self banRule ] ] ];
 		  yourself
 ]
 
@@ -407,6 +433,17 @@ SpSingleCodeCriticResultList >> isCritiqueFalsePositive [
 SpSingleCodeCriticResultList >> isCritiqueToDo [
 ^ criticsModel selectedItems anySatisfy: [ :critic | 
 		 cache isToDo: critic forRule: rule ]
+]
+
+{ #category : #initialization }
+SpSingleCodeCriticResultList >> rationaleOfRule [
+
+	| crit |
+						  crit := criticsModel selectedItem.
+						  crit popDescriptionUp.
+						  ReSystemAnnouncer uniqueInstance
+							  notifyCritique: crit
+							  descriptionViewedFor: crit sourceAnchor entity 
 ]
 
 { #category : #menu }
