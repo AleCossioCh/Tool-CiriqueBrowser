@@ -58,9 +58,10 @@ SpCritiqueBrowser class >> defaultSpec [
 
 { #category : #icons }
 SpCritiqueBrowser class >> icon [
+
 	"Answer an icon for the receiver."
 
-	^ self iconNamed: #smallWarningIcon
+	^ self iconNamed: #error
 ]
 
 { #category : #'instance creation' }

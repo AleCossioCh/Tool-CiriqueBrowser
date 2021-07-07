@@ -115,13 +115,6 @@ SpSingleCodeCriticResultList >> addCriticToToDo [
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> addNavigationMenuItemsTo: aMenu [
-
-	criticsModel selectedItem ifNotNil: [ :critique |
-		critique sourceAnchor entity populateCBMenu: aMenu ]
-]
-
-{ #category : #menu }
 SpSingleCodeCriticResultList >> addRuleToFalsePositive [
 
 	criticsModel selectedItems ifNotNil: [ :criticss |
@@ -177,11 +170,7 @@ SpSingleCodeCriticResultList >> buildMenu [
 			  group addItem: [ :item | 
 					  item
 						  name: 'Browse' translated;
-						  action: [ self browseCritic ] ].
-			  group addItem: [ :item | 
-				  item
-					  name: 'References to...' translated;
-					  action: [  ] ] ];
+						  action: [ self browseCritic ] ].];
 		  addGroup: [ :group | 
 			  group addItem: [ :item | 
 				  item
@@ -211,8 +200,8 @@ SpSingleCodeCriticResultList >> buildMenu [
 			  group addItem: [ :item | 
 				  item
 					  name: 'Automatically resolve the issue' translated;
-					  "visibleIf: [ self providesChange ];"action: [ 
-						  self applyTransformation ] ].
+					  visibleIf: [ criticsModel selectedItem providesChange ];
+					  action: [ self applyTransformation ] ].
 			  group addItem: [ :item | 
 				  item
 					  name: 'Ban this rule' translated;
@@ -238,20 +227,6 @@ SpSingleCodeCriticResultList >> criticMenu [
 	aMenu := self buildMenu.
 	(rule notNil and: [ criticsModel selectedItems notEmpty ]) ifFalse: [ 
 		^ aMenu ].
-
-	"self addNavigationMenuItemsTo: aMenu."
-
-	criticsModel selectedItem ifNotNil: [ :critique | 
-		critique actions ifNotEmpty: [ :actions | 
-			aMenu addLine.
-			actions do: [ :action | 
-				aMenu
-					add: action description
-					target: action
-					selector: #actOnCritic:ofEntity:
-					argumentList: { 
-							critique.
-							critique sourceAnchor entity } ] ] ].
 
 	^ aMenu
 ]
