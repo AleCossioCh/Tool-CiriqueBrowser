@@ -172,27 +172,25 @@ SpSingleCodeCriticResultList >> buildMenu [
 					  action: [ self removeCriticToFalsePositive ] ].
 			  group addItem: [ :item | 
 				  item
-					  name: 'Unmark as TODO' translated;
+					  name: 'Unmark as To Do' translated;
 					  visibleIf: [ self isCritiqueToDo ];
 					  action: [ self removeCriticToToDo ] ].
-				group addItem: [ :item | 
+			  group addItem: [ :item | 
 				  item
-					  name: 'Mark as TODO' translated;
+					  name: 'Mark as To Do' translated;
 					  visibleIf: [ self isCritiqueToDo not ];
 					  action: [ self addCriticToToDo ] ] ];
 		  addGroup: [ :group | 
 			  group addItem: [ :item | 
 				  item
 					  name: 'View rationale behind the rule' translated;
-					  action: [  ] ].
-			  group addItem: [ :item | 
-				  item
-					  name: 'Automatically resolve the issue' translated;
-					  action: [  ] ].
-			  group addItem: [ :item | 
-				  item
-					  name: 'Ban this rule' translated;
-					  action: [  ] ] ];
+					  action: [ 
+						  | crit |
+						  crit := criticsModel selectedItem.
+						  crit popDescriptionUp.
+						  ReSystemAnnouncer uniqueInstance
+							  notifyCritique: crit
+							  descriptionViewedFor: crit sourceAnchor entity ] ] ];
 		  yourself
 ]
 
