@@ -115,19 +115,6 @@ SpSingleCodeCriticResultList >> addCriticToToDo [
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> addMarkingMenuItemsTo: aMenu [
-	(criticsModel selectedItems anySatisfy: [ :critic | cache isFalsePositive: critic forRule: rule ]) 
-		ifTrue: [ aMenu add: 'Unmark as wrong' target: self selector: #removeCriticToFalsePositive ].
-	(criticsModel selectedItems anySatisfy: [ :critic | (cache isFalsePositive: critic forRule: rule) not ]) 
-		ifTrue: [ aMenu add: 'Mark as wrong' target: self selector: #addCriticToFalsePositive ].
-	(criticsModel selectedItems anySatisfy: [ :critic | cache isToDo: critic forRule: rule ]) 
-		ifTrue: [ aMenu add: 'Unmark as TODO' target: self selector: #removeCriticToToDo ].
-	(criticsModel selectedItems anySatisfy: [ :critic | (cache isToDo: critic forRule: rule) not ]) 
-		ifTrue: [ aMenu add: 'Mark as TODO' target: self selector: #addCriticToToDo ].
-	
-]
-
-{ #category : #menu }
 SpSingleCodeCriticResultList >> addNavigationMenuItemsTo: aMenu [
 
 	criticsModel selectedItem ifNotNil: [ :critique |
@@ -176,11 +163,23 @@ SpSingleCodeCriticResultList >> buildMenu [
 			  group addItem: [ :item | 
 				  item
 					  name: 'Mark as wrong' translated;
+					  visibleIf: [ self isCritiqueFalsePositive not ];
 					  action: [ self addCriticToFalsePositive ] ].
 			  group addItem: [ :item | 
 				  item
+					  name: 'Unmark as wrong' translated;
+					  visibleIf: [ self isCritiqueFalsePositive ];
+					  action: [ self removeCriticToFalsePositive ] ].
+			  group addItem: [ :item | 
+				  item
+					  name: 'Unmark as TODO' translated;
+					  visibleIf: [ self isCritiqueToDo ];
+					  action: [ self removeCriticToToDo ] ].
+				group addItem: [ :item | 
+				  item
 					  name: 'Mark as TODO' translated;
-					  action: [  ] ] ];
+					  visibleIf: [ self isCritiqueToDo not ];
+					  action: [ self addCriticToToDo ] ] ];
 		  addGroup: [ :group | 
 			  group addItem: [ :item | 
 				  item
@@ -216,8 +215,7 @@ SpSingleCodeCriticResultList >> criticMenu [
 	(rule notNil and: [ criticsModel selectedItems notEmpty ]) ifFalse: [ 
 		^ aMenu ].
 
-	self addNavigationMenuItemsTo: aMenu.
-	self addMarkingMenuItemsTo: aMenu.
+	"self addNavigationMenuItemsTo: aMenu."
 
 	criticsModel selectedItem ifNotNil: [ :critique | 
 		critique actions ifNotEmpty: [ :actions | 
@@ -401,6 +399,18 @@ SpSingleCodeCriticResultList >> initializeToolBar [
 
 ]
 
+{ #category : #private }
+SpSingleCodeCriticResultList >> isCritiqueFalsePositive [ 
+	^ criticsModel selectedItems anySatisfy: [ :critic | 
+								  (cache isFalsePositive: critic forRule: rule)]
+]
+
+{ #category : #menu }
+SpSingleCodeCriticResultList >> isCritiqueToDo [
+^ criticsModel selectedItems anySatisfy: [ :critic | 
+		 cache isToDo: critic forRule: rule ]
+]
+
 { #category : #menu }
 SpSingleCodeCriticResultList >> removeCriticToFalsePositive [
 	
@@ -506,7 +516,6 @@ SpSingleCodeCriticResultList >> setTextModelForTransformationRule: selection [
 	sourceCodeModel behavior: nil.
 	sourceCodeModel text: (
 		self diffTextForChange: selection change).
-	sourceCodeModel aboutToStyle: false.
 
 									
 					
