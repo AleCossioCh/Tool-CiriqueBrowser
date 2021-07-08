@@ -8,7 +8,11 @@ Class {
 		'sourceCodeModel',
 		'textInputFieldModel',
 		'cache',
-		'thread'
+		'thread',
+		'selectDiffButton',
+		'transformButton',
+		'falsePositiveButton',
+		'browseButton'
 	],
 	#classInstVars : [
 		'icons'
@@ -129,7 +133,6 @@ SpSingleCodeCriticResultList >> applyTransformation [
 	crit := criticsModel selectedItem.
 	changesBrowser := (ChangesBrowser changes: { crit change })
 		                  extent: 500 @ 400;
-		                  setModal: SystemWindow topWindow;
 		                  yourself.
 
 	changesBrowser openDialogWithSpec
@@ -143,6 +146,12 @@ SpSingleCodeCriticResultList >> banRule [
 	| crit |
 						  crit := criticsModel selectedItem.
 						  crit guidedBan
+]
+
+{ #category : #accessing }
+SpSingleCodeCriticResultList >> browseButton [
+
+	^ browseButton
 ]
 
 { #category : #menu }
@@ -287,6 +296,12 @@ SpSingleCodeCriticResultList >> diffTextForChange: aRefactoryChange [
 	^ text
 ]
 
+{ #category : #accessing }
+SpSingleCodeCriticResultList >> falsePositiveButton [
+
+	^ falsePositiveButton
+]
+
 { #category : #private }
 SpSingleCodeCriticResultList >> falsePositiveColor [
 	^ Color darkGray
@@ -353,12 +368,10 @@ SpSingleCodeCriticResultList >> initializePresenters [
 	| name |
 	criticsModel := self newList.
 	sourceCodeModel := self newCode.
-	buttonBar := self newButtonBar.
-	buttonBar placeAtStart.
-	buttonBar add: self newSelectDiffButton.
-	buttonBar add: self newTransformButton.
-	buttonBar add: self newFalsePositiveButton.
-	buttonBar add: self newBrowseButton.
+	selectDiffButton := self newSelectDiffButton.
+	transformButton := self newTransformButton.
+	falsePositiveButton := self newFalsePositiveButton.
+	browseButton := self newBrowseButton.
 	textInputFieldModel := self newTextInput.
 	criticsModel beMultipleSelection.
 	self initializeTextInputFieldModel.
@@ -510,6 +523,12 @@ SpSingleCodeCriticResultList >> rule: aRule [
 	self criticsOf:  aRule.
 ]
 
+{ #category : #accessing }
+SpSingleCodeCriticResultList >> selectDiffButton [
+
+	^ selectDiffButton
+]
+
 { #category : #'smartSuggestions - support' }
 SpSingleCodeCriticResultList >> selectedMessage [
 	^ nil
@@ -550,15 +569,11 @@ SpSingleCodeCriticResultList >> setTextModelForClassOrMethod: aCritique [
 SpSingleCodeCriticResultList >> setTextModelForNil [
 
 	| text |
-	text := rule rationale isEmpty 
-		ifTrue: [ rule name ]
-		ifFalse: [ rule rationale ]. 
-	"sourceCodeModel aboutToStyle: false."
+	text := rule rationale isEmpty
+		        ifTrue: [ rule name ]
+		        ifFalse: [ rule rationale ].
 	sourceCodeModel text: text.
-	sourceCodeModel behavior: nil.
-	
-	
-					
+	sourceCodeModel behavior: nil
 ]
 
 { #category : #initialization }
@@ -591,6 +606,12 @@ SpSingleCodeCriticResultList >> textModel [
 { #category : #private }
 SpSingleCodeCriticResultList >> toDoColor [
 	^ Color orange
+]
+
+{ #category : #accessing }
+SpSingleCodeCriticResultList >> transformButton [
+
+	^ transformButton
 ]
 
 { #category : #menu }

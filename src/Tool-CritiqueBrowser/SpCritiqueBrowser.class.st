@@ -15,7 +15,11 @@ Class {
 		'textInputFieldModel',
 		'criticsModel',
 		'buttonBar',
-		'sourceCodeModel'
+		'sourceCodeModel',
+		'browseButton',
+		'falsePositiveButton',
+		'transformButton',
+		'selectDiffButton'
 	],
 	#category : #'Tool-CritiqueBrowser-Base'
 }
@@ -49,8 +53,15 @@ SpCritiqueBrowser class >> defaultSpec [
 				   add: (SpBoxLayout newTopToBottom
 						    add: #textInputFieldModel height: 20;
 						    add: #criticsModel;
-						    add: #buttonBar height: 25;
-						    yourself);
+						    add: (SpBoxLayout newLeftToRight
+								     add: #browseButton;
+								     add: #falsePositiveButton;
+								     add: #transformButton;
+								     add: #selectDiffButton;
+								     yourself)
+						    height: 25;
+						    yourself)
+				   height: 25;
 				   yourself);
 		  add: #sourceCodeModel;
 		  yourself
@@ -172,6 +183,12 @@ SpCritiqueBrowser >> applyRules [
 	process resume
 ]
 
+{ #category : #accessing }
+SpCritiqueBrowser >> browseButton [
+
+	^ criticModel browseButton 
+]
+
 { #category : #private }
 SpCritiqueBrowser >> browseRule [
 
@@ -253,7 +270,7 @@ SpCritiqueBrowser >> criticsModel [
 { #category : #api }
 SpCritiqueBrowser >> defaultTitle [
 
-	^ 'Critic Browser'
+	^ 'Critique Browser'
 ]
 
 { #category : #accessing }
@@ -266,6 +283,11 @@ SpCritiqueBrowser >> environment [
 SpCritiqueBrowser >> environment: aEnv [
 	rbEnvironment := aEnv
 
+]
+
+{ #category : #accessing }
+SpCritiqueBrowser >> falsePositiveButton [
+	^ criticModel falsePositiveButton
 ]
 
 { #category : #'system annoucements' }
@@ -344,6 +366,10 @@ SpCritiqueBrowser >> initializePresenters [
 	criticsModel := self criticsModel.
 	buttonBar := self buttonBar.
 	sourceCodeModel := self sourceCodeModel.
+	selectDiffButton := self selectDiffButton.
+	transformButton := self transformButton.
+	falsePositiveButton := self falsePositiveButton.
+	browseButton := self browseButton.
 	rulesModel children: [ :rule | 
 		rule isComposite
 			ifTrue: [ rule rules asArray ]
@@ -362,8 +388,8 @@ SpCritiqueBrowser >> initializePresenters [
 SpCritiqueBrowser >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter
-		title:  self title;
-		initialExtent: 760@370
+		title: self defaultTitle;
+		initialExtent: 760 @ 370
 ]
 
 { #category : #accessing }
@@ -543,6 +569,11 @@ SpCritiqueBrowser >> rulesModel [
 	^ rulesModel
 ]
 
+{ #category : #accessing }
+SpCritiqueBrowser >> selectDiffButton [
+	^ criticModel selectDiffButton 
+]
+
 { #category : #initialization }
 SpCritiqueBrowser >> setActionLogButton [
 	^ [ (UIManager default
@@ -638,9 +669,9 @@ SpCritiqueBrowser >> textInputFieldModel [
 	^ criticModel textInputFieldModel
 ]
 
-{ #category : #api }
-SpCritiqueBrowser >> title [
-	^ title
+{ #category : #accessing }
+SpCritiqueBrowser >> transformButton [
+	^ criticModel transformButton 
 ]
 
 { #category : #'system annoucements' }
