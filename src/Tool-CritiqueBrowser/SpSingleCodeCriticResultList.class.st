@@ -562,7 +562,7 @@ SpSingleCodeCriticResultList >> setTextModelForClassOrMethod: aCritique [
 			 ifTrue: [ entity methodClass ]
 			 ifFalse: [ nil ]).
 	aCritique sourceAnchor providesInterval ifTrue: [ 
-		sourceCodeModel setSelection: aCritique sourceAnchor interval ]
+		sourceCodeModel selectionInterval: aCritique sourceAnchor interval ]
 ]
 
 { #category : #initialization }
