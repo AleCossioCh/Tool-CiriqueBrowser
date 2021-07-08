@@ -354,11 +354,12 @@ SpSingleCodeCriticResultList >> initializePresenters [
 	criticsModel := self newList.
 	sourceCodeModel := self newCode.
 	buttonBar := self newButtonBar.
-	buttonBar add: self newBrowseButton.
+	buttonBar placeAtStart.
+	buttonBar add: self newSelectDiffButton.
 	buttonBar add: self newTransformButton.
 	buttonBar add: self newFalsePositiveButton.
+	buttonBar add: self newBrowseButton.
 	textInputFieldModel := self newTextInput.
-
 	criticsModel beMultipleSelection.
 	self initializeTextInputFieldModel.
 	self initializeActionToPerformOnTextModel.
@@ -427,8 +428,17 @@ SpSingleCodeCriticResultList >> newFalsePositiveButton [
 	^ self newButton
 		  label: 'Mark as wrong';
 		  icon: (self iconNamed: #merge);
-		  help: 'Apply changes into your Working Copy';
 		  action: [ self addCriticToFalsePositive ];
+		yourself
+]
+
+{ #category : #menu }
+SpSingleCodeCriticResultList >> newSelectDiffButton [
+
+	^ self newDropList
+		  display: [:options | options name ]; 
+		  help: 'Select diff view';
+		  whenSelectedItemChangedDo: [ :aClass | aClass crTrace ];
 		  yourself
 ]
 
@@ -437,8 +447,8 @@ SpSingleCodeCriticResultList >> newTransformButton [
 
 	^ self newButton
 		  label: 'Transform';
-		  icon: (self iconNamed: #merge);
-		  help: 'Apply changes into your Working Copy';
+		  icon: (self iconNamed: #repair);
+		  help: 'Apply changes to solve issue';
 		  action: [ self transformCritic ];
 		  yourself
 ]
