@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'rule',
 		'criticsModel',
-		'toolbarModel',
+		'buttonBar',
 		'sourceCodeModel',
 		'textInputFieldModel',
 		'cache',
@@ -21,7 +21,7 @@ SpSingleCodeCriticResultList class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
 		  add: #criticsModel;
-		  add: #toolbarModel height: 25;
+		  add: #buttonBar height: 25;
 		  add: #sourceCodeModel;
 		  yourself
 ]
@@ -210,6 +210,12 @@ SpSingleCodeCriticResultList >> buildMenu [
 ]
 
 { #category : #accessing }
+SpSingleCodeCriticResultList >> buttonBar [
+
+	^ buttonBar
+]
+
+{ #category : #accessing }
 SpSingleCodeCriticResultList >> cache:  acache [ 
 	cache := acache
 ]
@@ -347,12 +353,14 @@ SpSingleCodeCriticResultList >> initializePresenters [
 	| name |
 	criticsModel := self newList.
 	sourceCodeModel := self newCode.
-	toolbarModel := self instantiate: SpCriticToolbar.
+	buttonBar := self newButtonBar.
+	buttonBar add: self newBrowseButton.
+	buttonBar add: self newTransformButton.
+	buttonBar add: self newFalsePositiveButton.
 	textInputFieldModel := self newTextInput.
 
 	criticsModel beMultipleSelection.
 	self initializeTextInputFieldModel.
-	self initializeToolBar.
 	self initializeActionToPerformOnTextModel.
 	criticsModel display: [ :selec | 
 		self initializeDisplayCritic: selec forRule: rule ].
@@ -361,7 +369,7 @@ SpSingleCodeCriticResultList >> initializePresenters [
 	criticsModel displayIcon: [ :item | self iconFor: item ].
 	self focusOrder
 		add: criticsModel;
-		add: toolbarModel;
+		add: buttonBar;
 		add: sourceCodeModel
 ]
 
@@ -390,14 +398,6 @@ SpSingleCodeCriticResultList >> initializeTextInputFieldModel [
 
 ]
 
-{ #category : #initialization }
-SpSingleCodeCriticResultList >> initializeToolBar [
-	
-	self toolbarModel whenFalsePositiveClickedDo: [ self addCriticToFalsePositive ].
-
-
-]
-
 { #category : #private }
 SpSingleCodeCriticResultList >> isCritiqueFalsePositive [ 
 	^ criticsModel selectedItems anySatisfy: [ :critic | 
@@ -408,6 +408,39 @@ SpSingleCodeCriticResultList >> isCritiqueFalsePositive [
 SpSingleCodeCriticResultList >> isCritiqueToDo [
 ^ criticsModel selectedItems anySatisfy: [ :critic | 
 		 cache isToDo: critic forRule: rule ]
+]
+
+{ #category : #menu }
+SpSingleCodeCriticResultList >> newBrowseButton [
+
+	^ self newButton
+		  label: 'Browse';
+		  icon: (self iconNamed: #nautilus);
+		  help: 'Explore and modify in System Browser';
+		  action: [ self browseCritic ];
+		  yourself
+]
+
+{ #category : #menu }
+SpSingleCodeCriticResultList >> newFalsePositiveButton [
+
+	^ self newButton
+		  label: 'Mark as wrong';
+		  icon: (self iconNamed: #merge);
+		  help: 'Apply changes into your Working Copy';
+		  action: [ self addCriticToFalsePositive ];
+		  yourself
+]
+
+{ #category : #menu }
+SpSingleCodeCriticResultList >> newTransformButton [
+
+	^ self newButton
+		  label: 'Transform';
+		  icon: (self iconNamed: #merge);
+		  help: 'Apply changes into your Working Copy';
+		  action: [ self transformCritic ];
+		  yourself
 ]
 
 { #category : #initialization }
@@ -465,7 +498,6 @@ SpSingleCodeCriticResultList >> rule: aRule [
 	(rule isNil or: [ rule isComposite ]) 
 		ifTrue: [ ^ self ].	
 	self criticsOf:  aRule.
-	toolbarModel rule: rule.
 ]
 
 { #category : #'smartSuggestions - support' }
@@ -514,7 +546,6 @@ SpSingleCodeCriticResultList >> setTextModelForNil [
 	"sourceCodeModel aboutToStyle: false."
 	sourceCodeModel text: text.
 	sourceCodeModel behavior: nil.
-	toolbarModel critic: nil 
 	
 	
 					
@@ -552,16 +583,12 @@ SpSingleCodeCriticResultList >> toDoColor [
 	^ Color orange
 ]
 
-{ #category : #accessing }
-SpSingleCodeCriticResultList >> toolbarModel [
-	^ toolbarModel
-]
-
 { #category : #menu }
 SpSingleCodeCriticResultList >> transformCritic [
-	
-	criticsModel selectedItems ifNotNil: [ :items |
-		items do: [:critic | critic change execute ]  displayingProgress: [:critic|]]
+
+	criticsModel selectedItem ifNotNil: [ :element | 
+		element change execute
+		]
 ]
 
 { #category : #thread }
@@ -581,7 +608,6 @@ SpSingleCodeCriticResultList >> whenSelectedItemChangesOnListModel [
 		sourceCodeModel selectionInterval: (0 to: 0).
 		rule ifNotNil: [ 
 			critique ifNil: [ self setTextModelForNil ] ifNotNil: [ 
-				toolbarModel critic: critique.
 				critique providesChange
 					ifTrue: [ self setTextModelForTransformationRule: critique ]
 					ifFalse: [ self setTextModelForClassOrMethod: critique ] ] ] ]

@@ -14,7 +14,7 @@ Class {
 		'updateButton',
 		'textInputFieldModel',
 		'criticsModel',
-		'toolbarModel',
+		'buttonBar',
 		'sourceCodeModel'
 	],
 	#category : #'Tool-CritiqueBrowser-Base'
@@ -49,7 +49,7 @@ SpCritiqueBrowser class >> defaultSpec [
 				   add: (SpBoxLayout newTopToBottom
 						    add: #textInputFieldModel height: 20;
 						    add: #criticsModel;
-						    add: #toolbarModel height: 25;
+						    add: #buttonBar height: 25;
 						    yourself);
 				   yourself);
 		  add: #sourceCodeModel;
@@ -176,6 +176,12 @@ SpCritiqueBrowser >> applyRules [
 SpCritiqueBrowser >> browseRule [
 
 	rulesModel selectedItem ifNotNil: [ :item | item browse ]
+]
+
+{ #category : #accessing }
+SpCritiqueBrowser >> buttonBar [
+
+	^ criticModel buttonBar 
 ]
 
 { #category : #'system annoucements' }
@@ -336,7 +342,7 @@ SpCritiqueBrowser >> initializePresenters [
 	criticModel := SpSingleCodeCriticResultList new.
 	textInputFieldModel := self textInputFieldModel.
 	criticsModel := self criticsModel.
-	toolbarModel := self toolbarModel.
+	buttonBar := self buttonBar.
 	sourceCodeModel := self sourceCodeModel.
 	rulesModel children: [ :rule | 
 		rule isComposite
@@ -635,12 +641,6 @@ SpCritiqueBrowser >> textInputFieldModel [
 { #category : #api }
 SpCritiqueBrowser >> title [
 	^ title
-]
-
-{ #category : #accessing }
-SpCritiqueBrowser >> toolbarModel [
-
-	^ criticModel toolbarModel
 ]
 
 { #category : #'system annoucements' }
