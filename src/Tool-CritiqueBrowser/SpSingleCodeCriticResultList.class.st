@@ -173,14 +173,14 @@ SpSingleCodeCriticResultList >> browseDependencies [
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> buildMenu [
+SpSingleCodeCriticResultList >> buildMenuCritique [ 
 
 	^ SpMenuPresenter new
 		  addGroup: [ :group | 
 			  group addItem: [ :item | 
 					  item
 						  name: 'Browse' translated;
-						  action: [ self browseCritic ] ].];
+						  action: [ self browseCritic ] ] ];
 		  addGroup: [ :group | 
 			  group addItem: [ :item | 
 				  item
@@ -234,17 +234,6 @@ SpSingleCodeCriticResultList >> cache:  acache [
 SpSingleCodeCriticResultList >> connectPresenters [
 
 	self whenSelectedItemChangesOnListModel
-]
-
-{ #category : #menu }
-SpSingleCodeCriticResultList >> criticMenu [
-
-	| aMenu |
-	aMenu := self buildMenu.
-	(rule notNil and: [ criticsModel selectedItems notEmpty ]) ifFalse: [ 
-		^ aMenu ].
-
-	^ aMenu
 ]
 
 { #category : #accessing }
@@ -336,19 +325,6 @@ SpSingleCodeCriticResultList >> initialize [
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> initializeActionToPerformOnTextModel [
-	
-	| selectedItem |
-	sourceCodeModel acceptDrop:  [ :text | 	
-		selectedItem := criticsModel selectedItem sourceAnchor entity.
-		(selectedItem isCompiledMethod and: [ rule isTransformationRule not ])
-			ifTrue: [ selectedItem methodClass compile: text ] 
-			ifFalse: [ Smalltalk compiler evaluate:  text ]]
-	
-
-]
-
-{ #category : #initialization }
 SpSingleCodeCriticResultList >> initializeDisplayCritic: aCritic forRule: aRule [
 
 	| criticRepresentation |
@@ -364,21 +340,17 @@ SpSingleCodeCriticResultList >> initializeDisplayCritic: aCritic forRule: aRule 
 { #category : #initialization }
 SpSingleCodeCriticResultList >> initializePresenters [
 
-	| name |
 	criticsModel := self newList.
 	sourceCodeModel := self newCode.
-	selectDiffButton := self newSelectDiffButton.
-	transformButton := self newTransformButton.
-	falsePositiveButton := self newFalsePositiveButton.
-	browseButton := self newBrowseButton.
+	sourceCodeModel beNotEditable.
+	self instantiateCriticsToolbar.
 	textInputFieldModel := self newTextInput.
 	criticsModel beMultipleSelection.
 	self initializeTextInputFieldModel.
-	self initializeActionToPerformOnTextModel.
 	criticsModel display: [ :selec | 
 		self initializeDisplayCritic: selec forRule: rule ].
-	name := criticsModel selectedItems.
-	criticsModel contextMenu: self criticMenu.
+	criticsModel contextMenu: self buildMenuCritique.
+	self halt.
 	criticsModel displayIcon: [ :item | self iconFor: item ].
 	self focusOrder
 		add: criticsModel;
@@ -409,6 +381,15 @@ SpSingleCodeCriticResultList >> initializeTextInputFieldModel [
 				matchText match: (self formatCritic: critic)]]).
 		criticsModel updateList ]
 
+]
+
+{ #category : #initialization }
+SpSingleCodeCriticResultList >> instantiateCriticsToolbar [
+
+	selectDiffButton := self newSelectDiffButton.
+	transformButton := self newTransformButton.
+	falsePositiveButton := self newFalsePositiveButton.
+	browseButton := self newBrowseButton.
 ]
 
 { #category : #private }
