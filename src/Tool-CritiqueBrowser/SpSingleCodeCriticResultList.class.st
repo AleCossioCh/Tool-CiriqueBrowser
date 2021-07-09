@@ -12,7 +12,9 @@ Class {
 		'selectDiffButton',
 		'transformButton',
 		'falsePositiveButton',
-		'browseButton'
+		'browseButton',
+		'unifiedPresenter',
+		'splitPresenter'
 	],
 	#classInstVars : [
 		'icons'
@@ -25,7 +27,6 @@ SpSingleCodeCriticResultList class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
 		  add: #criticsModel;
-		  add: #buttonBar height: 25;
 		  add: #sourceCodeModel;
 		  yourself
 ]
@@ -281,18 +282,16 @@ SpSingleCodeCriticResultList >> diffSeparator [
 
 { #category : #private }
 SpSingleCodeCriticResultList >> diffTextForChange: aRefactoryChange [
-	| text builder |
 
+	| text builder |
 	text := Text new.
 	builder := PrettyTextDiffBuilder new.
 	aRefactoryChange changes
-		do: [ :chng |
-			builder
-				from: chng oldVersionTextToDisplay
-				to: chng textToDisplay.
+		do: [ :chng | 
+			builder from: chng oldVersionTextToDisplay to: chng textToDisplay.
 			text append: builder buildDisplayPatch ]
 		separatedBy: [ text append: self diffSeparator ].
-	
+
 	^ text
 ]
 
@@ -440,9 +439,8 @@ SpSingleCodeCriticResultList >> newFalsePositiveButton [
 
 	^ self newButton
 		  label: 'Mark as wrong';
-		  icon: (self iconNamed: #merge);
 		  action: [ self addCriticToFalsePositive ];
-		yourself
+		  yourself
 ]
 
 { #category : #menu }
@@ -588,7 +586,7 @@ SpSingleCodeCriticResultList >> setTextModelForTransformationRule: selection [
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> sourceCodeModel [
+SpSingleCodeCriticResultList >> sourceCodeModel [ 
 
 	^ sourceCodeModel
 ]
@@ -596,11 +594,6 @@ SpSingleCodeCriticResultList >> sourceCodeModel [
 { #category : #accessing }
 SpSingleCodeCriticResultList >> textInputFieldModel [
 	^ textInputFieldModel
-]
-
-{ #category : #accessing }
-SpSingleCodeCriticResultList >> textModel [
-	^ sourceCodeModel
 ]
 
 { #category : #private }

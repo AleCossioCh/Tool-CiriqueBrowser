@@ -132,7 +132,7 @@ SpSelectRuleBrowser >> removeAllItems [
 SpSelectRuleBrowser >> removeItems [
 	
 	selectedModel selectedItem
-		ifNotNil: [ :item | selectedRules removeAllFoundIn: item content leaves ].
+		ifNotNil: [ :item | selectedRules removeAllFoundIn: item leaves ].
 	self updateTree  	  
 ]
 

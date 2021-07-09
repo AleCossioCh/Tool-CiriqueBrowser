@@ -195,12 +195,6 @@ SpCritiqueBrowser >> browseRule [
 	rulesModel selectedItem ifNotNil: [ :item | item browse ]
 ]
 
-{ #category : #accessing }
-SpCritiqueBrowser >> buttonBar [
-
-	^ criticModel buttonBar 
-]
-
 { #category : #'system annoucements' }
 SpCritiqueBrowser >> classAdded: aClass [
 
@@ -364,7 +358,6 @@ SpCritiqueBrowser >> initializePresenters [
 	criticModel := SpSingleCodeCriticResultList new.
 	textInputFieldModel := self textInputFieldModel.
 	criticsModel := self criticsModel.
-	buttonBar := self buttonBar.
 	sourceCodeModel := self sourceCodeModel.
 	selectDiffButton := self selectDiffButton.
 	transformButton := self transformButton.
