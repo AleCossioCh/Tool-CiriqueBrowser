@@ -354,7 +354,6 @@ SpSingleCodeCriticResultList >> initializePresenters [
 	criticsModel display: [ :selec | 
 		self initializeDisplayCritic: selec forRule: rule ].
 	criticsModel contextMenu: self buildMenuCritique.
-	
 	criticsModel displayIcon: [ :item | self iconFor: item ].
 	self focusOrder
 		add: criticsModel;

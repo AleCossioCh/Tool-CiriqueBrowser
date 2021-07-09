@@ -39,8 +39,8 @@ SpCritiqueBrowser class >> criticsBrowserMenuOn: aBuilder [
 { #category : #specs }
 SpCritiqueBrowser class >> defaultSpec [
 
-	^ SpBoxLayout newTopToBottom
-		  add: (SpBoxLayout newLeftToRight
+	^ SpPanedLayout newTopToBottom
+		  add: (SpPanedLayout newLeftToRight
 				   add: (SpBoxLayout newTopToBottom
 						    add: #rulesModel;
 						    add: (SpBoxLayout newLeftToRight
@@ -60,9 +60,8 @@ SpCritiqueBrowser class >> defaultSpec [
 								     add: #selectDiffButton;
 								     yourself)
 						    height: 25;
-						    yourself)
-				   height: 25;
-				   yourself);
+						    yourself);
+						yourself);
 		  add: #sourceCodeModel;
 		  yourself
 ]
