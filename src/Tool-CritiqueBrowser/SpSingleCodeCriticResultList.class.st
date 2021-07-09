@@ -304,11 +304,15 @@ SpSingleCodeCriticResultList >> formatCritic: aCritic [
 
 { #category : #private }
 SpSingleCodeCriticResultList >> iconFor: anItem [
-	
-	^  (cache isFalsePositive: anItem forRule: rule) 
-			ifFalse: [(cache isToDo: anItem forRule: rule)
-				ifTrue: [ self class wrenchOrangeIcon ]
-				ifFalse: [ self class exclamationIcon ] ]
+
+	^ (cache isFalsePositive: anItem forRule: rule) ifFalse: [ 
+		  (cache isToDo: anItem forRule: rule)
+			  ifTrue: [ self class wrenchOrangeIcon ]
+			  ifFalse: [ | severity |
+				severity := rule severity .
+				severity == #information
+				ifTrue: [ self iconNamed: #smallInfo ]
+				ifFalse: [ self iconNamed: severity  ] ] ] 
 ]
 
 { #category : #menu }
@@ -350,7 +354,7 @@ SpSingleCodeCriticResultList >> initializePresenters [
 	criticsModel display: [ :selec | 
 		self initializeDisplayCritic: selec forRule: rule ].
 	criticsModel contextMenu: self buildMenuCritique.
-	self halt.
+	
 	criticsModel displayIcon: [ :item | self iconFor: item ].
 	self focusOrder
 		add: criticsModel;
