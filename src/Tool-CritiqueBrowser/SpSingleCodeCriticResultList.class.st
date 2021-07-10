@@ -308,11 +308,15 @@ SpSingleCodeCriticResultList >> iconFor: anItem [
 	^ (cache isFalsePositive: anItem forRule: rule) ifFalse: [ 
 		  (cache isToDo: anItem forRule: rule)
 			  ifTrue: [ self class wrenchOrangeIcon ]
-			  ifFalse: [ | severity |
-				severity := rule severity .
-				severity == #information
-				ifTrue: [ self iconNamed: #smallInfo ]
-				ifFalse: [ self iconNamed: severity  ] ] ] 
+			  ifFalse: [ 
+				  | severity |
+				  severity := rule severity.
+				  severity == #information
+					  ifTrue: [ self iconNamed: #smallInfo ]
+					  ifFalse: [ 
+						  severity == #warning
+							  ifTrue: [ self iconNamed: #smallWarning ]
+							  ifFalse: [ self iconNamed: #smallError ] ] ] ]
 ]
 
 { #category : #menu }
