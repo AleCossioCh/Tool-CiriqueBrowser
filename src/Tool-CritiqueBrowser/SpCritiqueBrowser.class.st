@@ -14,7 +14,6 @@ Class {
 		'updateButton',
 		'textInputFieldModel',
 		'criticsModel',
-		'buttonBar',
 		'sourceCodeModel',
 		'browseButton',
 		'falsePositiveButton',

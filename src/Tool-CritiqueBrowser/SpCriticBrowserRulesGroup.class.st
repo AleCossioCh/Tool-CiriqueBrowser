@@ -12,9 +12,9 @@ Class {
 SpCriticBrowserRulesGroup class >> named: aString rules: aCollection [
 
 	^ self new
-		name: aString;
-		rules: aCollection;
-		yourself
+		  name: aString;
+		  rules: aCollection;
+		  yourself
 ]
 
 { #category : #enumerating }

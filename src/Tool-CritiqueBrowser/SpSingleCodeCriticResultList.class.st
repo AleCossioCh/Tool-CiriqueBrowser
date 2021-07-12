@@ -342,7 +342,7 @@ SpSingleCodeCriticResultList >> initializeDisplayCritic: aCritic forRule: aRule 
 		  ifFalse: [ 
 			  (cache isToDo: aCritic forRule: aRule)
 				  ifTrue: [ criticRepresentation color: self toDoColor ]
-				  ifFalse: [ criticRepresentation color: self defaultColor ] ]
+				  ifFalse: [ criticRepresentation color: self class theme textColor ] ]
 ]
 
 { #category : #initialization }
@@ -427,6 +427,7 @@ SpSingleCodeCriticResultList >> newFalsePositiveButton [
 
 	^ self newButton
 		  label: 'Mark as wrong';
+		  icon: (self iconNamed: #stop);
 		  action: [ self addCriticToFalsePositive ];
 		  yourself
 ]
