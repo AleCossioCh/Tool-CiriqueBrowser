@@ -258,7 +258,7 @@ SpSingleCodeCriticResultList >> criticsOf: aRule [
 
 { #category : #private }
 SpSingleCodeCriticResultList >> defaultColor [
-	^ Color red
+	^ Color red 
 ]
 
 { #category : #private }

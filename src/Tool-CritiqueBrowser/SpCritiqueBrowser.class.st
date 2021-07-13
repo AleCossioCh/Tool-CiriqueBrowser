@@ -229,10 +229,10 @@ SpCritiqueBrowser >> classRemoved: aClass [
 SpCritiqueBrowser >> colorForRule: aRule [
 	| total |
 	^ (total := cache criticsOf: aRule)
-		ifEmpty: [ self class theme textColor ]
+		ifEmpty: [ criticModel falsePositiveColor ]
 		ifNotEmpty: [ (cache falsePositiveOf: aRule) = total
 				ifTrue: [ criticModel falsePositiveColor ]
-				ifFalse: [ criticModel defaultColor ]]
+				ifFalse: [ self class theme textColor  ]]
 ]
 
 { #category : #initialization }
@@ -342,7 +342,7 @@ SpCritiqueBrowser >> initialize [
 
 { #category : #initialization }
 SpCritiqueBrowser >> initializePresenters [
-
+	
 	title := self defaultTitle.
 	rulesModel := self newTreeTable.
 	resetButton := self newButton.
@@ -365,9 +365,9 @@ SpCritiqueBrowser >> initializePresenters [
 		rule isComposite
 			ifTrue: [ rule rules asArray ]
 			ifFalse: [ #(  ) ] ].
-
-	rulesModel addColumn: (SpStringTableColumn evaluated: [ :rule | 
-			 self stringMorphForRule: rule ]).
+	
+	rulesModel addColumn: ((SpStringTableColumn evaluated: [ :rule |
+			 self stringMorphForRule: rule ]) title: 'Rules Group').
 	rulesModel contextMenu: self ruleMenu.
 
 	self focusOrder
