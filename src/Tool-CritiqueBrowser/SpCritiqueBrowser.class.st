@@ -75,12 +75,8 @@ SpCritiqueBrowser class >> icon [
 
 { #category : #'instance creation' }
 SpCritiqueBrowser class >> open [
-	<script>
-	
-	| env rules |
-	rules :=  RBCompositeLintRule allGoodRules rules.
-	env := RBBrowserEnvironment default.
-	self openOnRule: rules onEnvironment: env
+	<example>
+	^ self new openWithSpec
 ]
 
 { #category : #menu }
@@ -119,6 +115,18 @@ SpCritiqueBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
 	cbr openWithSpec.
 	cbr applyRules. 
 	cbr rulesModel  changed:  #listElementAt:
+]
+
+{ #category : #'instance creation' }
+SpCritiqueBrowser class >> openWindow [
+	<script>
+	
+	| env rules |
+	rules :=  RBCompositeLintRule allGoodRules rules.
+	env := RBBrowserEnvironment default.
+	self openOnRule: rules onEnvironment: env
+	
+	
 ]
 
 { #category : #icons }

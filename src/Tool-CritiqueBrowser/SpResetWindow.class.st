@@ -20,6 +20,13 @@ SpResetWindow class >> defaultSpec [
 ]
 
 { #category : #specs }
+SpResetWindow class >> open [
+
+	<example>
+	^ self new openWithSpec
+]
+
+{ #category : #specs }
 SpResetWindow class >> title [
 	^ 'Critique Browser' 
 ]
