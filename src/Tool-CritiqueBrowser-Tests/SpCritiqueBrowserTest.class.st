@@ -8,7 +8,7 @@ Class {
 SpCritiqueBrowserTest >> testOpen [
 
 	| critiqueBrowserWindow |
-	critiqueBrowserWindow := SpCritiqueBrowser open.
+	critiqueBrowserWindow := CBCritiqueBrowser open.
 	self assert: critiqueBrowserWindow isBuilt.
 	critiqueBrowserWindow close
 ]

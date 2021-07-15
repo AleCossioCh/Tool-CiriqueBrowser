@@ -1,5 +1,5 @@
 Class {
-	#name : #SpCriticWorkingConfiguration,
+	#name : #CBCritiqueWorkingConfiguration,
 	#superclass : #Object,
 	#instVars : [
 		'rule',
@@ -14,65 +14,65 @@ Class {
 }
 
 { #category : #'instance creation' }
-SpCriticWorkingConfiguration class >> current [
+CBCritiqueWorkingConfiguration class >> current [
 
 	^ Current ifNil: [ Current  := self basicNew initialize ].
 ]
 
 { #category : #testing }
-SpCriticWorkingConfiguration class >> exists [
+CBCritiqueWorkingConfiguration class >> exists [
 
 	^ Current notNil
 ]
 
 { #category : #'instance creation' }
-SpCriticWorkingConfiguration class >> new [
+CBCritiqueWorkingConfiguration class >> new [
 
 	^ self shouldNotImplement
 ]
 
 { #category : #initialization }
-SpCriticWorkingConfiguration class >> reset [
+CBCritiqueWorkingConfiguration class >> reset [
 
 	Current := nil
 ]
 
 { #category : #accessing }
-SpCriticWorkingConfiguration >> environment [
+CBCritiqueWorkingConfiguration >> environment [
 	^ environment
 ]
 
 { #category : #accessing }
-SpCriticWorkingConfiguration >> environment: anObject [
+CBCritiqueWorkingConfiguration >> environment: anObject [
 	environment := anObject
 ]
 
 { #category : #accessing }
-SpCriticWorkingConfiguration >> logInManifest [
+CBCritiqueWorkingConfiguration >> logInManifest [
 	^ logInManifest
 ]
 
 { #category : #accessing }
-SpCriticWorkingConfiguration >> logInManifest: anObject [
+CBCritiqueWorkingConfiguration >> logInManifest: anObject [
 	logInManifest := anObject
 ]
 
 { #category : #accessing }
-SpCriticWorkingConfiguration >> removeTestCase [
+CBCritiqueWorkingConfiguration >> removeTestCase [
 	^ removeTestCase
 ]
 
 { #category : #accessing }
-SpCriticWorkingConfiguration >> removeTestCase: aBoolean [
+CBCritiqueWorkingConfiguration >> removeTestCase: aBoolean [
 	removeTestCase := aBoolean
 ]
 
 { #category : #accessing }
-SpCriticWorkingConfiguration >> rule [
+CBCritiqueWorkingConfiguration >> rule [
 	^ rule
 ]
 
 { #category : #accessing }
-SpCriticWorkingConfiguration >> rule: anObject [
+CBCritiqueWorkingConfiguration >> rule: anObject [
 	rule := anObject
 ]

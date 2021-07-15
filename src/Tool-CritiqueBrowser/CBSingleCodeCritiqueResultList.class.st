@@ -1,5 +1,5 @@
 Class {
-	#name : #SpSingleCodeCriticResultList,
+	#name : #CBSingleCodeCritiqueResultList,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'rule',
@@ -23,7 +23,7 @@ Class {
 }
 
 { #category : #specs }
-SpSingleCodeCriticResultList class >> defaultSpec [
+CBSingleCodeCritiqueResultList class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
 		  add: #criticsModel;
@@ -32,7 +32,7 @@ SpSingleCodeCriticResultList class >> defaultSpec [
 ]
 
 { #category : #icons }
-SpSingleCodeCriticResultList class >> exclamationIcon [ 
+CBSingleCodeCritiqueResultList class >> exclamationIcon [ 
 
 	^  icons
 			at: #'exclamationIcon'
@@ -41,7 +41,7 @@ SpSingleCodeCriticResultList class >> exclamationIcon [
 ]
 
 { #category : #icons }
-SpSingleCodeCriticResultList class >> exclamationIconContents [
+CBSingleCodeCritiqueResultList class >> exclamationIconContents [
 	"Private - Method generated"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0
 RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJPSURBVDjLpZPLS5RhFMYfv9QJ
@@ -59,19 +59,19 @@ e48/+xD8oxcAYPzs4QaS7RR2kbLTTOTQieczfzfTv8QPldGvTGoF6/8AAAAASUVORK5CYII='
 ]
 
 { #category : #'class initialization' }
-SpSingleCodeCriticResultList class >> initialize [
+CBSingleCodeCritiqueResultList class >> initialize [
 	
 	icons := IdentityDictionary new
 ]
 
 { #category : #specs }
-SpSingleCodeCriticResultList class >> title [
+CBSingleCodeCritiqueResultList class >> title [
 
 	^ 'Critic Browser'
 ]
 
 { #category : #icons }
-SpSingleCodeCriticResultList class >> wrenchOrangeIcon [
+CBSingleCodeCritiqueResultList class >> wrenchOrangeIcon [
 
 	^  icons
 			at: #'wrenchOrangeIcon'
@@ -80,7 +80,7 @@ SpSingleCodeCriticResultList class >> wrenchOrangeIcon [
 ]
 
 { #category : #icons }
-SpSingleCodeCriticResultList class >> wrenchOrangeIconContents [
+CBSingleCodeCritiqueResultList class >> wrenchOrangeIconContents [
 	"Private - Method generated"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0
 RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHaSURBVDjLlZO7a1NRHMfzfzhI
@@ -96,7 +96,7 @@ QewSrJyeCd4P0bnwXYISy3MCn5oZNtsf3pH46e7XBJcAAAAASUVORK5CYII='
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> addCriticToFalsePositive [
+CBSingleCodeCritiqueResultList >> addCriticToFalsePositive [
 	
 	criticsModel selectedItems
 		ifNotNil: [ :items | items do: [ :item |
@@ -108,7 +108,7 @@ SpSingleCodeCriticResultList >> addCriticToFalsePositive [
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> addCriticToToDo [
+CBSingleCodeCritiqueResultList >> addCriticToToDo [
 
 	criticsModel selectedItems
 		ifNotNil: [ :items | items do: [ :item |
@@ -120,7 +120,7 @@ SpSingleCodeCriticResultList >> addCriticToToDo [
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> addRuleToFalsePositive [
+CBSingleCodeCritiqueResultList >> addRuleToFalsePositive [
 
 	criticsModel selectedItems ifNotNil: [ :criticss |
 		criticss do: [ :critic |
@@ -128,7 +128,7 @@ SpSingleCodeCriticResultList >> addRuleToFalsePositive [
 ]
 
 { #category : #private }
-SpSingleCodeCriticResultList >> applyTransformation [
+CBSingleCodeCritiqueResultList >> applyTransformation [
 
 	| crit changesBrowser |
 	crit := criticsModel selectedItem.
@@ -142,7 +142,7 @@ SpSingleCodeCriticResultList >> applyTransformation [
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> banRule [
+CBSingleCodeCritiqueResultList >> banRule [
 
 	| crit |
 						  crit := criticsModel selectedItem.
@@ -150,13 +150,13 @@ SpSingleCodeCriticResultList >> banRule [
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> browseButton [
+CBSingleCodeCritiqueResultList >> browseButton [
 
 	^ browseButton
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> browseCritic [
+CBSingleCodeCritiqueResultList >> browseCritic [
 	criticsModel selectedItem
 		ifNotNil: [ :element |
 			| entity |
@@ -167,13 +167,13 @@ SpSingleCodeCriticResultList >> browseCritic [
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> browseDependencies [
+CBSingleCodeCritiqueResultList >> browseDependencies [
 	criticsModel selectedItems ifNotNil: [ :packages |
 		(DAPackageAnalyzerPackageDependenciesWindow onPackagesNamed: (packages collect: [:aPackage | aPackage packageName])) open ]
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> buildMenuCritique [ 
+CBSingleCodeCritiqueResultList >> buildMenuCritique [ 
 
 	^ SpMenuPresenter new
 		  addGroup: [ :group | 
@@ -220,36 +220,36 @@ SpSingleCodeCriticResultList >> buildMenuCritique [
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> buttonBar [
+CBSingleCodeCritiqueResultList >> buttonBar [
 
 	^ buttonBar
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> cache:  acache [ 
+CBSingleCodeCritiqueResultList >> cache:  acache [ 
 	cache := acache
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> connectPresenters [
+CBSingleCodeCritiqueResultList >> connectPresenters [
 
 	self whenSelectedItemChangesOnListModel
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> criticsModel [
+CBSingleCodeCritiqueResultList >> criticsModel [
 	^ criticsModel
 ]
 
 { #category : #private }
-SpSingleCodeCriticResultList >> criticsModelContains: aCritic [
+CBSingleCodeCritiqueResultList >> criticsModelContains: aCritic [
 
 	^ criticsModel listItems anySatisfy: [ :each |
 			 each sourceAnchor entity name = aCritic name]
 ]
 
 { #category : #private }
-SpSingleCodeCriticResultList >> criticsOf: aRule [
+CBSingleCodeCritiqueResultList >> criticsOf: aRule [
 	cache ifNil: [^ {}].
 	criticsModel items: ((cache criticsOf: aRule)
 				sorted: [ :a :b | 
@@ -257,12 +257,12 @@ SpSingleCodeCriticResultList >> criticsOf: aRule [
 ]
 
 { #category : #private }
-SpSingleCodeCriticResultList >> defaultColor [
+CBSingleCodeCritiqueResultList >> defaultColor [
 	^ Color red 
 ]
 
 { #category : #private }
-SpSingleCodeCriticResultList >> diffSeparator [
+CBSingleCodeCritiqueResultList >> diffSeparator [
 
 	^ '——————————————————
 	
@@ -270,7 +270,7 @@ SpSingleCodeCriticResultList >> diffSeparator [
 ]
 
 { #category : #private }
-SpSingleCodeCriticResultList >> diffTextForChange: aRefactoryChange [
+CBSingleCodeCritiqueResultList >> diffTextForChange: aRefactoryChange [
 
 	| text builder |
 	text := Text new.
@@ -285,25 +285,25 @@ SpSingleCodeCriticResultList >> diffTextForChange: aRefactoryChange [
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> falsePositiveButton [
+CBSingleCodeCritiqueResultList >> falsePositiveButton [
 
 	^ falsePositiveButton
 ]
 
 { #category : #private }
-SpSingleCodeCriticResultList >> falsePositiveColor [
+CBSingleCodeCritiqueResultList >> falsePositiveColor [
 	^ Color darkGray
 ]
 
 { #category : #private }
-SpSingleCodeCriticResultList >> formatCritic: aCritic [
+CBSingleCodeCritiqueResultList >> formatCritic: aCritic [
 	
 	^  String streamContents: [:s | aCritic sourceAnchor entity criticNameOn: s ]
 
 ]
 
 { #category : #private }
-SpSingleCodeCriticResultList >> iconFor: anItem [
+CBSingleCodeCritiqueResultList >> iconFor: anItem [
 
 	^ (cache isFalsePositive: anItem forRule: rule) ifFalse: [ 
 		  (cache isToDo: anItem forRule: rule)
@@ -320,20 +320,20 @@ SpSingleCodeCriticResultList >> iconFor: anItem [
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> implementorsOfCritic [
+CBSingleCodeCritiqueResultList >> implementorsOfCritic [
 	criticsModel selectedItem ifNotNil: [ :item | item browse] 
 
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> initialize [
+CBSingleCodeCritiqueResultList >> initialize [
 
 	super initialize.
 	self initializeShortcuts
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> initializeDisplayCritic: aCritic forRule: aRule [
+CBSingleCodeCritiqueResultList >> initializeDisplayCritic: aCritic forRule: aRule [
 
 	| criticRepresentation |
 	criticRepresentation := (self formatCritic: aCritic) asMorph.
@@ -346,7 +346,7 @@ SpSingleCodeCriticResultList >> initializeDisplayCritic: aCritic forRule: aRule 
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> initializePresenters [
+CBSingleCodeCritiqueResultList >> initializePresenters [
 
 	criticsModel := self newList.
 	sourceCodeModel := self newCode.
@@ -366,12 +366,12 @@ SpSingleCodeCriticResultList >> initializePresenters [
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> initializeShortcuts [
+CBSingleCodeCritiqueResultList >> initializeShortcuts [
 	criticsModel bindKeyCombination: PharoShortcuts current browseShortcut toAction: [ self browseCritic ]
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> initializeTextInputFieldModel [
+CBSingleCodeCritiqueResultList >> initializeTextInputFieldModel [
 
 	|critics|
 	textInputFieldModel 
@@ -391,7 +391,7 @@ SpSingleCodeCriticResultList >> initializeTextInputFieldModel [
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> instantiateCriticsToolbar [
+CBSingleCodeCritiqueResultList >> instantiateCriticsToolbar [
 
 	selectDiffButton := self newSelectDiffButton.
 	transformButton := self newTransformButton.
@@ -400,19 +400,19 @@ SpSingleCodeCriticResultList >> instantiateCriticsToolbar [
 ]
 
 { #category : #private }
-SpSingleCodeCriticResultList >> isCritiqueFalsePositive [ 
+CBSingleCodeCritiqueResultList >> isCritiqueFalsePositive [ 
 	^ criticsModel selectedItems anySatisfy: [ :critic | 
 								  (cache isFalsePositive: critic forRule: rule)]
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> isCritiqueToDo [
+CBSingleCodeCritiqueResultList >> isCritiqueToDo [
 ^ criticsModel selectedItems anySatisfy: [ :critic | 
 		 cache isToDo: critic forRule: rule ]
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> newBrowseButton [
+CBSingleCodeCritiqueResultList >> newBrowseButton [
 
 	^ self newButton
 		  label: 'Browse';
@@ -423,7 +423,7 @@ SpSingleCodeCriticResultList >> newBrowseButton [
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> newFalsePositiveButton [
+CBSingleCodeCritiqueResultList >> newFalsePositiveButton [
 
 	^ self newButton
 		  label: 'Mark as wrong';
@@ -433,7 +433,7 @@ SpSingleCodeCriticResultList >> newFalsePositiveButton [
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> newSelectDiffButton [
+CBSingleCodeCritiqueResultList >> newSelectDiffButton [
 
 	^ self newDropList
 		  display: [:options | options name ]; 
@@ -443,7 +443,7 @@ SpSingleCodeCriticResultList >> newSelectDiffButton [
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> newTransformButton [
+CBSingleCodeCritiqueResultList >> newTransformButton [
 
 	^ self newButton
 		  label: 'Transform';
@@ -454,7 +454,7 @@ SpSingleCodeCriticResultList >> newTransformButton [
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> rationaleOfRule [
+CBSingleCodeCritiqueResultList >> rationaleOfRule [
 
 	| crit |
 						  crit := criticsModel selectedItem.
@@ -465,7 +465,7 @@ SpSingleCodeCriticResultList >> rationaleOfRule [
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> removeCriticToFalsePositive [
+CBSingleCodeCritiqueResultList >> removeCriticToFalsePositive [
 	
 	criticsModel selectedItems
 		ifNotNil: [ :items | items do: [ :item |
@@ -474,7 +474,7 @@ SpSingleCodeCriticResultList >> removeCriticToFalsePositive [
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> removeCriticToToDo [
+CBSingleCodeCritiqueResultList >> removeCriticToToDo [
 
 	criticsModel selectedItems
 		ifNotNil: [:items | items do: [ :item |
@@ -484,7 +484,7 @@ SpSingleCodeCriticResultList >> removeCriticToToDo [
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> removeRuleToFalsePositive [
+CBSingleCodeCritiqueResultList >> removeRuleToFalsePositive [
 
 	criticsModel selectedItems ifNotNil: [ :criticss |
 		criticss do: [ :critic |
@@ -492,17 +492,17 @@ SpSingleCodeCriticResultList >> removeRuleToFalsePositive [
 ]
 
 { #category : #api }
-SpSingleCodeCriticResultList >> resetSelection [
+CBSingleCodeCritiqueResultList >> resetSelection [
 	self criticsModel resetListSelection
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> rule [
+CBSingleCodeCritiqueResultList >> rule [
 	^ rule
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> rule: aRule [
+CBSingleCodeCritiqueResultList >> rule: aRule [
 
 	rule := aRule.
 	(rule isNil or: [ rule isComposite ]) 
@@ -511,23 +511,23 @@ SpSingleCodeCriticResultList >> rule: aRule [
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> selectDiffButton [
+CBSingleCodeCritiqueResultList >> selectDiffButton [
 
 	^ selectDiffButton
 ]
 
 { #category : #'smartSuggestions - support' }
-SpSingleCodeCriticResultList >> selectedMessage [
+CBSingleCodeCritiqueResultList >> selectedMessage [
 	^ nil
 ]
 
 { #category : #private }
-SpSingleCodeCriticResultList >> selectionIntervalFor: aString [
+CBSingleCodeCritiqueResultList >> selectionIntervalFor: aString [
 	^ rule result selectionIntervalFor: aString
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> sendersOfCritic [
+CBSingleCodeCritiqueResultList >> sendersOfCritic [
 	criticsModel selectedItem
 		ifNotNil: [ :elem | 
 			elem isBehavior
@@ -536,7 +536,7 @@ SpSingleCodeCriticResultList >> sendersOfCritic [
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> setTextModelForClassOrMethod: aCritique [
+CBSingleCodeCritiqueResultList >> setTextModelForClassOrMethod: aCritique [
 
 	| entity |
 	entity := aCritique sourceAnchor entity.
@@ -553,7 +553,7 @@ SpSingleCodeCriticResultList >> setTextModelForClassOrMethod: aCritique [
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> setTextModelForNil [
+CBSingleCodeCritiqueResultList >> setTextModelForNil [
 
 	| text |
 	text := rule rationale isEmpty
@@ -564,7 +564,7 @@ SpSingleCodeCriticResultList >> setTextModelForNil [
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> setTextModelForTransformationRule: selection [
+CBSingleCodeCritiqueResultList >> setTextModelForTransformationRule: selection [
 	
 	sourceCodeModel behavior: nil.
 	sourceCodeModel text: (
@@ -575,29 +575,29 @@ SpSingleCodeCriticResultList >> setTextModelForTransformationRule: selection [
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> sourceCodeModel [ 
+CBSingleCodeCritiqueResultList >> sourceCodeModel [ 
 
 	^ sourceCodeModel
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> textInputFieldModel [
+CBSingleCodeCritiqueResultList >> textInputFieldModel [
 	^ textInputFieldModel
 ]
 
 { #category : #private }
-SpSingleCodeCriticResultList >> toDoColor [
+CBSingleCodeCritiqueResultList >> toDoColor [
 	^ Color orange
 ]
 
 { #category : #accessing }
-SpSingleCodeCriticResultList >> transformButton [
+CBSingleCodeCritiqueResultList >> transformButton [
 
 	^ transformButton
 ]
 
 { #category : #menu }
-SpSingleCodeCriticResultList >> transformCritic [
+CBSingleCodeCritiqueResultList >> transformCritic [
 
 	criticsModel selectedItem ifNotNil: [ :element | 
 		element change execute
@@ -605,7 +605,7 @@ SpSingleCodeCriticResultList >> transformCritic [
 ]
 
 { #category : #thread }
-SpSingleCodeCriticResultList >> updateList [
+CBSingleCodeCritiqueResultList >> updateList [
 
 	self criticsOf: rule.
 	thread ifNotNil: [ thread terminate ].
@@ -613,7 +613,7 @@ SpSingleCodeCriticResultList >> updateList [
 ]
 
 { #category : #initialization }
-SpSingleCodeCriticResultList >> whenSelectedItemChangesOnListModel [
+CBSingleCodeCritiqueResultList >> whenSelectedItemChangesOnListModel [
 
 	criticsModel whenSelectionChangedDo: [ :aSelection | 
 		| critique |

@@ -1,5 +1,5 @@
 Class {
-	#name : #SpCriticBrowserRulesGroup,
+	#name : #CBCritiqueBrowserRulesGroup,
 	#superclass : #Object,
 	#instVars : [
 		'name',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-SpCriticBrowserRulesGroup class >> named: aString rules: aCollection [
+CBCritiqueBrowserRulesGroup class >> named: aString rules: aCollection [
 
 	^ self new
 		  name: aString;
@@ -18,33 +18,33 @@ SpCriticBrowserRulesGroup class >> named: aString rules: aCollection [
 ]
 
 { #category : #enumerating }
-SpCriticBrowserRulesGroup >> do: aBlock [
+CBCritiqueBrowserRulesGroup >> do: aBlock [
 
 	rules do: aBlock
 ]
 
 { #category : #testing }
-SpCriticBrowserRulesGroup >> isComposite [
+CBCritiqueBrowserRulesGroup >> isComposite [
 
 	^ true
 ]
 
 { #category : #accessing }
-SpCriticBrowserRulesGroup >> name [
+CBCritiqueBrowserRulesGroup >> name [
 	^ name
 ]
 
 { #category : #accessing }
-SpCriticBrowserRulesGroup >> name: anObject [
+CBCritiqueBrowserRulesGroup >> name: anObject [
 	name := anObject
 ]
 
 { #category : #accessing }
-SpCriticBrowserRulesGroup >> rules [
+CBCritiqueBrowserRulesGroup >> rules [
 	^ rules
 ]
 
 { #category : #accessing }
-SpCriticBrowserRulesGroup >> rules: anObject [
+CBCritiqueBrowserRulesGroup >> rules: anObject [
 	rules := anObject
 ]

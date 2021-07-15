@@ -8,7 +8,7 @@ Class {
 SpResetWindowTest >> testOpen [
 
 	| resetWindow |
-	resetWindow := SpResetWindow open.
+	resetWindow := CBResetWindow open.
 	self assert: resetWindow isBuilt.
 	resetWindow close
 ]

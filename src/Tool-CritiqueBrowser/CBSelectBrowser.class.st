@@ -1,5 +1,5 @@
 Class {
-	#name : #SpSelectBrowser,
+	#name : #CBSelectBrowser,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'toSelectModel',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #specs }
-SpSelectBrowser class >> defaultSpec [
+CBSelectBrowser class >> defaultSpec [
 	
 	^ SpBoxLayout newTopToBottom
 		add: (SpBoxLayout newLeftToRight
@@ -30,28 +30,28 @@ SpSelectBrowser class >> defaultSpec [
 ]
 
 { #category : #accessing }
-SpSelectBrowser >> addAllButtonModel [
+CBSelectBrowser >> addAllButtonModel [
 	^ addAllButtonModel
 ]
 
 { #category : #private }
-SpSelectBrowser >> addAllItems [
+CBSelectBrowser >> addAllItems [
 
 	self subclassResponsibility 
 ]
 
 { #category : #accessing }
-SpSelectBrowser >> addButtonModel [
+CBSelectBrowser >> addButtonModel [
 	^ addButtonModel
 ]
 
 { #category : #api }
-SpSelectBrowser >> initialExtent [
+CBSelectBrowser >> initialExtent [
 	^   450@360
 ]
 
 { #category : #initialization }
-SpSelectBrowser >> initializePresenters [
+CBSelectBrowser >> initializePresenters [
 
 	addButtonModel := self newButton.
 	addAllButtonModel := self newButton.
@@ -69,40 +69,40 @@ SpSelectBrowser >> initializePresenters [
 ]
 
 { #category : #accessing }
-SpSelectBrowser >> items: aCollection [
+CBSelectBrowser >> items: aCollection [
 	"Set the elements to be analysed"
 	toSelectModel items: (self sort: aCollection)
 
 ]
 
 { #category : #api }
-SpSelectBrowser >> nextAction [
+CBSelectBrowser >> nextAction [
 	self subclassResponsibility
 
 ]
 
 { #category : #accessing }
-SpSelectBrowser >> nextButtonModel [
+CBSelectBrowser >> nextButtonModel [
 	^ nextButtonModel
 ]
 
 { #category : #accessing }
-SpSelectBrowser >> removeAllButtonModel [
+CBSelectBrowser >> removeAllButtonModel [
 	^ removeAllButtonModel
 ]
 
 { #category : #accessing }
-SpSelectBrowser >> removeButtonModel [
+CBSelectBrowser >> removeButtonModel [
 	^ removeButtonModel
 ]
 
 { #category : #accessing }
-SpSelectBrowser >> selectedModel [
+CBSelectBrowser >> selectedModel [
 	^ selectedModel
 ]
 
 { #category : #initialization }
-SpSelectBrowser >> setAddAllButtonModel [
+CBSelectBrowser >> setAddAllButtonModel [
 	
 	addAllButtonModel
 		state: false;
@@ -113,7 +113,7 @@ SpSelectBrowser >> setAddAllButtonModel [
 ]
 
 { #category : #initialization }
-SpSelectBrowser >> setAddButtonModel [
+CBSelectBrowser >> setAddButtonModel [
 	
 	addButtonModel
 		state: false;
@@ -124,7 +124,7 @@ SpSelectBrowser >> setAddButtonModel [
 ]
 
 { #category : #initialization }
-SpSelectBrowser >> setFocusOrder [
+CBSelectBrowser >> setFocusOrder [
 
 	self focusOrder
 		add: addButtonModel;
@@ -135,7 +135,7 @@ SpSelectBrowser >> setFocusOrder [
 ]
 
 { #category : #initialization }
-SpSelectBrowser >> setNextButtonModel [
+CBSelectBrowser >> setNextButtonModel [
 	
 	nextButtonModel
 		state: false;
@@ -146,7 +146,7 @@ SpSelectBrowser >> setNextButtonModel [
 ]
 
 { #category : #initialization }
-SpSelectBrowser >> setRemoveAllButtonModel [
+CBSelectBrowser >> setRemoveAllButtonModel [
 	
 	removeAllButtonModel
 		state: false;
@@ -157,7 +157,7 @@ SpSelectBrowser >> setRemoveAllButtonModel [
 ]
 
 { #category : #initialization }
-SpSelectBrowser >> setRemoveButtonModel [
+CBSelectBrowser >> setRemoveButtonModel [
 	
 	removeButtonModel
 		state: false;
@@ -168,11 +168,11 @@ SpSelectBrowser >> setRemoveButtonModel [
 ]
 
 { #category : #private }
-SpSelectBrowser >> sort: aCollection [
+CBSelectBrowser >> sort: aCollection [
 	^ aCollection asOrderedCollection sort: [:e1 :e2 | (e1 asString) < (e2 asString)].
 ]
 
 { #category : #accessing }
-SpSelectBrowser >> toSelectModel [
+CBSelectBrowser >> toSelectModel [
 	^ toSelectModel
 ]

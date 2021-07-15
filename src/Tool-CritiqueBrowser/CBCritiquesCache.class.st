@@ -1,5 +1,5 @@
 Class {
-	#name : #SpCriticsCache,
+	#name : #CBCritiquesCache,
 	#superclass : #Object,
 	#instVars : [
 		'critics',
@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #private }
-SpCriticsCache >> addAllCriticToFalsePositive: aCollectionOfCritic forRule: aRule on: aManifestBuilder [
+CBCritiquesCache >> addAllCriticToFalsePositive: aCollectionOfCritic forRule: aRule on: aManifestBuilder [
 
 	| ruleId versionId  criticss |
 	criticss := aCollectionOfCritic 
@@ -31,7 +31,7 @@ SpCriticsCache >> addAllCriticToFalsePositive: aCollectionOfCritic forRule: aRul
 ]
 
 { #category : #private }
-SpCriticsCache >> addAllCriticToToDo: aCollectionOfCritic forRule: aRule on: aManifestBuilder [
+CBCritiquesCache >> addAllCriticToToDo: aCollectionOfCritic forRule: aRule on: aManifestBuilder [
 
 	| ruleId versionId  |
 	ruleId := aRule class uniqueIdentifierName.
@@ -44,7 +44,7 @@ SpCriticsCache >> addAllCriticToToDo: aCollectionOfCritic forRule: aRule on: aMa
 ]
 
 { #category : #'add/remove' }
-SpCriticsCache >> addCritic: aCritic forRule: aRule [
+CBCritiquesCache >> addCritic: aCritic forRule: aRule [
 
 	(critics includesKey: aRule) 
 		ifFalse: [ critics at:aRule put: IdentitySet new ].
@@ -53,7 +53,7 @@ SpCriticsCache >> addCritic: aCritic forRule: aRule [
 ]
 
 { #category : #'add/remove' }
-SpCriticsCache >> addFalsePositive: aCritic forRule: aRule [
+CBCritiquesCache >> addFalsePositive: aCritic forRule: aRule [
 
 	(falsePositives includesKey: aRule) 
 		ifFalse: [ falsePositives at: aRule put: IdentitySet new ].
@@ -62,7 +62,7 @@ SpCriticsCache >> addFalsePositive: aCritic forRule: aRule [
 ]
 
 { #category : #'add/remove' }
-SpCriticsCache >> addFalsePositiveClass: aClass [ 
+CBCritiquesCache >> addFalsePositiveClass: aClass [ 
 	
 	| fp |
 	falsePositiveClasses add: aClass instanceSide. 
@@ -74,7 +74,7 @@ SpCriticsCache >> addFalsePositiveClass: aClass [
 ]
 
 { #category : #'add/remove' }
-SpCriticsCache >> addFalsePositiveRule: aRule forPackage: aPackage [
+CBCritiquesCache >> addFalsePositiveRule: aRule forPackage: aPackage [
 	
 	| fp |
 	(falsePositiveRules includesKey: aPackage) 
@@ -86,7 +86,7 @@ SpCriticsCache >> addFalsePositiveRule: aRule forPackage: aPackage [
 ]
 
 { #category : #'add/remove' }
-SpCriticsCache >> addToDo: aCritic forRule: aRule [
+CBCritiquesCache >> addToDo: aCritic forRule: aRule [
 
 	(toDos includesKey: aRule) 
 		ifFalse: [ toDos at:aRule put: IdentitySet new ].
@@ -95,37 +95,37 @@ SpCriticsCache >> addToDo: aCritic forRule: aRule [
 ]
 
 { #category : #accessing }
-SpCriticsCache >> browser: aCodeCritiicBrowser [
+CBCritiquesCache >> browser: aCodeCritiicBrowser [
 	browser := aCodeCritiicBrowser 
 ]
 
 { #category : #private }
-SpCriticsCache >> builderManifestClass [
+CBCritiquesCache >> builderManifestClass [
 	^ TheManifestBuilder
 ]
 
 { #category : #accessing }
-SpCriticsCache >> cacheChange [
+CBCritiquesCache >> cacheChange [
 	^ change
 ]
 
 { #category : #private }
-SpCriticsCache >> cacheChanged [ 
+CBCritiquesCache >> cacheChanged [ 
 	change := true
 ]
 
 { #category : #private }
-SpCriticsCache >> cacheNotChanged [ 
+CBCritiquesCache >> cacheNotChanged [ 
 	change := false
 ]
 
 { #category : #accessing }
-SpCriticsCache >> checker: aSmallLintChercker [
+CBCritiquesCache >> checker: aSmallLintChercker [
 	checker := aSmallLintChercker
 ]
 
 { #category : #protocol }
-SpCriticsCache >> criticsOf: aRule [
+CBCritiquesCache >> criticsOf: aRule [
 
 	aRule ifNil: [ ^ {} ].	
 	^ aRule isComposite
@@ -134,7 +134,7 @@ SpCriticsCache >> criticsOf: aRule [
 ]
 
 { #category : #protocol }
-SpCriticsCache >> falsePositiveOf: aRule [
+CBCritiquesCache >> falsePositiveOf: aRule [
 	
 	aRule ifNil: [ ^ {}].
 	^ aRule isComposite
@@ -145,7 +145,7 @@ SpCriticsCache >> falsePositiveOf: aRule [
 ]
 
 { #category : #initialization }
-SpCriticsCache >> initCache [
+CBCritiquesCache >> initCache [
 
 	checker rule leaves do: [ :rule | 
 		falsePositives at: rule put: (IdentitySet newFrom: (checker falsePositiveOf: rule)).
@@ -159,7 +159,7 @@ SpCriticsCache >> initCache [
 ]
 
 { #category : #initialization }
-SpCriticsCache >> initialize [
+CBCritiquesCache >> initialize [
 	
 	super initialize.
 	falsePositives := Dictionary new.
@@ -172,17 +172,17 @@ SpCriticsCache >> initialize [
 ]
 
 { #category : #testing }
-SpCriticsCache >> isFalsePositive: aCritic forRule: aRule [
+CBCritiquesCache >> isFalsePositive: aCritic forRule: aRule [
 	^ (self falsePositiveOf: aRule) includes: aCritic
 ]
 
 { #category : #testing }
-SpCriticsCache >> isToDo: aCritic forRule: aRule [
+CBCritiquesCache >> isToDo: aCritic forRule: aRule [
 	^ (self toDosOf: aRule) includes: aCritic
 ]
 
 { #category : #'add/remove' }
-SpCriticsCache >> itemRemoved: anItem [
+CBCritiquesCache >> itemRemoved: anItem [
 
 	{ critics . toDos . falsePositives } do: [ :ruleDict |
 		ruleDict valuesDo: [ :crits |
@@ -192,7 +192,7 @@ SpCriticsCache >> itemRemoved: anItem [
 ]
 
 { #category : #private }
-SpCriticsCache >> logFalsePositiveClassInManifest [
+CBCritiquesCache >> logFalsePositiveClassInManifest [
 	| manifestBuilder |
 	packages
 		do: [ :package | 
@@ -202,7 +202,7 @@ SpCriticsCache >> logFalsePositiveClassInManifest [
 ]
 
 { #category : #private }
-SpCriticsCache >> logFalsePositiveInManifest [
+CBCritiquesCache >> logFalsePositiveInManifest [
 	| removeFp addFp |
 	falsePositives
 		keysAndValuesDo: [ :rule :criticss | 
@@ -217,7 +217,7 @@ SpCriticsCache >> logFalsePositiveInManifest [
 ]
 
 { #category : #private }
-SpCriticsCache >> logFalsePositiveRulesInManifest [
+CBCritiquesCache >> logFalsePositiveRulesInManifest [
 	| manifestBuilder |
 	falsePositiveRules
 		keysAndValuesDo: [:package :rules | 
@@ -227,7 +227,7 @@ SpCriticsCache >> logFalsePositiveRulesInManifest [
 ]
 
 { #category : #protocol }
-SpCriticsCache >> logInManifest [
+CBCritiquesCache >> logInManifest [
 
 	self cacheChange 
 		ifFalse: [^ self].
@@ -241,7 +241,7 @@ SpCriticsCache >> logInManifest [
 ]
 
 { #category : #private }
-SpCriticsCache >> logToDosInManifest [
+CBCritiquesCache >> logToDosInManifest [
 	| removeFp addFp |
 	toDos
 		keysAndValuesDo: [ :rule :criticss | 
@@ -256,18 +256,18 @@ SpCriticsCache >> logToDosInManifest [
 ]
 
 { #category : #private }
-SpCriticsCache >> packageOf: aCritc [
+CBCritiquesCache >> packageOf: aCritc [
 	^ aCritc mcWorkingCopy 
 ]
 
 { #category : #accessing }
-SpCriticsCache >> packages: aPackageEnv [
+CBCritiquesCache >> packages: aPackageEnv [
 	
 	packages := aPackageEnv packages
 ]
 
 { #category : #private }
-SpCriticsCache >> removeAllCriticToFalsePositive: aCollectionOfCritic forRule: aRule on: aManifestBuilder [
+CBCritiquesCache >> removeAllCriticToFalsePositive: aCollectionOfCritic forRule: aRule on: aManifestBuilder [
 
 	| ruleId versionId |
 	ruleId := aRule class uniqueIdentifierName.
@@ -280,7 +280,7 @@ SpCriticsCache >> removeAllCriticToFalsePositive: aCollectionOfCritic forRule: a
 ]
 
 { #category : #private }
-SpCriticsCache >> removeAllCriticToToDo: aCollectionOfCritic forRule: aRule on: aManifestBuilder [
+CBCritiquesCache >> removeAllCriticToToDo: aCollectionOfCritic forRule: aRule on: aManifestBuilder [
 
 	| ruleId versionId |
 	ruleId := aRule class uniqueIdentifierName.
@@ -293,7 +293,7 @@ SpCriticsCache >> removeAllCriticToToDo: aCollectionOfCritic forRule: aRule on: 
 ]
 
 { #category : #'add/remove' }
-SpCriticsCache >> removeCritic: aCritic forRule: aRule [
+CBCritiquesCache >> removeCritic: aCritic forRule: aRule [
 
 	(critics includesKey: aRule) 
 		ifFalse: [^ self].
@@ -303,7 +303,7 @@ SpCriticsCache >> removeCritic: aCritic forRule: aRule [
 ]
 
 { #category : #'add/remove' }
-SpCriticsCache >> removeFalsePositive: aCritic forRule: aRule [
+CBCritiquesCache >> removeFalsePositive: aCritic forRule: aRule [
 
 	(falsePositives includesKey: aRule) 
 		ifFalse: [^ self ].
@@ -316,7 +316,7 @@ SpCriticsCache >> removeFalsePositive: aCritic forRule: aRule [
 ]
 
 { #category : #'add/remove' }
-SpCriticsCache >> removeFalsePositiveClass: aClass [
+CBCritiquesCache >> removeFalsePositiveClass: aClass [
 	
 	| fp |
 	falsePositiveClasses remove: aClass ifAbsent: [^ self]. 
@@ -326,7 +326,7 @@ SpCriticsCache >> removeFalsePositiveClass: aClass [
 ]
 
 { #category : #'add/remove' }
-SpCriticsCache >> removeFalsePositiveRule: aRule forPackage: aPackage [
+CBCritiquesCache >> removeFalsePositiveRule: aRule forPackage: aPackage [
 	| fp |
 	
 	(falsePositiveRules includesKey: aPackage) 
@@ -343,14 +343,14 @@ SpCriticsCache >> removeFalsePositiveRule: aRule forPackage: aPackage [
 ]
 
 { #category : #'add/remove' }
-SpCriticsCache >> removeRule: aRule [
+CBCritiquesCache >> removeRule: aRule [
 
 	{ critics . toDos . falsePositives } do: [ :ruleDict |
 		ruleDict removeKey: aRule ]
 ]
 
 { #category : #'add/remove' }
-SpCriticsCache >> removeToDo: aCritic forRule: aRule [
+CBCritiquesCache >> removeToDo: aCritic forRule: aRule [
 
 	(toDos includesKey: aRule) 
 		ifFalse: [^ self].
@@ -361,7 +361,7 @@ SpCriticsCache >> removeToDo: aCritic forRule: aRule [
 ]
 
 { #category : #protocol }
-SpCriticsCache >> replaceAll: oldMethod by: newMethod [
+CBCritiquesCache >> replaceAll: oldMethod by: newMethod [
 
 	critics valuesDo: [:each |  
 		(each includes: oldMethod)
@@ -384,7 +384,7 @@ SpCriticsCache >> replaceAll: oldMethod by: newMethod [
 ]
 
 { #category : #protocol }
-SpCriticsCache >> toDosOf: aRule [
+CBCritiquesCache >> toDosOf: aRule [
 
 	aRule ifNil: [ ^{} ].
 	^ aRule isComposite
@@ -393,7 +393,7 @@ SpCriticsCache >> toDosOf: aRule [
 ]
 
 { #category : #private }
-SpCriticsCache >> updateBrowser [
+CBCritiquesCache >> updateBrowser [
 
 	self cacheChanged.
 	browser updateTree 

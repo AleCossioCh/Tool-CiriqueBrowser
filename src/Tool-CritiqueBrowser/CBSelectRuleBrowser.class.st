@@ -1,6 +1,6 @@
 Class {
-	#name : #SpSelectRuleBrowser,
-	#superclass : #SpSelectBrowser,
+	#name : #CBSelectRuleBrowser,
+	#superclass : #CBSelectBrowser,
 	#instVars : [
 		'environment',
 		'removeTestCase',
@@ -10,13 +10,13 @@ Class {
 }
 
 { #category : #'instance creation' }
-SpSelectRuleBrowser class >> items [
+CBSelectRuleBrowser class >> items [
 
 	| rules rulesByGroup |
 	rules := (ReRuleManager visibleRuleClasses collect: [ :aClass | 
 		          aClass new ]) sorted: [ :a :b | a name < b name ].
 	rulesByGroup := (rules groupedBy: #group) associations collect: [ :as | 
-		                SpCriticBrowserRulesGroup
+		                CBCritiqueBrowserRulesGroup
 			                named: as key
 			                rules: as value ].
 	rulesByGroup sort: [ :a :b | a name < b name ].
@@ -24,7 +24,7 @@ SpSelectRuleBrowser class >> items [
 ]
 
 { #category : #'instance creation' }
-SpSelectRuleBrowser class >> openWithEnvironment: anEnvironment removeTestCase: aBoolean [
+CBSelectRuleBrowser class >> openWithEnvironment: anEnvironment removeTestCase: aBoolean [
 
 	self new
 		items: self items;
@@ -35,19 +35,19 @@ SpSelectRuleBrowser class >> openWithEnvironment: anEnvironment removeTestCase: 
 ]
 
 { #category : #specs }
-SpSelectRuleBrowser class >> title [
+CBSelectRuleBrowser class >> title [
 	^ 'Select rules'
 ]
 
 { #category : #private }
-SpSelectRuleBrowser >> addAllItems [
+CBSelectRuleBrowser >> addAllItems [
 	
 	toSelectModel roots do: [ :group | selectedRules addAll: group rules].
 	self updateTree  	  
 ]
 
 { #category : #private }
-SpSelectRuleBrowser >> addItems [
+CBSelectRuleBrowser >> addItems [
 	toSelectModel selectedItem
 		ifNotNil:
 			[ :item |
@@ -58,17 +58,17 @@ SpSelectRuleBrowser >> addItems [
 ]
 
 { #category : #private }
-SpSelectRuleBrowser >> defaultRulesRootName [
+CBSelectRuleBrowser >> defaultRulesRootName [
 	^ 'Selected Rules'
 ]
 
 { #category : #accessing }
-SpSelectRuleBrowser >> environment: aEnv [
+CBSelectRuleBrowser >> environment: aEnv [
 	environment := aEnv
 ]
 
 { #category : #initialization }
-SpSelectRuleBrowser >> initialize [
+CBSelectRuleBrowser >> initialize [
 	| wrappingBlock selectedRulesChildrenBlock rulesToSelectChildrenBlock |
 	super initialize.
 	toSelectModel := self instantiate: SpTreePresenter.
@@ -92,7 +92,7 @@ SpSelectRuleBrowser >> initialize [
 ]
 
 { #category : #private }
-SpSelectRuleBrowser >> isSelected: aRule [
+CBSelectRuleBrowser >> isSelected: aRule [
 	"Check the rule identifier to not run twice the same rule"
 
 	^ selectedRules
@@ -100,7 +100,7 @@ SpSelectRuleBrowser >> isSelected: aRule [
 ]
 
 { #category : #accessing }
-SpSelectRuleBrowser >> items: aCollection [
+CBSelectRuleBrowser >> items: aCollection [
 	
 	toSelectModel roots: aCollection.
 	selectedModel roots: aCollection
@@ -108,20 +108,20 @@ SpSelectRuleBrowser >> items: aCollection [
 ]
 
 { #category : #api }
-SpSelectRuleBrowser >> nextAction [
+CBSelectRuleBrowser >> nextAction [
 
 	self delete.
 
-	SpCriticWorkingConfiguration current
+	CBCritiqueWorkingConfiguration current
 		rule: selectedRules;
 		environment: environment;
 		removeTestCase: removeTestCase.
-	SpCritiqueBrowser openOnWorkingConfiguration:
-		SpCriticWorkingConfiguration current
+	CBCritiqueBrowser openOnWorkingConfiguration:
+		CBCritiqueWorkingConfiguration current
 ]
 
 { #category : #api }
-SpSelectRuleBrowser >> removeAllItems [
+CBSelectRuleBrowser >> removeAllItems [
 	
 	selectedModel roots do: [ :item |  
 		selectedRules removeAllFoundIn: item value ].
@@ -129,7 +129,7 @@ SpSelectRuleBrowser >> removeAllItems [
 ]
 
 { #category : #api }
-SpSelectRuleBrowser >> removeItems [
+CBSelectRuleBrowser >> removeItems [
 	
 	selectedModel selectedItem
 		ifNotNil: [ :item | selectedRules removeAllFoundIn: item leaves ].
@@ -137,12 +137,12 @@ SpSelectRuleBrowser >> removeItems [
 ]
 
 { #category : #accessing }
-SpSelectRuleBrowser >> removeTestCase: aBoolean [
+CBSelectRuleBrowser >> removeTestCase: aBoolean [
 	removeTestCase := aBoolean
 ]
 
 { #category : #api }
-SpSelectRuleBrowser >> updateTree [
+CBSelectRuleBrowser >> updateTree [
 
 	toSelectModel update.
 	selectedModel update

@@ -1,6 +1,6 @@
 Class {
-	#name : #SpSelectPackageBrowser,
-	#superclass : #SpSelectBrowser,
+	#name : #CBSelectPackageBrowser,
+	#superclass : #CBSelectBrowser,
 	#instVars : [
 		'addTestCaseClassesModel',
 		'removeTestPackageModel',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #specs }
-SpSelectPackageBrowser class >> defaultSpec [
+CBSelectPackageBrowser class >> defaultSpec [
 	
 	^ SpBoxLayout newTopToBottom
 		add:	(SpBoxLayout newLeftToRight
@@ -29,7 +29,7 @@ SpSelectPackageBrowser class >> defaultSpec [
 ]
 
 { #category : #'instance creation' }
-SpSelectPackageBrowser class >> open [
+CBSelectPackageBrowser class >> open [
 	<script>
 	
 	self new items: RPackageOrganizer default packages;
@@ -37,12 +37,12 @@ SpSelectPackageBrowser class >> open [
 ]
 
 { #category : #specs }
-SpSelectPackageBrowser class >> title [
+CBSelectPackageBrowser class >> title [
 	^ 'Select packages'
 ]
 
 { #category : #private }
-SpSelectPackageBrowser >> addAllItems [
+CBSelectPackageBrowser >> addAllItems [
 	| tmp |
 	tmp := self 
 		sort: selectedModel items
@@ -54,7 +54,7 @@ SpSelectPackageBrowser >> addAllItems [
 ]
 
 { #category : #private }
-SpSelectPackageBrowser >> addItems [
+CBSelectPackageBrowser >> addItems [
 	toSelectModel selectedItems
 		ifNotNil: [ :items |  
 			selectedModel items: (self sort: selectedModel items withAll: items).
@@ -64,19 +64,19 @@ SpSelectPackageBrowser >> addItems [
 ]
 
 { #category : #accessing }
-SpSelectPackageBrowser >> addTestCaseClasses [
+CBSelectPackageBrowser >> addTestCaseClasses [
 	^ addTestCaseClassesModel
 
 ]
 
 { #category : #accessing }
-SpSelectPackageBrowser >> addTestCaseClassesModel [
+CBSelectPackageBrowser >> addTestCaseClassesModel [
 	^ addTestCaseClassesModel
 
 ]
 
 { #category : #initialization }
-SpSelectPackageBrowser >> initialize [
+CBSelectPackageBrowser >> initialize [
 	
 	| wrappingBlock |
 	super initialize.
@@ -91,7 +91,7 @@ SpSelectPackageBrowser >> initialize [
 ]
 
 { #category : #initialization }
-SpSelectPackageBrowser >> initializePresenters [
+CBSelectPackageBrowser >> initializePresenters [
 
 	super initializePresenters.
 	addTestCaseClassesModel := self newCheckBox.
@@ -102,19 +102,19 @@ SpSelectPackageBrowser >> initializePresenters [
 ]
 
 { #category : #api }
-SpSelectPackageBrowser >> nextAction [
+CBSelectPackageBrowser >> nextAction [
 
 	| env packages |
 	packages := selectedModel items.
 	env := RBPackageEnvironment new packages: packages.
-	SpSelectRuleBrowser
+	CBSelectRuleBrowser
 		openWithEnvironment: env
 		removeTestCase: self addTestCaseClasses state.
 	self delete
 ]
 
 { #category : #private }
-SpSelectPackageBrowser >> removeAllItems [
+CBSelectPackageBrowser >> removeAllItems [
 	| tmp |
 	tmp := self 
 		sort: toSelectModel items
@@ -126,7 +126,7 @@ SpSelectPackageBrowser >> removeAllItems [
 ]
 
 { #category : #private }
-SpSelectPackageBrowser >> removeItems [
+CBSelectPackageBrowser >> removeItems [
 	selectedModel selectedItems
 		ifNotNil: [:items | 
 			toSelectModel items: (self sort: toSelectModel items withAll: items).
@@ -136,7 +136,7 @@ SpSelectPackageBrowser >> removeItems [
 ]
 
 { #category : #initialization }
-SpSelectPackageBrowser >> removeTestPackage [
+CBSelectPackageBrowser >> removeTestPackage [
 
 	| matchText  |
 	testPackage isEmpty
@@ -155,7 +155,7 @@ SpSelectPackageBrowser >> removeTestPackage [
 ]
 
 { #category : #initialization }
-SpSelectPackageBrowser >> removeTestPackageModel [
+CBSelectPackageBrowser >> removeTestPackageModel [
 
 	^ removeTestPackageModel
 	
@@ -163,7 +163,7 @@ SpSelectPackageBrowser >> removeTestPackageModel [
 ]
 
 { #category : #initialization }
-SpSelectPackageBrowser >> setRemoveTestPackageModel [
+CBSelectPackageBrowser >> setRemoveTestPackageModel [
 
 	removeTestPackageModel
 		state: false;
@@ -173,7 +173,7 @@ SpSelectPackageBrowser >> setRemoveTestPackageModel [
 ]
 
 { #category : #private }
-SpSelectPackageBrowser >> sort: aCollection withAll: anotherCollection [
+CBSelectPackageBrowser >> sort: aCollection withAll: anotherCollection [
 	^ self sort: 
 		(aCollection asOrderedCollection 
 			addAll: (anotherCollection);
@@ -181,7 +181,7 @@ SpSelectPackageBrowser >> sort: aCollection withAll: anotherCollection [
 ]
 
 { #category : #private }
-SpSelectPackageBrowser >> sort: aCollection withoutAll: anotherCollection [
+CBSelectPackageBrowser >> sort: aCollection withoutAll: anotherCollection [
 	^ self sort: 
 		(aCollection asOrderedCollection 
 			removeAll: (anotherCollection);

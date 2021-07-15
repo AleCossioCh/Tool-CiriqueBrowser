@@ -1,5 +1,5 @@
 Class {
-	#name : #SpResetWindow,
+	#name : #CBResetWindow,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'resetModel',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #specs }
-SpResetWindow class >> defaultSpec [
+CBResetWindow class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
 		  add: (SpBoxLayout newLeftToRight
@@ -20,24 +20,24 @@ SpResetWindow class >> defaultSpec [
 ]
 
 { #category : #specs }
-SpResetWindow class >> open [
+CBResetWindow class >> open [
 
 	<example>
 	^ self new openWithSpec
 ]
 
 { #category : #specs }
-SpResetWindow class >> title [
+CBResetWindow class >> title [
 	^ 'Critique Browser' 
 ]
 
 { #category : #accessing }
-SpResetWindow >> currentConfigurationModel [
+CBResetWindow >> currentConfigurationModel [
 	^ currentConfigurationModel
 ]
 
 { #category : #initialization }
-SpResetWindow >> initializePresenters [
+CBResetWindow >> initializePresenters [
 
 	resetModel := self newButton.
 	currentConfigurationModel := self newButton.
@@ -48,7 +48,7 @@ SpResetWindow >> initializePresenters [
 ]
 
 { #category : #api }
-SpResetWindow >> initializeWindow: aWindowPresenter [
+CBResetWindow >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter
 		title:  self title;
@@ -56,24 +56,24 @@ SpResetWindow >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : #accessing }
-SpResetWindow >> resetModel [
+CBResetWindow >> resetModel [
 	^ resetModel
 ]
 
 { #category : #initialization }
-SpResetWindow >> setCurrentConfigurationModel [
+CBResetWindow >> setCurrentConfigurationModel [
 
 	currentConfigurationModel
 		state: false;
 		label: 'Uses Current Configuration';
 		action: [ 
-			SpCritiqueBrowser openOnWorkingConfiguration:
-					SpCriticWorkingConfiguration current.
+			CBCritiqueBrowser openOnWorkingConfiguration:
+					CBCritiqueWorkingConfiguration current.
 			self delete ]
 ]
 
 { #category : #initialization }
-SpResetWindow >> setFocusOrder [
+CBResetWindow >> setFocusOrder [
 
 	self focusOrder
 		add: resetModel;
@@ -81,12 +81,12 @@ SpResetWindow >> setFocusOrder [
 ]
 
 { #category : #initialization }
-SpResetWindow >> setResetModel [
+CBResetWindow >> setResetModel [
 
 	resetModel
 		state: false;
 		label: 'Reset Current Configurartion';
 		action: [ 
-			SpSelectPackageBrowser open.
+			CBSelectPackageBrowser open.
 			self delete ]
 ]

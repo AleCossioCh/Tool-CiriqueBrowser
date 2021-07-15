@@ -1,5 +1,5 @@
 Class {
-	#name : #SpCritiqueBrowser,
+	#name : #CBCritiqueBrowser,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'criticModel',
@@ -24,7 +24,7 @@ Class {
 }
 
 { #category : #menu }
-SpCritiqueBrowser class >> criticsBrowserMenuOn: aBuilder [ 
+CBCritiqueBrowser class >> criticsBrowserMenuOn: aBuilder [ 
 	<worldMenu>
 	
 	(aBuilder item: 'Critique Browser')
@@ -36,7 +36,7 @@ SpCritiqueBrowser class >> criticsBrowserMenuOn: aBuilder [
 ]
 
 { #category : #specs }
-SpCritiqueBrowser class >> defaultSpec [
+CBCritiqueBrowser class >> defaultSpec [
 
 	^ SpPanedLayout newTopToBottom
 		  add: (SpPanedLayout newLeftToRight
@@ -66,7 +66,7 @@ SpCritiqueBrowser class >> defaultSpec [
 ]
 
 { #category : #icons }
-SpCritiqueBrowser class >> icon [
+CBCritiqueBrowser class >> icon [
 
 	"Answer an icon for the receiver."
 
@@ -74,22 +74,22 @@ SpCritiqueBrowser class >> icon [
 ]
 
 { #category : #'instance creation' }
-SpCritiqueBrowser class >> open [
+CBCritiqueBrowser class >> open [
 	<example>
 	^ self new openWithSpec
 ]
 
 { #category : #menu }
-SpCritiqueBrowser class >> openOnCurrentWorkingConfiguration [
+CBCritiqueBrowser class >> openOnCurrentWorkingConfiguration [
 
 	<script>
-	SpCriticWorkingConfiguration exists
-		ifTrue: [ SpResetWindow new openWithSpec ]
-		ifFalse: [ SpSelectPackageBrowser open ]
+	CBCritiqueWorkingConfiguration exists
+		ifTrue: [ CBResetWindow new openWithSpec ]
+		ifFalse: [ CBSelectPackageBrowser open ]
 ]
 
 { #category : #'instance creation' }
-SpCritiqueBrowser class >> openOnRule: aRule onEnvironment: aEnv [
+CBCritiqueBrowser class >> openOnRule: aRule onEnvironment: aEnv [
 
 	| cbr |
 	cbr :=  self new rules: aRule;
@@ -103,7 +103,7 @@ SpCritiqueBrowser class >> openOnRule: aRule onEnvironment: aEnv [
 ]
 
 { #category : #'instance creation' }
-SpCritiqueBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
+CBCritiqueBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
 
 	| cbr |
 	cbr := self new 
@@ -118,7 +118,7 @@ SpCritiqueBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
 ]
 
 { #category : #'instance creation' }
-SpCritiqueBrowser class >> openWindow [
+CBCritiqueBrowser class >> openWindow [
 	<script>
 	
 	| env rules |
@@ -130,13 +130,13 @@ SpCritiqueBrowser class >> openWindow [
 ]
 
 { #category : #icons }
-SpCritiqueBrowser class >> taskbarIconName [
+CBCritiqueBrowser class >> taskbarIconName [
 
 	^#smallWarningIcon
 ]
 
 { #category : #'user interface' }
-SpCritiqueBrowser >> addModelItemsToWindowMenu: aMenu [
+CBCritiqueBrowser >> addModelItemsToWindowMenu: aMenu [
 	"Add model-related items to the window menu"
 
 	aMenu
@@ -146,7 +146,7 @@ SpCritiqueBrowser >> addModelItemsToWindowMenu: aMenu [
 ]
 
 { #category : #private }
-SpCritiqueBrowser >> addRuleToFalsePositive [
+CBCritiqueBrowser >> addRuleToFalsePositive [
 
 	rulesModel selectedItem ifNotNil: [ :rule | 
 		rule leaves do: [ :r | 
@@ -155,12 +155,12 @@ SpCritiqueBrowser >> addRuleToFalsePositive [
 ]
 
 { #category : #private }
-SpCritiqueBrowser >> allRules [
+CBCritiqueBrowser >> allRules [
 	^ rulesModel roots flatCollect: #rules
 ]
 
 { #category : #private }
-SpCritiqueBrowser >> applyRules [
+CBCritiqueBrowser >> applyRules [
 	| packageCount nbPackage process rules |
 	rules := self allRules.
 	nbPackage := rbEnvironment packages size.
@@ -190,19 +190,19 @@ SpCritiqueBrowser >> applyRules [
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> browseButton [
+CBCritiqueBrowser >> browseButton [
 
 	^ criticModel browseButton 
 ]
 
 { #category : #private }
-SpCritiqueBrowser >> browseRule [
+CBCritiqueBrowser >> browseRule [
 
 	rulesModel selectedItem ifNotNil: [ :item | item browse ]
 ]
 
 { #category : #'system annoucements' }
-SpCritiqueBrowser >> classAdded: aClass [
+CBCritiqueBrowser >> classAdded: aClass [
 
 	| rules |
 
@@ -225,7 +225,7 @@ SpCritiqueBrowser >> classAdded: aClass [
 ]
 
 { #category : #'system annoucements' }
-SpCritiqueBrowser >> classRemoved: aClass [
+CBCritiqueBrowser >> classRemoved: aClass [
 
 	(rbEnvironment definesClass: aClass)
 		ifTrue: [ cache itemRemoved: aClass ].
@@ -234,7 +234,7 @@ SpCritiqueBrowser >> classRemoved: aClass [
 ]
 
 { #category : #private }
-SpCritiqueBrowser >> colorForRule: aRule [
+CBCritiqueBrowser >> colorForRule: aRule [
 	| total |
 	^ (total := cache criticsOf: aRule)
 		ifEmpty: [ criticModel falsePositiveColor ]
@@ -244,7 +244,7 @@ SpCritiqueBrowser >> colorForRule: aRule [
 ]
 
 { #category : #initialization }
-SpCritiqueBrowser >> connectPresenters [
+CBCritiqueBrowser >> connectPresenters [
 
 	rulesModel whenSelectedItemChangedDo: [ :rule | 
 		(rule isNil or: [ rule isComposite ]) ifFalse: [ 
@@ -257,48 +257,48 @@ SpCritiqueBrowser >> connectPresenters [
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> criticModel [
+CBCritiqueBrowser >> criticModel [
 	^ criticModel
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> criticsModel [
+CBCritiqueBrowser >> criticsModel [
 
 	^ criticModel criticsModel
 ]
 
 { #category : #api }
-SpCritiqueBrowser >> defaultTitle [
+CBCritiqueBrowser >> defaultTitle [
 
 	^ 'Critique Browser'
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> environment [
+CBCritiqueBrowser >> environment [
 	^ rbEnvironment
 
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> environment: aEnv [
+CBCritiqueBrowser >> environment: aEnv [
 	rbEnvironment := aEnv
 
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> falsePositiveButton [
+CBCritiqueBrowser >> falsePositiveButton [
 	^ criticModel falsePositiveButton
 ]
 
 { #category : #'system annoucements' }
-SpCritiqueBrowser >> handleClassAdded: anAnnouncement [
+CBCritiqueBrowser >> handleClassAdded: anAnnouncement [
 
 	self classAdded: anAnnouncement classAdded
 
 ]
 
 { #category : #'system annoucements' }
-SpCritiqueBrowser >> handleClassModified: anAnnouncement [
+CBCritiqueBrowser >> handleClassModified: anAnnouncement [
 
 	self
 		classRemoved: anAnnouncement oldClassDefinition;
@@ -307,21 +307,21 @@ SpCritiqueBrowser >> handleClassModified: anAnnouncement [
 ]
 
 { #category : #'system annoucements' }
-SpCritiqueBrowser >> handleClassRemoved: anAnnouncement [
+CBCritiqueBrowser >> handleClassRemoved: anAnnouncement [
 
 	self classRemoved: anAnnouncement classRemoved
 
 ]
 
 { #category : #'system annoucements' }
-SpCritiqueBrowser >> handleMethodAdded: anAnnouncement [
+CBCritiqueBrowser >> handleMethodAdded: anAnnouncement [
 
 	self methodAdded: anAnnouncement methodAdded
 
 ]
 
 { #category : #'system annoucements' }
-SpCritiqueBrowser >> handleMethodModified: anAnnouncement [
+CBCritiqueBrowser >> handleMethodModified: anAnnouncement [
 
 	self
 		methodRemoved: anAnnouncement oldMethod;
@@ -331,14 +331,14 @@ SpCritiqueBrowser >> handleMethodModified: anAnnouncement [
 ]
 
 { #category : #'system annoucements' }
-SpCritiqueBrowser >> handleMethodRemoved: anAnnouncement [
+CBCritiqueBrowser >> handleMethodRemoved: anAnnouncement [
 
 	self methodRemoved: anAnnouncement methodRemoved
 
 ]
 
 { #category : #initialization }
-SpCritiqueBrowser >> initialize [
+CBCritiqueBrowser >> initialize [
 	
 	super initialize.
 	cache := ReCriticsCache new.
@@ -349,7 +349,7 @@ SpCritiqueBrowser >> initialize [
 ]
 
 { #category : #initialization }
-SpCritiqueBrowser >> initializePresenters [
+CBCritiqueBrowser >> initializePresenters [
 	
 	title := self defaultTitle.
 	rulesModel := self newTreeTable.
@@ -361,7 +361,7 @@ SpCritiqueBrowser >> initializePresenters [
 	self setResetButton.
 	self setUpdateButton.
 
-	criticModel := SpSingleCodeCriticResultList new.
+	criticModel := CBSingleCodeCritiqueResultList new.
 	textInputFieldModel := self textInputFieldModel.
 	criticsModel := self criticsModel.
 	sourceCodeModel := self sourceCodeModel.
@@ -384,7 +384,7 @@ SpCritiqueBrowser >> initializePresenters [
 ]
 
 { #category : #'user interface' }
-SpCritiqueBrowser >> initializeWindow: aWindowPresenter [
+CBCritiqueBrowser >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter
 		title: self defaultTitle;
@@ -392,17 +392,17 @@ SpCritiqueBrowser >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> logButton [
+CBCritiqueBrowser >> logButton [
 	^ logButton 
 ]
 
 { #category : #private }
-SpCritiqueBrowser >> logInManifest [
+CBCritiqueBrowser >> logInManifest [
 	cache logInManifest
 ]
 
 { #category : #'system annoucements' }
-SpCritiqueBrowser >> methodAdded: aMethod [
+CBCritiqueBrowser >> methodAdded: aMethod [
 
 	| rules |
 
@@ -425,7 +425,7 @@ SpCritiqueBrowser >> methodAdded: aMethod [
 ]
 
 { #category : #'system annoucements' }
-SpCritiqueBrowser >> methodRemoved: aMethod [
+CBCritiqueBrowser >> methodRemoved: aMethod [
 
 	(rbEnvironment includesMethod: aMethod)
 		ifTrue: [ cache itemRemoved: aMethod ].
@@ -434,7 +434,7 @@ SpCritiqueBrowser >> methodRemoved: aMethod [
 ]
 
 { #category : #api }
-SpCritiqueBrowser >> onWindowClosed [
+CBCritiqueBrowser >> onWindowClosed [
 
 	self unregisterFromAnnouncements.
 
@@ -448,20 +448,20 @@ before closing the Critics Browser ?')
 ]
 
 { #category : #display }
-SpCritiqueBrowser >> open [
+CBCritiqueBrowser >> open [
 
 	^ self openWithSpec
 ]
 
 { #category : #private }
-SpCritiqueBrowser >> reapplyAllRules [
+CBCritiqueBrowser >> reapplyAllRules [
 	
 	cache initialize.
 	self applyRules 
 ]
 
 { #category : #private }
-SpCritiqueBrowser >> reapplyRule: aRule [
+CBCritiqueBrowser >> reapplyRule: aRule [
 
 	cache removeRule: aRule.
 	checker resetResult.
@@ -478,7 +478,7 @@ SpCritiqueBrowser >> reapplyRule: aRule [
 ]
 
 { #category : #private }
-SpCritiqueBrowser >> reapplyThisRule [
+CBCritiqueBrowser >> reapplyThisRule [
 
 	| rule |
 	rulesModel selectedItem ifNil: [ ^ self ].
@@ -491,7 +491,7 @@ SpCritiqueBrowser >> reapplyThisRule [
 ]
 
 { #category : #'system annoucements' }
-SpCritiqueBrowser >> registerToAnnouncements [
+CBCritiqueBrowser >> registerToAnnouncements [
 	
 	self unregisterFromAnnouncements.
 	
@@ -506,7 +506,7 @@ SpCritiqueBrowser >> registerToAnnouncements [
 ]
 
 { #category : #private }
-SpCritiqueBrowser >> removeRuleToFalsePositive [
+CBCritiqueBrowser >> removeRuleToFalsePositive [
 
 	rulesModel selectedItem ifNotNil: [ :rule |
 		rule leaves do: [ :r |
@@ -518,17 +518,17 @@ SpCritiqueBrowser >> removeRuleToFalsePositive [
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> removeTestCase: aBoolean [
+CBCritiqueBrowser >> removeTestCase: aBoolean [
 	removeTestCase :=  aBoolean
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> resetButton [
+CBCritiqueBrowser >> resetButton [
 	^ resetButton 
 ]
 
 { #category : #private }
-SpCritiqueBrowser >> ruleMenu [
+CBCritiqueBrowser >> ruleMenu [
 
 	^ SpMenuPresenter new
 		  addGroup: [ :group | 
@@ -553,28 +553,28 @@ SpCritiqueBrowser >> ruleMenu [
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> rules: rulesCollection [
+CBCritiqueBrowser >> rules: rulesCollection [
 
 	self rulesModel roots:
 		(((rulesCollection groupedBy: #group) associations collect: [ :as | 
-			  SpCriticBrowserRulesGroup named: as key rules: as value ]) sorted: [ 
+			  CBCritiqueBrowserRulesGroup named: as key rules: as value ]) sorted: [ 
 			 :a 
 			 :b | a name < b name ])
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> rulesModel [
+CBCritiqueBrowser >> rulesModel [
 
 	^ rulesModel
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> selectDiffButton [
+CBCritiqueBrowser >> selectDiffButton [
 	^ criticModel selectDiffButton 
 ]
 
 { #category : #initialization }
-SpCritiqueBrowser >> setActionLogButton [
+CBCritiqueBrowser >> setActionLogButton [
 	^ [ (UIManager default
 		confirm:
 			'Do you want to save all false positive and toDo in the Manifests ?
@@ -583,23 +583,23 @@ SpCritiqueBrowser >> setActionLogButton [
 ]
 
 { #category : #initialization }
-SpCritiqueBrowser >> setActionResetButton [
+CBCritiqueBrowser >> setActionResetButton [
 
 	^ [ 
 	  (UIManager default confirm:
 		   'Do you want to delete the current configuration
  and create a new configuration ?') ifTrue: [ 
 		  self delete.
-		  SpSelectPackageBrowser open ] ]
+		  CBSelectPackageBrowser open ] ]
 ]
 
 { #category : #initialization }
-SpCritiqueBrowser >> setActionUpdateButton [
+CBCritiqueBrowser >> setActionUpdateButton [
 	^ [ self reapplyAllRules ]
 ]
 
 { #category : #initialization }
-SpCritiqueBrowser >> setLogButton [
+CBCritiqueBrowser >> setLogButton [
 
 	logButton 
 		state: false;
@@ -608,7 +608,7 @@ SpCritiqueBrowser >> setLogButton [
 ]
 
 { #category : #initialization }
-SpCritiqueBrowser >> setResetButton [
+CBCritiqueBrowser >> setResetButton [
 
 	resetButton 
 		state: false;
@@ -617,14 +617,14 @@ SpCritiqueBrowser >> setResetButton [
 ]
 
 { #category : #api }
-SpCritiqueBrowser >> setTitle: aTitle [
+CBCritiqueBrowser >> setTitle: aTitle [
 
 	title := aTitle.
 	self withWindowDo: [ :w | w title: aTitle ]
 ]
 
 { #category : #initialization }
-SpCritiqueBrowser >> setUpdateButton [
+CBCritiqueBrowser >> setUpdateButton [
 
 	updateButton 
 		state: false;
@@ -633,13 +633,13 @@ SpCritiqueBrowser >> setUpdateButton [
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> sourceCodeModel [
+CBCritiqueBrowser >> sourceCodeModel [
 
 	^ criticModel sourceCodeModel
 ]
 
 { #category : #private }
-SpCritiqueBrowser >> stringMorphForRule: rule [
+CBCritiqueBrowser >> stringMorphForRule: rule [
 	| unclassified falsePositives toDos text total |
 	falsePositives := (cache falsePositiveOf: rule) size.
 	toDos := (cache toDosOf: rule) size.
@@ -663,29 +663,29 @@ SpCritiqueBrowser >> stringMorphForRule: rule [
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> textInputFieldModel [
+CBCritiqueBrowser >> textInputFieldModel [
 
 	^ criticModel textInputFieldModel
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> transformButton [
+CBCritiqueBrowser >> transformButton [
 	^ criticModel transformButton 
 ]
 
 { #category : #'system annoucements' }
-SpCritiqueBrowser >> unregisterFromAnnouncements [
+CBCritiqueBrowser >> unregisterFromAnnouncements [
 
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
 { #category : #accessing }
-SpCritiqueBrowser >> updateButton [
+CBCritiqueBrowser >> updateButton [
 	^ updateButton 
 ]
 
 { #category : #thread }
-SpCritiqueBrowser >> updateTree [
+CBCritiqueBrowser >> updateTree [
 	criticModel updateList. 
 	rulesModel update
 ]
