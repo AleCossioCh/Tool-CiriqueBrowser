@@ -10,10 +10,9 @@ Class {
 
 { #category : #'instance creation' }
 CBCritiqueBrowserRulesGroup class >> named: aString rules: aCollection [
-
 	^ self new
 		  name: aString;
-		  rules: aCollection;
+		  rules: (aCollection sorted: [ :a :b | a name < b name ]);
 		  yourself
 ]
 
