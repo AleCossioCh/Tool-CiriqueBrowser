@@ -12,13 +12,9 @@ Class {
 		'resetButton',
 		'logButton',
 		'updateButton',
-		'textInputFieldModel',
 		'criticsModel',
 		'sourceCodeModel',
-		'browseButton',
-		'falsePositiveButton',
-		'transformButton',
-		'selectDiffButton'
+		'toolbarModel'
 	],
 	#category : #'Tool-CritiqueBrowser-Base'
 }
@@ -50,17 +46,11 @@ CBCritiqueBrowser class >> defaultSpec [
 						    height: 25;
 						    yourself);
 				   add: (SpBoxLayout newTopToBottom
-						    add: #textInputFieldModel height: 20;
 						    add: #criticsModel;
-						    add: (SpBoxLayout newLeftToRight
-								     add: #browseButton;
-								     add: #falsePositiveButton;
-								     add: #transformButton;
-								     add: #selectDiffButton;
-								     yourself)
+						    add: #toolbarModel
 						    height: 25;
 						    yourself);
-						yourself);
+				   yourself);
 		  add: #sourceCodeModel;
 		  yourself
 ]
@@ -189,12 +179,6 @@ CBCritiqueBrowser >> applyRules [
 	process resume
 ]
 
-{ #category : #accessing }
-CBCritiqueBrowser >> browseButton [
-
-	^ criticModel browseButton 
-]
-
 { #category : #private }
 CBCritiqueBrowser >> browseRule [
 
@@ -285,11 +269,6 @@ CBCritiqueBrowser >> environment: aEnv [
 
 ]
 
-{ #category : #accessing }
-CBCritiqueBrowser >> falsePositiveButton [
-	^ criticModel falsePositiveButton
-]
-
 { #category : #'system annoucements' }
 CBCritiqueBrowser >> handleClassAdded: anAnnouncement [
 
@@ -339,18 +318,19 @@ CBCritiqueBrowser >> handleMethodRemoved: anAnnouncement [
 
 { #category : #initialization }
 CBCritiqueBrowser >> initialize [
-	
+
 	super initialize.
 	cache := ReCriticsCache new.
 	checker := ReSmalllintChecker new.
 	cache checker: checker.
 	cache browser: self.
-	criticModel cache: cache
+	criticModel cache: cache.
+	toolbarModel cache: cache
 ]
 
 { #category : #initialization }
 CBCritiqueBrowser >> initializePresenters [
-	
+
 	title := self defaultTitle.
 	rulesModel := self newTreeTable.
 	resetButton := self newButton.
@@ -362,20 +342,16 @@ CBCritiqueBrowser >> initializePresenters [
 	self setUpdateButton.
 
 	criticModel := CBSingleCodeCritiqueResultList new.
-	textInputFieldModel := self textInputFieldModel.
 	criticsModel := self criticsModel.
 	sourceCodeModel := self sourceCodeModel.
-	selectDiffButton := self selectDiffButton.
-	transformButton := self transformButton.
-	falsePositiveButton := self falsePositiveButton.
-	browseButton := self browseButton.
+	toolbarModel := self toolbarModel.
 	rulesModel children: [ :rule | 
 		rule isComposite
 			ifTrue: [ rule rules asArray ]
 			ifFalse: [ #(  ) ] ].
-	
-	rulesModel addColumn: ((SpStringTableColumn evaluated: [ :rule |
-			 self stringMorphForRule: rule ]) title: 'Rules Group').
+
+	rulesModel addColumn: ((SpStringTableColumn evaluated: [ :rule | 
+			  self stringMorphForRule: rule ]) title: 'Rules Group').
 	rulesModel contextMenu: self ruleMenu.
 
 	self focusOrder
@@ -568,11 +544,6 @@ CBCritiqueBrowser >> rulesModel [
 	^ rulesModel
 ]
 
-{ #category : #accessing }
-CBCritiqueBrowser >> selectDiffButton [
-	^ criticModel selectDiffButton 
-]
-
 { #category : #initialization }
 CBCritiqueBrowser >> setActionLogButton [
 	^ [ (UIManager default
@@ -663,14 +634,9 @@ CBCritiqueBrowser >> stringMorphForRule: rule [
 ]
 
 { #category : #accessing }
-CBCritiqueBrowser >> textInputFieldModel [
+CBCritiqueBrowser >> toolbarModel [
 
-	^ criticModel textInputFieldModel
-]
-
-{ #category : #accessing }
-CBCritiqueBrowser >> transformButton [
-	^ criticModel transformButton 
+	^ criticModel toolbarModel
 ]
 
 { #category : #'system annoucements' }

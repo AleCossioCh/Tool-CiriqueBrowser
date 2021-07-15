@@ -4,17 +4,10 @@ Class {
 	#instVars : [
 		'rule',
 		'criticsModel',
-		'buttonBar',
 		'sourceCodeModel',
-		'textInputFieldModel',
 		'cache',
 		'thread',
-		'selectDiffButton',
-		'transformButton',
-		'falsePositiveButton',
-		'browseButton',
-		'unifiedPresenter',
-		'splitPresenter'
+		'toolbarModel'
 	],
 	#classInstVars : [
 		'icons'
@@ -27,6 +20,7 @@ CBSingleCodeCritiqueResultList class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
 		  add: #criticsModel;
+		add: #toolbarModel;
 		  add: #sourceCodeModel;
 		  yourself
 ]
@@ -97,14 +91,10 @@ QewSrJyeCd4P0bnwXYISy3MCn5oZNtsf3pH46e7XBJcAAAAASUVORK5CYII='
 
 { #category : #menu }
 CBSingleCodeCritiqueResultList >> addCriticToFalsePositive [
-	
-	criticsModel selectedItems
-		ifNotNil: [ :items | items do: [ :item |
-			cache
-				addFalsePositive: item
-				forRule: rule ]].
-	
-	
+
+	criticsModel selectedItems ifNotNil: [ :items | 
+		items do: [ :item | 
+			cache addFalsePositive: item forRule: rule ] ]
 ]
 
 { #category : #menu }
@@ -149,12 +139,6 @@ CBSingleCodeCritiqueResultList >> banRule [
 						  crit guidedBan
 ]
 
-{ #category : #accessing }
-CBSingleCodeCritiqueResultList >> browseButton [
-
-	^ browseButton
-]
-
 { #category : #menu }
 CBSingleCodeCritiqueResultList >> browseCritic [
 	criticsModel selectedItem
@@ -173,7 +157,7 @@ CBSingleCodeCritiqueResultList >> browseDependencies [
 ]
 
 { #category : #accessing }
-CBSingleCodeCritiqueResultList >> buildMenuCritique [ 
+CBSingleCodeCritiqueResultList >> buildMenuCritique [
 
 	^ SpMenuPresenter new
 		  addGroup: [ :group | 
@@ -196,7 +180,7 @@ CBSingleCodeCritiqueResultList >> buildMenuCritique [
 				  item
 					  name: 'Unmark as To Do' translated;
 					  visibleIf: [ self isCritiqueToDo ];
-					  action: [ self removeCriticToToDo ] ].
+					  action: [ self removeCriticToDo ] ].
 			  group addItem: [ :item | 
 				  item
 					  name: 'Mark as To Do' translated;
@@ -220,14 +204,9 @@ CBSingleCodeCritiqueResultList >> buildMenuCritique [
 ]
 
 { #category : #accessing }
-CBSingleCodeCritiqueResultList >> buttonBar [
+CBSingleCodeCritiqueResultList >> cache: aCache [
 
-	^ buttonBar
-]
-
-{ #category : #accessing }
-CBSingleCodeCritiqueResultList >> cache:  acache [ 
-	cache := acache
+	cache := aCache
 ]
 
 { #category : #initialization }
@@ -282,12 +261,6 @@ CBSingleCodeCritiqueResultList >> diffTextForChange: aRefactoryChange [
 		separatedBy: [ text append: self diffSeparator ].
 
 	^ text
-]
-
-{ #category : #accessing }
-CBSingleCodeCritiqueResultList >> falsePositiveButton [
-
-	^ falsePositiveButton
 ]
 
 { #category : #private }
@@ -349,54 +322,22 @@ CBSingleCodeCritiqueResultList >> initializeDisplayCritic: aCritic forRule: aRul
 CBSingleCodeCritiqueResultList >> initializePresenters [
 
 	criticsModel := self newList.
-	sourceCodeModel := self newCode.
-	sourceCodeModel beNotEditable.
-	self instantiateCriticsToolbar.
-	textInputFieldModel := self newTextInput.
+	sourceCodeModel := self newSourceCodeCritique.
+	toolbarModel := CBCritiqueToolbar new.
 	criticsModel beMultipleSelection.
-	self initializeTextInputFieldModel.
 	criticsModel display: [ :selec | 
 		self initializeDisplayCritic: selec forRule: rule ].
 	criticsModel contextMenu: self buildMenuCritique.
 	criticsModel displayIcon: [ :item | self iconFor: item ].
 	self focusOrder
 		add: criticsModel;
-		add: buttonBar;
+		add: toolbarModel;
 		add: sourceCodeModel
 ]
 
 { #category : #initialization }
 CBSingleCodeCritiqueResultList >> initializeShortcuts [
 	criticsModel bindKeyCombination: PharoShortcuts current browseShortcut toAction: [ self browseCritic ]
-]
-
-{ #category : #initialization }
-CBSingleCodeCritiqueResultList >> initializeTextInputFieldModel [
-
-	|critics|
-	textInputFieldModel 
-		autoAccept: true;
-		placeholder: 'Search field';
-		text: ' ';
-		removeEntryCompletion.	
-	textInputFieldModel acceptDrop: [ :text | |matchText|
-		critics :=cache criticsOf: rule.
-		matchText := '*', text, '*'.
-		criticsModel items: (text isEmpty 
-			ifTrue: [ critics ]
-			ifFalse: [ critics select: [ :critic |
-				matchText match: (self formatCritic: critic)]]).
-		criticsModel updateList ]
-
-]
-
-{ #category : #initialization }
-CBSingleCodeCritiqueResultList >> instantiateCriticsToolbar [
-
-	selectDiffButton := self newSelectDiffButton.
-	transformButton := self newTransformButton.
-	falsePositiveButton := self newFalsePositiveButton.
-	browseButton := self newBrowseButton.
 ]
 
 { #category : #private }
@@ -411,46 +352,10 @@ CBSingleCodeCritiqueResultList >> isCritiqueToDo [
 		 cache isToDo: critic forRule: rule ]
 ]
 
-{ #category : #menu }
-CBSingleCodeCritiqueResultList >> newBrowseButton [
-
-	^ self newButton
-		  label: 'Browse';
-		  icon: (self iconNamed: #nautilus);
-		  help: 'Explore and modify in System Browser';
-		  action: [ self browseCritic ];
-		  yourself
-]
-
-{ #category : #menu }
-CBSingleCodeCritiqueResultList >> newFalsePositiveButton [
-
-	^ self newButton
-		  label: 'Mark as wrong';
-		  icon: (self iconNamed: #stop);
-		  action: [ self addCriticToFalsePositive ];
-		  yourself
-]
-
-{ #category : #menu }
-CBSingleCodeCritiqueResultList >> newSelectDiffButton [
-
-	^ self newDropList
-		  display: [:options | options name ]; 
-		  help: 'Select diff view';
-		  whenSelectedItemChangedDo: [ :aClass | aClass crTrace ];
-		  yourself
-]
-
-{ #category : #menu }
-CBSingleCodeCritiqueResultList >> newTransformButton [
-
-	^ self newButton
-		  label: 'Transform';
-		  icon: (self iconNamed: #repair);
-		  help: 'Apply changes to solve issue';
-		  action: [ self transformCritic ];
-		  yourself
+{ #category : #initialization }
+CBSingleCodeCritiqueResultList >> newSourceCodeCritique [
+	
+	^ SpCodePresenter new beNotEditable.
 ]
 
 { #category : #initialization }
@@ -465,22 +370,18 @@ CBSingleCodeCritiqueResultList >> rationaleOfRule [
 ]
 
 { #category : #menu }
-CBSingleCodeCritiqueResultList >> removeCriticToFalsePositive [
-	
-	criticsModel selectedItems
-		ifNotNil: [ :items | items do: [ :item |
-			cache removeFalsePositive: item forRule: rule ]].
-	
+CBSingleCodeCritiqueResultList >> removeCriticToDo [
+
+	criticsModel selectedItems ifNotNil: [ :items | 
+		items do: [ :item | cache removeToDo: item forRule: rule ] ]
 ]
 
 { #category : #menu }
-CBSingleCodeCritiqueResultList >> removeCriticToToDo [
+CBSingleCodeCritiqueResultList >> removeCriticToFalsePositive [
 
-	criticsModel selectedItems
-		ifNotNil: [:items | items do: [ :item |
-			cache removeToDo: item forRule: rule ]].
-	
-	
+	criticsModel selectedItems ifNotNil: [ :items | 
+		items do: [ :item | 
+			cache removeFalsePositive: item forRule: rule ] ]
 ]
 
 { #category : #menu }
@@ -505,15 +406,9 @@ CBSingleCodeCritiqueResultList >> rule [
 CBSingleCodeCritiqueResultList >> rule: aRule [
 
 	rule := aRule.
-	(rule isNil or: [ rule isComposite ]) 
-		ifTrue: [ ^ self ].	
-	self criticsOf:  aRule.
-]
-
-{ #category : #accessing }
-CBSingleCodeCritiqueResultList >> selectDiffButton [
-
-	^ selectDiffButton
+	(rule isNil or: [ rule isComposite ]) ifTrue: [ ^ self ].
+	self criticsOf: aRule.
+	toolbarModel rule: aRule.
 ]
 
 { #category : #'smartSuggestions - support' }
@@ -533,6 +428,14 @@ CBSingleCodeCritiqueResultList >> sendersOfCritic [
 			elem isBehavior
 				ifTrue: [ self systemNavigation browseAllCallsOnClass: elem ]
 				ifFalse: [ self systemNavigation browseAllSendersOf: elem selector ] ]
+]
+
+{ #category : #accessing }
+CBSingleCodeCritiqueResultList >> setFocusOrder [
+
+	self focusOrder
+		add: criticsModel;
+		add: sourceCodeModel
 ]
 
 { #category : #initialization }
@@ -560,7 +463,8 @@ CBSingleCodeCritiqueResultList >> setTextModelForNil [
 		        ifTrue: [ rule name ]
 		        ifFalse: [ rule rationale ].
 	sourceCodeModel text: text.
-	sourceCodeModel behavior: nil
+	sourceCodeModel behavior: nil.
+	toolbarModel critique: nil
 ]
 
 { #category : #initialization }
@@ -580,20 +484,15 @@ CBSingleCodeCritiqueResultList >> sourceCodeModel [
 	^ sourceCodeModel
 ]
 
-{ #category : #accessing }
-CBSingleCodeCritiqueResultList >> textInputFieldModel [
-	^ textInputFieldModel
-]
-
 { #category : #private }
 CBSingleCodeCritiqueResultList >> toDoColor [
 	^ Color orange
 ]
 
-{ #category : #accessing }
-CBSingleCodeCritiqueResultList >> transformButton [
+{ #category : #initialization }
+CBSingleCodeCritiqueResultList >> toolbarModel [
 
-	^ transformButton
+	^ toolbarModel
 ]
 
 { #category : #menu }
@@ -621,6 +520,7 @@ CBSingleCodeCritiqueResultList >> whenSelectedItemChangesOnListModel [
 		sourceCodeModel selectionInterval: (0 to: 0).
 		rule ifNotNil: [ 
 			critique ifNil: [ self setTextModelForNil ] ifNotNil: [ 
+				toolbarModel critique: critique. 
 				critique providesChange
 					ifTrue: [ self setTextModelForTransformationRule: critique ]
 					ifFalse: [ self setTextModelForClassOrMethod: critique ] ] ] ]
