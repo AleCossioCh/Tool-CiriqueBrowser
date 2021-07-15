@@ -136,15 +136,6 @@ CBCritiqueBrowser >> addModelItemsToWindowMenu: aMenu [
 ]
 
 { #category : #private }
-CBCritiqueBrowser >> addRuleToFalsePositive [
-
-	rulesModel selectedItem ifNotNil: [ :rule | 
-		rule leaves do: [ :r | 
-			rbEnvironment packages do: [ :package | 
-				cache addFalsePositiveRule: r forPackage: package ] ] ]
-]
-
-{ #category : #private }
 CBCritiqueBrowser >> allRules [
 	^ rulesModel roots flatCollect: #rules
 ]
@@ -183,6 +174,22 @@ CBCritiqueBrowser >> applyRules [
 CBCritiqueBrowser >> browseRule [
 
 	rulesModel selectedItem ifNotNil: [ :item | item browse ]
+]
+
+{ #category : #private }
+CBCritiqueBrowser >> buildRuleMenu [
+
+	^ SpMenuPresenter new
+		  addGroup: [ :group | 
+			  group addItem: [ :item | 
+					  item
+						  name: 'Browse rule' translated;
+						  action: [ self browseRule ] ].
+			  group addItem: [ :item | 
+				  item
+					  name: 'Reapply this rule' translated;
+					  action: [ self reapplyThisRule ] ] ];
+		  yourself
 ]
 
 { #category : #'system annoucements' }
@@ -352,7 +359,7 @@ CBCritiqueBrowser >> initializePresenters [
 
 	rulesModel addColumn: ((SpStringTableColumn evaluated: [ :rule | 
 			  self stringMorphForRule: rule ]) title: 'Rules Group').
-	rulesModel contextMenu: self ruleMenu.
+	rulesModel contextMenu: self buildRuleMenu.
 
 	self focusOrder
 		add: rulesModel;
@@ -481,18 +488,6 @@ CBCritiqueBrowser >> registerToAnnouncements [
 	self window window announcer when: WindowClosed send: #onWindowClosed to: self
 ]
 
-{ #category : #private }
-CBCritiqueBrowser >> removeRuleToFalsePositive [
-
-	rulesModel selectedItem ifNotNil: [ :rule |
-		rule leaves do: [ :r |
-			rbEnvironment packages do: [ :package |
-				 cache removeFalsePositiveRule: r forPackage: package ]]]
-
-	
-	
-]
-
 { #category : #accessing }
 CBCritiqueBrowser >> removeTestCase: aBoolean [
 	removeTestCase :=  aBoolean
@@ -501,31 +496,6 @@ CBCritiqueBrowser >> removeTestCase: aBoolean [
 { #category : #accessing }
 CBCritiqueBrowser >> resetButton [
 	^ resetButton 
-]
-
-{ #category : #private }
-CBCritiqueBrowser >> ruleMenu [
-
-	^ SpMenuPresenter new
-		  addGroup: [ :group | 
-			  group addItem: [ :item | 
-					  item
-						  name: 'Browse rule' translated;
-						  action: [ self browseRule ] ].
-			  group addItem: [ :item | 
-				  item
-					  name: 'Reapply this rule' translated;
-					  action: [ self reapplyThisRule ] ] ];
-		  addGroup: [ :group | 
-			  group addItem: [ :item | 
-				  item
-					  name: 'Ban from selected packages' translated;
-					  action: [ self addRuleToFalsePositive ] ].
-			  group addItem: [ :item | 
-				  item
-					  name: 'Unban from selected packages' translated;
-					  action: [ self removeRuleToFalsePositive ] ] ];
-		  yourself
 ]
 
 { #category : #accessing }
