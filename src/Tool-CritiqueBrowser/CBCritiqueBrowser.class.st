@@ -1,3 +1,38 @@
+"
+I am a graphical tool that allows developers:
+	- select a list of software packages where he/she is working
+	- select a quality rules-group
+	- get a list of critiques that broken the selected rules-group. 
+
+I interact with CBSelectBrowser to select packages and CBResetWindow to open a new window of CBCritiqueBrowser. 
+
+There are examples in class side. 
+
+Public API and Key Messages
+
+- message one   
+- message two 
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	cache:		<Object>
+	checker:		<Object>
+	criticModel:		<Object>
+	criticsModel:		<Object>
+	logButton:		<Object>
+	rbEnvironment:		<Object>
+	removeTestCase:		<Object>
+	resetButton:		<Object>
+	rulesModel:		<Object>
+	sourceCodeModel:		<Object>
+	title:		<Object>
+	toolbarModel:		<Object>
+	updateButton:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #CBCritiqueBrowser,
 	#superclass : #SpPresenter,
@@ -245,11 +280,6 @@ CBCritiqueBrowser >> connectPresenters [
 				setTextModelForNil ].
 		self setTitle:
 			(rule ifNil: [ self defaultTitle ] ifNotNil: [ rule name ]) ]
-]
-
-{ #category : #accessing }
-CBCritiqueBrowser >> criticModel [
-	^ criticModel
 ]
 
 { #category : #accessing }

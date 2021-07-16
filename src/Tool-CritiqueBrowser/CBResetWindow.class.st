@@ -1,3 +1,23 @@
+"
+I am a UI to reset the currently analysed model.
+
+Public API and Key Messages
+
+- message one   
+- message two 
+- (for bonus points) how to create instances.
+
+   One simple example is simply gorgeous.
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	currentConfigurationModel:		<Object>
+	resetModel:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #CBResetWindow,
 	#superclass : #SpPresenter,

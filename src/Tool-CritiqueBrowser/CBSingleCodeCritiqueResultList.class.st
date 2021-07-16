@@ -1,3 +1,30 @@
+"
+I display everything about critiques:
+	- critiques violating the selected rule
+	- options to do in critiques
+	- source code for selected critique
+
+Public API and Key Messages
+
+- message one   
+- message two 
+- (for bonus points) how to create instances.
+
+   One simple example is simply gorgeous.
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	cache:		<Object>
+	criticsModel:		<Object>
+	rule:		<Object>
+	sourceCodeModel:		<Object>
+	thread:		<Object>
+	toolbarModel:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #CBSingleCodeCritiqueResultList,
 	#superclass : #SpPresenter,
@@ -20,7 +47,7 @@ CBSingleCodeCritiqueResultList class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
 		  add: #criticsModel;
-		add: #toolbarModel;
+		  add: #toolbarModel height: 25;
 		  add: #sourceCodeModel;
 		  yourself
 ]
@@ -58,10 +85,17 @@ CBSingleCodeCritiqueResultList class >> initialize [
 	icons := IdentityDictionary new
 ]
 
+{ #category : #icons }
+CBSingleCodeCritiqueResultList class >> open [
+
+	<example>
+	^ self new openWithSpec
+]
+
 { #category : #specs }
 CBSingleCodeCritiqueResultList class >> title [
 
-	^ 'Critic Browser'
+	^ 'Critique Browser'
 ]
 
 { #category : #icons }

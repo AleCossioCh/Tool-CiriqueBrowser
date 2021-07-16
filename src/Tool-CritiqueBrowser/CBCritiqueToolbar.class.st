@@ -1,3 +1,28 @@
+"
+I am the toolbar for displayed critiques in the critique browser.
+
+Public API and Key Messages
+
+- message one   
+- message two 
+- (for bonus points) how to create instances.
+
+There is an example in class side.
+ 
+Internal Representation and Key Implementation Points.
+
+    Instance Variables
+	browseButton:		<Object>
+	cache:		<Object>
+	criticHolder:		<Object>
+	falsePositiveButton:		<Object>
+	ruleHolder:		<Object>
+	selectDiffButton:		<Object>
+	transformButton:		<Object>
+
+
+    Implementation Points
+"
 Class {
 	#name : #CBCritiqueToolbar,
 	#superclass : #SpPresenter,
@@ -137,14 +162,8 @@ CBCritiqueToolbar >> setFocusOrder [
 
 { #category : #accessing }
 CBCritiqueToolbar >> transformCritique [
-	criticHolder value ifNotNil: [ :critique | 
-	| changesBrowser |
-	changesBrowser := (ChangesBrowser changes: { critique change })
-		                  extent: 500 @ 400;
-		                  yourself.
 
-	changesBrowser openDialogWithSpec
-		okAction: [ changesBrowser accept ];
-		centered	 ]
-	
+	criticHolder value ifNotNil: [ :critique | 
+		(RewriteRuleChangesBrowser changes: { critique change })
+			open ]
 ]
