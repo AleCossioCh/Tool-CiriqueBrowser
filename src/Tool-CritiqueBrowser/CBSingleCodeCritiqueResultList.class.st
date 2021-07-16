@@ -132,15 +132,10 @@ CBSingleCodeCritiqueResultList >> addCriticToFalsePositive [
 ]
 
 { #category : #menu }
-CBSingleCodeCritiqueResultList >> addCriticToToDo [
+CBSingleCodeCritiqueResultList >> addCritiqueToDo [
 
-	criticsModel selectedItems
-		ifNotNil: [ :items | items do: [ :item |
-			cache
-				addToDo: item
-				forRule: rule ]].
-		
-
+	criticsModel selectedItems ifNotNil: [ :items | 
+		items do: [ :item | cache addToDo: item forRule: rule ] ]
 ]
 
 { #category : #menu }
@@ -219,7 +214,7 @@ CBSingleCodeCritiqueResultList >> buildMenuCritique [
 				  item
 					  name: 'Mark as To Do' translated;
 					  visibleIf: [ self isCritiqueToDo not ];
-					  action: [ self addCriticToToDo ] ] ];
+					  action: [ self addCritiqueToDo ] ] ];
 		  addGroup: [ :group | 
 			  group addItem: [ :item | 
 				  item
