@@ -164,6 +164,6 @@ CBCritiqueToolbar >> setFocusOrder [
 CBCritiqueToolbar >> transformCritique [
 
 	criticHolder value ifNotNil: [ :critique | 
-		(RewriteRuleChangesBrowser changes: { critique change })
+		(CBRewriteCritiqueChangesBrowser changes: { critique change})
 			open ]
 ]
