@@ -16,9 +16,9 @@ Class {
 CBRewriteCritiqueChangesBrowser class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom 
-		add: (SpPanedLayout newTopToBottom
+			add: (SpPanedLayout  newTopToBottom
 			add: #changeTree;
-			add: #diffView;
+			add: (SpBoxLayout newTopToBottom add: #changeUnifiedView height: 25; add: #diffView; yourself);
 		yourself);
 		add: (SpBoxLayout newLeftToRight
 			addLast: #buttonCancel expand: false fill: true padding: 2;
@@ -28,6 +28,13 @@ CBRewriteCritiqueChangesBrowser class >> defaultSpec [
 		fill: false 
 		padding: 2;
 		yourself
+]
+
+{ #category : #specs }
+CBRewriteCritiqueChangesBrowser class >> open [
+
+	<example>
+	^ self new openWithSpec
 ]
 
 { #category : #accessing }
