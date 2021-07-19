@@ -5,7 +5,7 @@ Class {
 		'unifiedText',
 		'copyDstMorph'
 	],
-	#category : #'Tool-CritiqueBrowser-Transform critique'
+	#category : #'Tool-CritiqueBrowser-Transform '
 }
 
 { #category : #'instance creation' }

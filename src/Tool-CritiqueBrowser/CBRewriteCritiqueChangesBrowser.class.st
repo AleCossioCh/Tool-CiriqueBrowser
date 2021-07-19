@@ -5,7 +5,7 @@ Class {
 		'changeUnifiedOption',
 		'changeSplitOption'
 	],
-	#category : #'Tool-CritiqueBrowser-Transform critique'
+	#category : #'Tool-CritiqueBrowser-Transform '
 }
 
 { #category : #specs }
@@ -67,8 +67,10 @@ CBRewriteCritiqueChangesBrowser >> changes: anObject [
 { #category : #accessing }
 CBRewriteCritiqueChangesBrowser >> connectPresenters [
 	super connectPresenters.
-	changeUnifiedOption whenActivatedDo: [ self applyChangesInUnified ].
-	changeSplitOption whenActivatedDo: [ self applyChangesInSplit ]
+	changeUnifiedOption whenActivatedDo: [ self applyChangesInUnified. changeSplitOption disable ].
+	changeUnifiedOption whenDeactivatedDo: [ changeSplitOption enable ].
+	changeSplitOption whenActivatedDo: [ self applyChangesInSplit. changeUnifiedOption disable ].
+	changeSplitOption whenDeactivatedDo: [ changeUnifiedOption enable ]
 ]
 
 { #category : #initialization }

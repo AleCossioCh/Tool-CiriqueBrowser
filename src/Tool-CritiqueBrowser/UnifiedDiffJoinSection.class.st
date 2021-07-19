@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'copy'
 	],
-	#category : #'Tool-CritiqueBrowser-Transform critique'
+	#category : #'Tool-CritiqueBrowser-Transform '
 }
 
 { #category : #copying }
