@@ -2,10 +2,10 @@ Class {
 	#name : #CBRewriteCritiqueChangesBrowser,
 	#superclass : #RewriteRuleChangesBrowser,
 	#instVars : [
-		'textCode',
-		'changeUnifiedView'
+		'changeUnifiedOption',
+		'changeSplitOption'
 	],
-	#category : #'Tool-CritiqueBrowser-Parts'
+	#category : #'Tool-CritiqueBrowser-Transform critique'
 }
 
 { #category : #specs }
@@ -34,9 +34,16 @@ CBRewriteCritiqueChangesBrowser class >> open [
 ]
 
 { #category : #accessing }
-CBRewriteCritiqueChangesBrowser >> applyChangesUnified [
-	textCode text: ( self buildUnifiedDiffFor: changeTree selectedItem ) . 
-	textCode openWithSpec.
+CBRewriteCritiqueChangesBrowser >> applyChangesInSplit [
+	diffView := self newDiff.
+	self buildDiffFor: changeTree selectedItem.
+	self update.  
+]
+
+{ #category : #accessing }
+CBRewriteCritiqueChangesBrowser >> applyChangesInUnified [
+	diffView := SpMorphPresenter new morph:(UnifiedDiffMorph from: changeTree selectedItem oldVersionTextToDisplay to: changeTree selectedItem textToDisplay).
+	self update. 
 ]
 
 { #category : #accessing }
@@ -60,15 +67,28 @@ CBRewriteCritiqueChangesBrowser >> changes: anObject [
 { #category : #accessing }
 CBRewriteCritiqueChangesBrowser >> connectPresenters [
 	super connectPresenters.
-	changeUnifiedView whenActivatedDo: [ self applyChangesUnified ]
+	changeUnifiedOption whenActivatedDo: [ self applyChangesInUnified ].
+	changeSplitOption whenActivatedDo: [ self applyChangesInSplit ]
+]
+
+{ #category : #initialization }
+CBRewriteCritiqueChangesBrowser >> initializePresenters [
+	super initializePresenters.
+	changeUnifiedOption:= self newCheckBoxUnified.
+	changeSplitOption := self newCheckBoxSplit.
+	diffView showOptions: false.
 ]
 
 { #category : #accessing }
-CBRewriteCritiqueChangesBrowser >> initializePresenters [
-	super initializePresenters.
-	textCode := self newCode.
-	changeUnifiedView:= self newCheckBox.
-	changeUnifiedView label: 'Unified View';
+CBRewriteCritiqueChangesBrowser >> newCheckBoxSplit [
+	^ self newCheckBox
+	label: 'Split View';
+	state: false.
+]
+
+{ #category : #accessing }
+CBRewriteCritiqueChangesBrowser >> newCheckBoxUnified [
+	^ self newCheckBox
+	label: 'Unified View';
 		state: false.
-	diffView showOptions: false.
 ]
