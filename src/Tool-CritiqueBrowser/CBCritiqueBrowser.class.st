@@ -574,6 +574,7 @@ CBCritiqueBrowser >> setLogButton [
 
 	logButton 
 		state: false;
+		icon: (self iconNamed: #smallSave);
 		label: 'Save Critics';
 		action: self setActionLogButton 
 ]
@@ -583,6 +584,7 @@ CBCritiqueBrowser >> setResetButton [
 
 	resetButton 
 		state: false;
+		icon: (self iconNamed: #glamorousAccept);
 		label: 'Run new configuration';
 		action: self setActionResetButton
 ]
@@ -599,6 +601,7 @@ CBCritiqueBrowser >> setUpdateButton [
 
 	updateButton 
 		state: false;
+		icon: (self iconNamed: #smallUpdate);
 		label: 'Update';
 		action: self setActionUpdateButton.
 ]
