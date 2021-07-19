@@ -14,7 +14,7 @@ CBRewriteCritiqueChangesBrowser class >> defaultSpec [
 	^ SpBoxLayout newTopToBottom 
 			add: (SpPanedLayout  newTopToBottom
 			add: #changeTree;
-			add: (SpBoxLayout newTopToBottom add: #changeUnifiedView height: 25; add: #diffView; yourself);
+			add: (SpBoxLayout newTopToBottom add: (SpBoxLayout newLeftToRight add: #changeUnifiedOption; add: #changeSplitOption; yourself) height: 25; add: #diffView; yourself);
 		yourself);
 		add: (SpBoxLayout newLeftToRight
 			addLast: #buttonCancel expand: false fill: true padding: 2;

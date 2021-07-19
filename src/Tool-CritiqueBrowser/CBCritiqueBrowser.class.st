@@ -584,7 +584,7 @@ CBCritiqueBrowser >> setResetButton [
 
 	resetButton 
 		state: false;
-		icon: (self iconNamed: #glamorousAccept);
+		icon: (self iconNamed: #smallUpdate);
 		label: 'Run new configuration';
 		action: self setActionResetButton
 ]
@@ -601,7 +601,7 @@ CBCritiqueBrowser >> setUpdateButton [
 
 	updateButton 
 		state: false;
-		icon: (self iconNamed: #smallUpdate);
+		icon: (self iconNamed: #glamorousRestart);
 		label: 'Update';
 		action: self setActionUpdateButton.
 ]
