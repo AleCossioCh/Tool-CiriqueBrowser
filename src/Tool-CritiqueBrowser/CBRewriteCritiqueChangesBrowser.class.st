@@ -42,7 +42,7 @@ CBRewriteCritiqueChangesBrowser >> applyChangesInSplit [
 
 { #category : #accessing }
 CBRewriteCritiqueChangesBrowser >> applyChangesInUnified [
-	diffView := SpMorphPresenter new morph:(UnifiedDiffMorph from: changeTree selectedItem oldVersionTextToDisplay to: changeTree selectedItem textToDisplay).
+	diffView := SpMorphPresenter new morph:(UnifiedDiffChangesMorph from: changeTree selectedItem oldVersionTextToDisplay to: changeTree selectedItem textToDisplay).
 	self update. 
 ]
 

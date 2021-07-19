@@ -193,7 +193,7 @@ UnifiedDiffChangesMorph >> initialize [
 UnifiedDiffChangesMorph >> joinSectionClass [
 	"Answer the class to use for a new join section."
 
-	^UnifiedJoinSection
+	^UnifiedDiffJoinSection
 ]
 
 { #category : #actions }
