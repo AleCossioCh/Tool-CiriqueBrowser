@@ -2,12 +2,8 @@ Class {
 	#name : #CBRewriteCritiqueChangesBrowser,
 	#superclass : #RewriteRuleChangesBrowser,
 	#instVars : [
-		'rule',
-		'criticsModel',
-		'sourceCodeModel',
-		'cache',
-		'thread',
-		'toolbarModel'
+		'textCode',
+		'changeUnifiedView'
 	],
 	#category : #'Tool-CritiqueBrowser-Parts'
 }
@@ -38,8 +34,41 @@ CBRewriteCritiqueChangesBrowser class >> open [
 ]
 
 { #category : #accessing }
+CBRewriteCritiqueChangesBrowser >> applyChangesUnified [
+	textCode text: ( self buildUnifiedDiffFor: changeTree selectedItem ) . 
+	textCode openWithSpec.
+]
+
+{ #category : #accessing }
+CBRewriteCritiqueChangesBrowser >> buildUnifiedDiffFor: aChange [
+
+	^ aChange
+		ifNil: [ '' ]
+		ifNotNil: [
+			PrettyTextDiffBuilder 
+				buildDisplayPatchFrom: aChange oldVersionTextToDisplay 
+				to: aChange textToDisplay ].
+]
+
+{ #category : #accessing }
 CBRewriteCritiqueChangesBrowser >> changes: anObject [
 	changes := anObject.
 	selectedChanges := OrderedCollection with: changes first.
 	self updateChanges
+]
+
+{ #category : #accessing }
+CBRewriteCritiqueChangesBrowser >> connectPresenters [
+	super connectPresenters.
+	changeUnifiedView whenActivatedDo: [ self applyChangesUnified ]
+]
+
+{ #category : #accessing }
+CBRewriteCritiqueChangesBrowser >> initializePresenters [
+	super initializePresenters.
+	textCode := self newCode.
+	changeUnifiedView:= self newCheckBox.
+	changeUnifiedView label: 'Unified View';
+		state: false.
+	diffView showOptions: false.
 ]
