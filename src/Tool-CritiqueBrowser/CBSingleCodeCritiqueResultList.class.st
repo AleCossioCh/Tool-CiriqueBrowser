@@ -138,14 +138,6 @@ CBSingleCodeCritiqueResultList >> addCritiqueToDo [
 		items do: [ :item | cache addToDo: item forRule: rule ] ]
 ]
 
-{ #category : #menu }
-CBSingleCodeCritiqueResultList >> addRuleToFalsePositive [
-
-	criticsModel selectedItems ifNotNil: [ :criticss |
-		criticss do: [ :critic |
-			cache addFalsePositiveRule: rule forPackage: critic mcWorkingCopy]].
-]
-
 { #category : #private }
 CBSingleCodeCritiqueResultList >> applyTransformation [
 
@@ -177,12 +169,6 @@ CBSingleCodeCritiqueResultList >> browseCritic [
 			entity isBehavior 
 				ifTrue: [ entity instanceSide browse ]
 				ifFalse: [ entity browse ] ] 
-]
-
-{ #category : #menu }
-CBSingleCodeCritiqueResultList >> browseDependencies [
-	criticsModel selectedItems ifNotNil: [ :packages |
-		(DAPackageAnalyzerPackageDependenciesWindow onPackagesNamed: (packages collect: [:aPackage | aPackage packageName])) open ]
 ]
 
 { #category : #accessing }
@@ -250,13 +236,6 @@ CBSingleCodeCritiqueResultList >> criticsModel [
 ]
 
 { #category : #private }
-CBSingleCodeCritiqueResultList >> criticsModelContains: aCritic [
-
-	^ criticsModel listItems anySatisfy: [ :each |
-			 each sourceAnchor entity name = aCritic name]
-]
-
-{ #category : #private }
 CBSingleCodeCritiqueResultList >> criticsOf: aRule [
 	cache ifNil: [^ {}].
 	criticsModel items: ((cache criticsOf: aRule)
@@ -319,12 +298,6 @@ CBSingleCodeCritiqueResultList >> iconFor: anItem [
 						  severity == #warning
 							  ifTrue: [ self iconNamed: #smallWarning ]
 							  ifFalse: [ self iconNamed: #smallError ] ] ] ]
-]
-
-{ #category : #menu }
-CBSingleCodeCritiqueResultList >> implementorsOfCritic [
-	criticsModel selectedItem ifNotNil: [ :item | item browse] 
-
 ]
 
 { #category : #initialization }
@@ -413,14 +386,6 @@ CBSingleCodeCritiqueResultList >> removeCriticToFalsePositive [
 			cache removeFalsePositive: item forRule: rule ] ]
 ]
 
-{ #category : #menu }
-CBSingleCodeCritiqueResultList >> removeRuleToFalsePositive [
-
-	criticsModel selectedItems ifNotNil: [ :criticss |
-		criticss do: [ :critic |
-			cache removeFalsePositiveRule: rule forPackage: critic sourceAnchor entity mcWorkingCopy]].
-]
-
 { #category : #api }
 CBSingleCodeCritiqueResultList >> resetSelection [
 	self criticsModel resetListSelection
@@ -448,15 +413,6 @@ CBSingleCodeCritiqueResultList >> selectedMessage [
 { #category : #private }
 CBSingleCodeCritiqueResultList >> selectionIntervalFor: aString [
 	^ rule result selectionIntervalFor: aString
-]
-
-{ #category : #menu }
-CBSingleCodeCritiqueResultList >> sendersOfCritic [
-	criticsModel selectedItem
-		ifNotNil: [ :elem | 
-			elem isBehavior
-				ifTrue: [ self systemNavigation browseAllCallsOnClass: elem ]
-				ifFalse: [ self systemNavigation browseAllSendersOf: elem selector ] ]
 ]
 
 { #category : #accessing }
@@ -522,14 +478,6 @@ CBSingleCodeCritiqueResultList >> toDoColor [
 CBSingleCodeCritiqueResultList >> toolbarModel [
 
 	^ toolbarModel
-]
-
-{ #category : #menu }
-CBSingleCodeCritiqueResultList >> transformCritic [
-
-	criticsModel selectedItem ifNotNil: [ :element | 
-		element change execute
-		]
 ]
 
 { #category : #thread }
