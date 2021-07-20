@@ -47,17 +47,6 @@ CBRewriteCritiqueChangesBrowser >> applyChangesInUnified [
 ]
 
 { #category : #accessing }
-CBRewriteCritiqueChangesBrowser >> buildUnifiedDiffFor: aChange [
-
-	^ aChange
-		ifNil: [ '' ]
-		ifNotNil: [
-			PrettyTextDiffBuilder 
-				buildDisplayPatchFrom: aChange oldVersionTextToDisplay 
-				to: aChange textToDisplay ].
-]
-
-{ #category : #accessing }
 CBRewriteCritiqueChangesBrowser >> changes: anObject [
 	changes := anObject.
 	selectedChanges := OrderedCollection with: changes first.
@@ -78,7 +67,7 @@ CBRewriteCritiqueChangesBrowser >> initializePresenters [
 	super initializePresenters.
 	changeUnifiedOption:= self newCheckBoxUnified.
 	changeSplitOption := self newCheckBoxSplit.
-	diffView showOptions: false.
+	
 ]
 
 { #category : #accessing }
