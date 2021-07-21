@@ -357,7 +357,7 @@ CBCritiqueBrowser >> handleMethodRemoved: anAnnouncement [
 CBCritiqueBrowser >> initialize [
 
 	super initialize.
-	cache := ReCriticsCache new.
+	cache := CBCritiquesCache new.
 	checker := ReSmalllintChecker new.
 	cache checker: checker.
 	cache browser: self.
