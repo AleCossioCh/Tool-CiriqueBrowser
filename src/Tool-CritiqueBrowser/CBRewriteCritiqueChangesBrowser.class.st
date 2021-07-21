@@ -48,15 +48,19 @@ CBRewriteCritiqueChangesBrowser class >> open [
 
 { #category : #accessing }
 CBRewriteCritiqueChangesBrowser >> applyChangesInSplit [
+   changeTree selectedItem ifNotNil: [ 
 	diffView := self newDiff.
 	self buildDiffFor: changeTree selectedItem.
-	self update.  
+	self update.].
 ]
 
 { #category : #accessing }
 CBRewriteCritiqueChangesBrowser >> applyChangesInUnified [
-	diffView := SpMorphPresenter new morph:(UnifiedDiffChangesMorph from: changeTree selectedItem oldVersionTextToDisplay to: changeTree selectedItem textToDisplay).
-	self update. 
+changeTree selectedItem ifNotNil: [ 
+	diffView := SpMorphPresenter new morph: (UnifiedDiffChangesMorph
+			             from: changeTree selectedItem oldVersionTextToDisplay
+			             to: changeTree selectedItem textToDisplay).
+	self update].
 ]
 
 { #category : #accessing }
@@ -66,12 +70,13 @@ CBRewriteCritiqueChangesBrowser >> changes: anObject [
 	self updateChanges
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 CBRewriteCritiqueChangesBrowser >> connectPresenters [
 
 	super connectPresenters.
-	changeUnifiedOption whenActivatedDo: [ self applyChangesInUnified ].
-	changeSplitOption whenActivatedDo: [ self applyChangesInSplit ].
+	
+		changeUnifiedOption whenActivatedDo: [ self applyChangesInUnified ].
+		changeSplitOption whenActivatedDo: [ self applyChangesInSplit ].
 ]
 
 { #category : #initialization }
