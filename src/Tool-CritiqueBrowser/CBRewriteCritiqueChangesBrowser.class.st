@@ -16,8 +16,8 @@ CBRewriteCritiqueChangesBrowser class >> defaultSpec [
 				   add: #changeTree;
 				   add: (SpBoxLayout newTopToBottom
 						    add: (SpBoxLayout newLeftToRight
-								     add: #changeSplitOption expand: false;
-								     add: #changeUnifiedOption expand: false;
+								     add: #changeSplitOption width: 90;
+								     add: #changeUnifiedOption width:90;
 								     yourself)
 						    height: 25;
 						    add: #diffView;

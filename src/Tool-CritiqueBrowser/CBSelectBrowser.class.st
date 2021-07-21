@@ -10,7 +10,7 @@ Class {
 		'removeAllButtonModel',
 		'nextButtonModel'
 	],
-	#category : #'Tool-CritiqueBrowser-Parts'
+	#category : #'Tool-CritiqueBrowser-Applier'
 }
 
 { #category : #specs }

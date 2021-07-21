@@ -6,7 +6,7 @@ Class {
 		'removeTestPackageModel',
 		'testPackage'
 	],
-	#category : #'Tool-CritiqueBrowser-Parts'
+	#category : #'Tool-CritiqueBrowser-Applier'
 }
 
 { #category : #specs }

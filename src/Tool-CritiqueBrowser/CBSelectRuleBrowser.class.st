@@ -6,7 +6,7 @@ Class {
 		'removeTestCase',
 		'selectedRules'
 	],
-	#category : #'Tool-CritiqueBrowser-Parts'
+	#category : #'Tool-CritiqueBrowser-Applier'
 }
 
 { #category : #'instance creation' }
