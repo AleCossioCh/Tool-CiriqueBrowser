@@ -3,7 +3,6 @@ Class {
 	#superclass : #CBSelectBrowser,
 	#instVars : [
 		'addTestCaseClassesModel',
-		'removeTestPackageModel',
 		'testPackage'
 	],
 	#category : #'Tool-CritiqueBrowser-Applier'
@@ -17,7 +16,6 @@ CBSelectPackageBrowser class >> defaultSpec [
 					add: #toSelectModel; 
 					add: #selectedModel; yourself);
 		add: (SpBoxLayout newLeftToRight 
-					add: #removeTestPackageModel; 
 					add: #addTestCaseClassesModel; yourself) height: 25;
 		add: (SpBoxLayout newLeftToRight 
 					add: #addButtonModel;
@@ -133,43 +131,6 @@ CBSelectPackageBrowser >> removeItems [
 			selectedModel items: (self sort: selectedModel items withoutAll: items) ].
 	toSelectModel updateList.
 	selectedModel updateList 	  
-]
-
-{ #category : #initialization }
-CBSelectPackageBrowser >> removeTestPackage [
-
-	| matchText  |
-	testPackage isEmpty
-		ifTrue: [
-			removeTestPackageModel label: 'Add All Packages Tests'.
-			matchText := '*Test*'.
-			testPackage :=MCWorkingCopy allManagers select: [ :package | matchText match:  package packageName ].
-			selectedModel items: (self sort:(selectedModel listItems \ testPackage)).
-			toSelectModel items: (self sort:(toSelectModel  listItems \ testPackage)) ]
-		ifFalse: [
-			removeTestPackageModel label: 'Remove All Packages Tests'.		
-			toSelectModel items: (self sort: (toSelectModel listItems asOrderedCollection addAll: testPackage; yourself)).
-			testPackage := OrderedCollection new ]. 
-	toSelectModel updateList.
-	selectedModel updateList  	
-]
-
-{ #category : #initialization }
-CBSelectPackageBrowser >> removeTestPackageModel [
-
-	^ removeTestPackageModel
-	
-	
-]
-
-{ #category : #initialization }
-CBSelectPackageBrowser >> setRemoveTestPackageModel [
-
-	removeTestPackageModel
-		state: false;
-		label: 'Remove All Packages Tests';
-		action: [ self  removeTestPackage ]
-	
 ]
 
 { #category : #private }
