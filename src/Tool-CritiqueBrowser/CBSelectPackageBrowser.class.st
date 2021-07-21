@@ -2,7 +2,6 @@ Class {
 	#name : #CBSelectPackageBrowser,
 	#superclass : #CBSelectBrowser,
 	#instVars : [
-		'addTestCaseClassesModel',
 		'testPackage'
 	],
 	#category : #'Tool-CritiqueBrowser-Applier'
@@ -15,8 +14,6 @@ CBSelectPackageBrowser class >> defaultSpec [
 		add:	(SpBoxLayout newLeftToRight
 					add: #toSelectModel; 
 					add: #selectedModel; yourself);
-		add: (SpBoxLayout newLeftToRight 
-					add: #addTestCaseClassesModel; yourself) height: 25;
 		add: (SpBoxLayout newLeftToRight 
 					add: #addButtonModel;
 					add: #addAllButtonModel;
@@ -61,18 +58,6 @@ CBSelectPackageBrowser >> addItems [
 	selectedModel updateList  	  
 ]
 
-{ #category : #accessing }
-CBSelectPackageBrowser >> addTestCaseClasses [
-	^ addTestCaseClassesModel
-
-]
-
-{ #category : #accessing }
-CBSelectPackageBrowser >> addTestCaseClassesModel [
-	^ addTestCaseClassesModel
-
-]
-
 { #category : #initialization }
 CBSelectPackageBrowser >> initialize [
 	
@@ -92,11 +77,6 @@ CBSelectPackageBrowser >> initialize [
 CBSelectPackageBrowser >> initializePresenters [
 
 	super initializePresenters.
-	addTestCaseClassesModel := self newCheckBox.
-	removeTestPackageModel := self newButton.
-	self setRemoveTestPackageModel.
-	addTestCaseClassesModel label: 'remove all TestCase Classes'.
-	addTestCaseClassesModel state: true
 ]
 
 { #category : #api }
