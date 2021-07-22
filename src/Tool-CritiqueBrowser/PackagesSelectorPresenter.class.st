@@ -3,6 +3,7 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'packagesListWithFilter',
+		'rulesGroupListWithFilter',
 		'addAllPackagesButton',
 		'removeAllPackagesButton'
 	],
@@ -33,12 +34,17 @@ PackagesSelectorPresenter >> initializeLayout [
 
 	self layout: (SpBoxLayout newTopToBottom
 			 add: (SpBoxLayout newLeftToRight
-					  add: #packagesListWithFilter;
-					  spacing: 5;
-					  yourself) yourself;
-			 add: (SpBoxLayout newLeftToRight
-					  add: #addAllPackagesButton;
-					  add: #removeAllPackagesButton; yourself) height: 25;
+					  add: (SpBoxLayout newTopToBottom
+							   add: #packagesListWithFilter;
+								spacing: 5;
+							   add: (SpBoxLayout newLeftToRight
+									    add: #addAllPackagesButton;
+									    add: #removeAllPackagesButton;
+									    yourself)
+							   height: 25;
+							   yourself);
+					  add: #rulesGroupListWithFilter;
+					  yourself);
 			 yourself)
 ]
 
@@ -52,6 +58,7 @@ PackagesSelectorPresenter >> initializePackagesList [
 		display: [ :item | item name ];
 		displayIcon: [ self iconNamed: #packageIcon ];
 		sortingBlock: [ :a :b | a name < b name ];
+		whenSelectionChangedDo: [ self packagesChanged ];
 		beMultipleSelection
 ]
 
@@ -59,8 +66,22 @@ PackagesSelectorPresenter >> initializePackagesList [
 PackagesSelectorPresenter >> initializePresenters [
 
 	self initializePackagesList.
+	self initializeRulesGroupList.
 	self initializeSelectionButtons.
 	self initializeLayout
+]
+
+{ #category : #initialization }
+PackagesSelectorPresenter >> initializeRulesGroupList [
+
+	rulesGroupListWithFilter := self newFilteringList.
+	rulesGroupListWithFilter listPresenter
+		headerTitle: 'Rules group';
+		display: [ :item | item name ];
+		"displayIcon: [ iconFor: '#warning'];"sortingBlock: [ :a :b | 
+			a name < b name ];
+		"whenSelectionChangedDo: [ :selection | self classesChanged ];"
+			beMultipleSelection
 ]
 
 { #category : #actions }
@@ -70,6 +91,22 @@ PackagesSelectorPresenter >> initializeSelectionButtons [
 	removeAllPackagesButton := self newButton.
 	self setAddAllPackagesButton.
 	self setRemoveAllPackagesButton
+]
+
+{ #category : #actions }
+PackagesSelectorPresenter >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter
+		title: 'Critique Browser applier';
+		initialExtent: 450 @ 360;
+		windowIcon: self windowIcon
+]
+
+{ #category : #actions }
+PackagesSelectorPresenter >> packagesChanged [
+
+	rulesGroupListWithFilter items: self class items.
+	rulesGroupListWithFilter listPresenter resetListSelection
 ]
 
 { #category : #actions }
