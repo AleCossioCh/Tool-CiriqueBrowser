@@ -41,9 +41,8 @@ CBSelectRuleBrowser class >> title [
 
 { #category : #private }
 CBSelectRuleBrowser >> addAllItems [
-	
 	toSelectModel roots do: [ :group | selectedRules addAll: group rules].
-	self updateTree  	  
+	self update  	  
 ]
 
 { #category : #private }
@@ -125,15 +124,15 @@ CBSelectRuleBrowser >> removeAllItems [
 	
 	selectedModel roots do: [ :item |  
 		selectedRules removeAllFoundIn: item value ].
-	self updateTree 	  
+	self update  
 ]
 
 { #category : #api }
 CBSelectRuleBrowser >> removeItems [
 	
 	selectedModel selectedItem
-		ifNotNil: [ :item | selectedRules removeAllFoundIn: item leaves ].
-	self updateTree  	  
+		ifNotNil: [ :item | selectedRules removeAllFoundIn: item ].
+	self update	  
 ]
 
 { #category : #accessing }
