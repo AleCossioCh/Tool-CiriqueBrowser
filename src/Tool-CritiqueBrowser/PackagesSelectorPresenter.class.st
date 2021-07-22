@@ -5,7 +5,9 @@ Class {
 		'packagesListWithFilter',
 		'rulesGroupListWithFilter',
 		'addAllPackagesButton',
-		'removeAllPackagesButton'
+		'removeAllPackagesButton',
+		'addAllRulesButton',
+		'removeAllRulesButton'
 	],
 	#category : #'Tool-CritiqueBrowser-Applier'
 }
@@ -36,14 +38,22 @@ PackagesSelectorPresenter >> initializeLayout [
 			 add: (SpBoxLayout newLeftToRight
 					  add: (SpBoxLayout newTopToBottom
 							   add: #packagesListWithFilter;
-								spacing: 5;
+							   spacing: 5;
 							   add: (SpBoxLayout newLeftToRight
 									    add: #addAllPackagesButton;
 									    add: #removeAllPackagesButton;
 									    yourself)
 							   height: 25;
 							   yourself);
-					  add: #rulesGroupListWithFilter;
+					  add: (SpBoxLayout newTopToBottom
+							   add: #rulesGroupListWithFilter;
+							   spacing: 5;
+							   add: (SpBoxLayout newLeftToRight
+									    add: #addAllRulesButton;
+									    add: #removeAllRulesButton;
+									    yourself)
+							   height: 25;
+							   yourself);
 					  yourself);
 			 yourself)
 ]
@@ -78,8 +88,8 @@ PackagesSelectorPresenter >> initializeRulesGroupList [
 	rulesGroupListWithFilter listPresenter
 		headerTitle: 'Rules group';
 		display: [ :item | item name ];
-		"displayIcon: [ iconFor: '#warning'];"sortingBlock: [ :a :b | 
-			a name < b name ];
+		displayIcon: [ self iconNamed: #group ];
+		sortingBlock: [ :a :b | a name < b name ];
 		"whenSelectionChangedDo: [ :selection | self classesChanged ];"
 			beMultipleSelection
 ]
@@ -89,8 +99,12 @@ PackagesSelectorPresenter >> initializeSelectionButtons [
 
 	addAllPackagesButton := self newButton.
 	removeAllPackagesButton := self newButton.
+	addAllRulesButton := self newButton.
+	removeAllRulesButton := self newButton.
 	self setAddAllPackagesButton.
-	self setRemoveAllPackagesButton
+	self setRemoveAllPackagesButton.
+	self setAddAllRulesButton.
+	self setRemoveAllRulesButton.
 ]
 
 { #category : #actions }
@@ -116,9 +130,25 @@ PackagesSelectorPresenter >> setAddAllPackagesButton [
 ]
 
 { #category : #actions }
+PackagesSelectorPresenter >> setAddAllRulesButton [
+
+	addAllRulesButton
+		label: 'Add all';
+		action: [  ]
+]
+
+{ #category : #actions }
 PackagesSelectorPresenter >> setRemoveAllPackagesButton [
 
 	removeAllPackagesButton
+		label: 'Remove all';
+		action: [  ]
+]
+
+{ #category : #actions }
+PackagesSelectorPresenter >> setRemoveAllRulesButton [
+
+	removeAllRulesButton 
 		label: 'Remove all';
 		action: [  ]
 ]
