@@ -10,6 +10,18 @@ Class {
 }
 
 { #category : #'instance creation' }
+PackagesSelectorPresenter class >> items [
+
+	| rules rulesByGroup |
+	rules := (ReRuleManager visibleRuleClasses collect: [:aClass | aClass new]) sorted: [ :a :b |
+		a name < b name ].
+	rulesByGroup := ((rules groupedBy: #group) associations collect: [ :as |
+		CriticBrowserRulesGroup named: as key rules: as value ]).
+	rulesByGroup sort: [ :a :b | a name < b name ].
+	^ rulesByGroup
+]
+
+{ #category : #'instance creation' }
 PackagesSelectorPresenter class >> openWindow [
 
 	<script>
