@@ -2,7 +2,9 @@ Class {
 	#name : #PackagesSelectorPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'packagesListWithFilter'
+		'packagesListWithFilter',
+		'addAllPackagesButton',
+		'removeAllPackagesButton'
 	],
 	#category : #'Tool-CritiqueBrowser-Applier'
 }
@@ -17,9 +19,14 @@ PackagesSelectorPresenter class >> openWindow [
 { #category : #actions }
 PackagesSelectorPresenter >> initializeLayout [
 
-	self layout: (SpBoxLayout newLeftToRight
-			 add: #packagesListWithFilter;
-			 spacing: 5;
+	self layout: (SpBoxLayout newTopToBottom
+			 add: (SpBoxLayout newLeftToRight
+					  add: #packagesListWithFilter;
+					  spacing: 5;
+					  yourself) yourself;
+			 add: (SpBoxLayout newLeftToRight
+					  add: #addAllPackagesButton;
+					  add: #removeAllPackagesButton; yourself) height: 25;
 			 yourself)
 ]
 
@@ -40,5 +47,29 @@ PackagesSelectorPresenter >> initializePackagesList [
 PackagesSelectorPresenter >> initializePresenters [
 
 	self initializePackagesList.
+	self initializeSelectionButtons.
 	self initializeLayout
+]
+
+{ #category : #actions }
+PackagesSelectorPresenter >> initializeSelectionButtons [
+
+	addAllPackagesButton := self newButton.
+	removeAllPackagesButton := self newButton.
+	self setAddAllPackagesButton.
+	self setRemoveAllPackagesButton
+]
+
+{ #category : #actions }
+PackagesSelectorPresenter >> setAddAllPackagesButton [
+	addAllPackagesButton label:'Add all';
+	action: [  ]
+]
+
+{ #category : #actions }
+PackagesSelectorPresenter >> setRemoveAllPackagesButton [
+
+	removeAllPackagesButton
+		label: 'Remove all';
+		action: [  ]
 ]

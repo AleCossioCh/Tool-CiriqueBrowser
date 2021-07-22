@@ -1,9 +1,6 @@
 Class {
 	#name : #CBSelectPackageBrowser,
 	#superclass : #CBSelectBrowser,
-	#instVars : [
-		'testPackage'
-	],
 	#category : #'Tool-CritiqueBrowser-Applier'
 }
 
@@ -67,7 +64,6 @@ CBSelectPackageBrowser >> initialize [
 	selectedModel := self newList.
 	selectedModel beMultipleSelection.
 	toSelectModel beMultipleSelection.
-	testPackage := OrderedCollection new.
 	wrappingBlock := [ :package | package packageName ].
 	toSelectModel display: wrappingBlock.
 	selectedModel display: wrappingBlock
