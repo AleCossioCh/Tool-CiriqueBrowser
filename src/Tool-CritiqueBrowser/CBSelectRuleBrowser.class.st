@@ -56,11 +56,6 @@ CBSelectRuleBrowser >> addItems [
 	self update
 ]
 
-{ #category : #private }
-CBSelectRuleBrowser >> defaultRulesRootName [
-	^ 'Selected Rules'
-]
-
 { #category : #accessing }
 CBSelectRuleBrowser >> environment: aEnv [
 	environment := aEnv
@@ -129,10 +124,10 @@ CBSelectRuleBrowser >> removeAllItems [
 
 { #category : #api }
 CBSelectRuleBrowser >> removeItems [
-	
-	selectedModel selectedItem
-		ifNotNil: [ :item | selectedRules removeAllFoundIn: item ].
-	self update	  
+
+	selectedModel selectedItem ifNotNil: [ :item | 
+		selectedRules removeAllFoundIn: item ].
+	self update
 ]
 
 { #category : #accessing }

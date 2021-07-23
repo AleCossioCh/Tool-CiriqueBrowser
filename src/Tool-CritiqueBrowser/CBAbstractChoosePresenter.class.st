@@ -30,14 +30,9 @@ CBAbstractChoosePresenter class >> openOn: aCollection onAccept: aBlock [
 		openModalWithSpec
 ]
 
-{ #category : #adding }
+{ #category : #accessing }
 CBAbstractChoosePresenter >> addAll [
-
-	selectedList items:
-		(selectedList unfilteredItems , list unfilteredItems sorted:
-			 self methodName ascending).
-	list items: #(  ).
-	list selectItems: #(  )
+self subclassResponsibility 
 ]
 
 { #category : #accessing }
@@ -60,12 +55,7 @@ CBAbstractChoosePresenter >> addButton [
 { #category : #adding }
 CBAbstractChoosePresenter >> addSelected [
 
-	selectedList items: 
-		(selectedList items, 
-		(list selectedItems sorted: self methodName ascending)).
-	list items: ((list unfilteredItems \ list selectedItems) sorted: self methodName ascending).
-	list applyFilter: list filterText.
-	list selectItems: #()
+	self subclassResponsibility 
 ]
 
 { #category : #accessing }
@@ -182,13 +172,12 @@ CBAbstractChoosePresenter >> initializeNextButton [
 { #category : #initialization }
 CBAbstractChoosePresenter >> initializePresenters [
 
-	<script: 'self new openWithSpec'>
 	self initializeLayout.
 	self initializeList.
 	self initalizeSelectedList.
 	self initializeButtons.
 	self initializeButtonBar.
-		self initializeNextButton.
+	self initializeNextButton
 ]
 
 { #category : #initialization }
@@ -197,12 +186,6 @@ CBAbstractChoosePresenter >> initializeWindow: aWindowPresenter [
 	aWindowPresenter 
 		title: self title;
 		initialExtent: 700@500
-]
-
-{ #category : #accessing }
-CBAbstractChoosePresenter >> items [
-
-	^ items ifNil: [ items := {  } ]
 ]
 
 { #category : #accessing }
@@ -222,11 +205,9 @@ CBAbstractChoosePresenter >> nextAction [
 	self subclassResponsibility
 ]
 
-{ #category : #actions }
+{ #category : #accessing }
 CBAbstractChoosePresenter >> removeAll [
-
-	selectedList items: #().
-	list items: self items
+self subclassResponsibility 
 ]
 
 { #category : #accessing }
@@ -247,14 +228,9 @@ CBAbstractChoosePresenter >> removeButton [
 	^ removeButton
 ]
 
-{ #category : #actions }
+{ #category : #accessing }
 CBAbstractChoosePresenter >> removeSelected [
-
-	list items: ((list unfilteredItems, selectedList selectedItems) sorted: self methodName ascending).
-	list applyFilter: list filterText.
-	selectedList items: ((selectedList unfilteredItems \ selectedList selectedItems) sorted: self methodName ascending).
-	selectedList applyFilter: selectedList filterText.
-	selectedList selectItems: #()
+self subclassResponsibility 
 ]
 
 { #category : #accessing }
@@ -287,11 +263,4 @@ CBAbstractChoosePresenter >> setModelBeforeInitialization: aCollection [
 CBAbstractChoosePresenter >> title [
 
 	^ 'Choose items'
-]
-
-{ #category : #adding }
-CBAbstractChoosePresenter >> updatePresenter [
-
-	list items: self items \ self selectedItems.
-	selectedList items: self selectedItems.
 ]
