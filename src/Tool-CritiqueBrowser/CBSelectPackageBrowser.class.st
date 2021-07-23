@@ -8,36 +8,6 @@ Class {
 	#category : #'Tool-CritiqueBrowser-Applier'
 }
 
-{ #category : #specs }
-CBSelectPackageBrowser class >> defaultSpec [
-	
-	^ SpBoxLayout newTopToBottom
-		add:	(SpBoxLayout newLeftToRight
-					add: #toSelectModel; 
-					add: #selectedModel; yourself);
-		add: (SpBoxLayout newLeftToRight
-					add: #addTestCaseClassesModel; 
-					add: #addButtonModel;
-					add: #addAllButtonModel;
-					add: #removeButtonModel;
-					add: #removeAllButtonModel;
-					add: #nextButtonModel; yourself ) height: 25;
-		yourself 
-]
-
-{ #category : #'instance creation' }
-CBSelectPackageBrowser class >> open [
-	<script>
-	
-	self new items: RPackageOrganizer default packages;
-		openWithSpec 
-]
-
-{ #category : #specs }
-CBSelectPackageBrowser class >> title [
-	^ 'Select packages'
-]
-
 { #category : #private }
 CBSelectPackageBrowser >> addAllItems [
 	| tmp |
