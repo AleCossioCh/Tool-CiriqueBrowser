@@ -107,6 +107,6 @@ CBResetWindow >> setResetModel [
 		state: false;
 		label: 'Reset Current Configurartion';
 		action: [ 
-			CBSelectPackageBrowser open.
+			CBPackagesSelectorPresenter open.
 			self delete ]
 ]

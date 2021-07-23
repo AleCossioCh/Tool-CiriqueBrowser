@@ -110,7 +110,7 @@ CBCritiqueBrowser class >> openOnCurrentWorkingConfiguration [
 	<script>
 	CBCritiqueWorkingConfiguration exists
 		ifTrue: [ CBResetWindow new openWithSpec ]
-		ifFalse: [ CBSelectPackageBrowser open ]
+		ifFalse: [ CBPackagesSelectorPresenter open ]
 ]
 
 { #category : #'instance creation' }
@@ -561,7 +561,7 @@ CBCritiqueBrowser >> setActionResetButton [
 		   'Do you want to delete the current configuration
  and create a new configuration ?') ifTrue: [ 
 		  self delete.
-		  CBSelectPackageBrowser open ] ]
+		  CBPackagesSelectorPresenter open ] ]
 ]
 
 { #category : #initialization }
