@@ -148,7 +148,7 @@ CBRulesChooserPresenter >> removeAll [
 CBRulesChooserPresenter >> removeSelected [
 
 	selectedList selectedItem ifNotNil: [ :item | 
-		selectedRules removeAllFoundIn: item ].
+		selectedRules remove: item ].
 	self update
 ]
 
