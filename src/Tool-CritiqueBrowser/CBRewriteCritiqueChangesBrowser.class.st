@@ -74,9 +74,11 @@ CBRewriteCritiqueChangesBrowser >> changes: anObject [
 CBRewriteCritiqueChangesBrowser >> connectPresenters [
 
 	super connectPresenters.
-	
 		changeUnifiedOption whenActivatedDo: [ self applyChangesInUnified ].
 		changeSplitOption whenActivatedDo: [ self applyChangesInSplit ].
+	changeUnifiedOption state: false.
+	changeSplitOption state: true.
+		
 ]
 
 { #category : #initialization }
@@ -86,6 +88,8 @@ CBRewriteCritiqueChangesBrowser >> initializePresenters [
 	changeUnifiedOption := self newUnifiedRadioButton.
 	changeSplitOption := self newSplitRadioButton.
 	changeSplitOption associatedRadioButtons: { changeUnifiedOption }.
+	changeTree whenSelectionChangedDo: [ :selection |  
+                self buildDiffFor: selection selectedItem ].
 ]
 
 { #category : #accessing }
@@ -100,4 +104,12 @@ CBRewriteCritiqueChangesBrowser >> newUnifiedRadioButton [
 	^ self newRadioButton
 	label: 'Unified Diff';
 		state: false.
+]
+
+{ #category : #update }
+CBRewriteCritiqueChangesBrowser >> updateChanges [ 
+	super updateChanges.
+	changeTree roots
+        ifNotEmpty: [ changeTree selectItem: changeTree roots first ].
+	
 ]
