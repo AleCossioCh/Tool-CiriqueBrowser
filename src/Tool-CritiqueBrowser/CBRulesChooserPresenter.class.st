@@ -67,6 +67,23 @@ CBRulesChooserPresenter >> environment: aEnviroment [
 ]
 
 { #category : #initialization }
+CBRulesChooserPresenter >> groupRules [
+	^ #(
+	#'API Change'
+	#'API Hints'
+	#'Architectural'
+	#'Bugs'
+	#'Coding Idiom Violation'
+	#'Design Flaws'
+	#'Optimization'
+	#'Potential Bugs'
+	#'Rubric'
+	#'SUnit'
+	#'Style'
+	#'Unclassified rules'  )
+]
+
+{ #category : #initialization }
 CBRulesChooserPresenter >> initalizeSelectedList [
 
 	selectedList := self instantiate: SpTreePresenter
@@ -144,11 +161,14 @@ CBRulesChooserPresenter >> removeAll [
 	self update
 ]
 
-{ #category : #actions }
+{ #category : #accessing }
 CBRulesChooserPresenter >> removeSelected [
 
-	selectedList selectedItem ifNotNil: [ :item | 
-		selectedRules remove: item ].
+	selectedList selectedItem ifNotNil: [ :item |
+		(self groupRules includes: item name)
+		ifTrue:[ selectedRules removeAllFoundIn: item ]
+		ifFalse: [ selectedRules remove: item ].
+		 ].
 	self update
 ]
 
