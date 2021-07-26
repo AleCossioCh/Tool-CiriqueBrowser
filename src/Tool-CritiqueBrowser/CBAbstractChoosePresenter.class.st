@@ -185,7 +185,7 @@ CBAbstractChoosePresenter >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter 
 		title: self title;
-		initialExtent: 700@500
+		initialExtent: 450@360
 ]
 
 { #category : #accessing }

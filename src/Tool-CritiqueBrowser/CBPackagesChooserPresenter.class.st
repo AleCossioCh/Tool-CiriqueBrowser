@@ -9,7 +9,7 @@ CBPackagesChooserPresenter class >> open [
 
 	self openOn: { 
 			(RPackageOrganizer default packages sorted: #packageName ascending).
-			{ (RPackageOrganizer default packageNamed: 'Refactoring-Core') }.
+			{ }.
 			#packageName }
 ]
 
