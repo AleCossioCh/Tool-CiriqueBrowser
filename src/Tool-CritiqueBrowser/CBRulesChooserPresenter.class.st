@@ -53,8 +53,7 @@ CBRulesChooserPresenter >> addAll [
 { #category : #adding }
 CBRulesChooserPresenter >> addSelected [
 
-	selectedList selectedItem ifNotNil: [ :item | 
-		self halt.
+	list selectedItem ifNotNil: [ :item | 
 		item isComposite
 			ifFalse: [ selectedRules add: item ]
 			ifTrue: [ selectedRules addAll: item rules ] ].
@@ -148,7 +147,7 @@ CBRulesChooserPresenter >> removeAll [
 { #category : #actions }
 CBRulesChooserPresenter >> removeSelected [
 
-	list selectedItem ifNotNil: [ :item | 
+	selectedList selectedItem ifNotNil: [ :item | 
 		selectedRules removeAllFoundIn: item ].
 	self update
 ]
@@ -157,6 +156,12 @@ CBRulesChooserPresenter >> removeSelected [
 CBRulesChooserPresenter >> removeTestCase: aBoolean [
 
 	removeTestCase := aBoolean
+]
+
+{ #category : #initialization }
+CBRulesChooserPresenter >> selectedItems [
+
+	^ selectedItems ifNil: [ selectedItems := #() ]
 ]
 
 { #category : #initialization }

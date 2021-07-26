@@ -89,6 +89,12 @@ CBPackagesChooserPresenter >> removeSelected [
 	selectedList selectItems: #()
 ]
 
+{ #category : #actions }
+CBPackagesChooserPresenter >> selectedItems [
+
+	^ selectedItems ifNil: [ selectedItems := {  } ]
+]
+
 { #category : #initialization }
 CBPackagesChooserPresenter >> title [
 

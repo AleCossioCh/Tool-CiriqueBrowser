@@ -242,7 +242,7 @@ CBAbstractChoosePresenter >> removeSelectedMessage [
 { #category : #accessing }
 CBAbstractChoosePresenter >> selectedItems [
 
-	^ selectedItems ifNil: [ selectedItems := {  } ]
+	self subclassResponsibility 
 ]
 
 { #category : #accessing }
