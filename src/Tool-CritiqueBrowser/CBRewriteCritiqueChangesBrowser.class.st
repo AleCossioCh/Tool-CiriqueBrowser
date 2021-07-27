@@ -88,8 +88,8 @@ CBRewriteCritiqueChangesBrowser >> initializePresenters [
 	changeUnifiedOption := self newUnifiedRadioButton.
 	changeSplitOption := self newSplitRadioButton.
 	changeSplitOption associatedRadioButtons: { changeUnifiedOption }.
-	changeTree whenSelectionChangedDo: [ :selection |  
-                self buildDiffFor: selection selectedItem ].
+	changeTree whenSelectionChangedDo: [ :selection | 
+		self buildDiffFor: selection selectedItem ]
 ]
 
 { #category : #accessing }
