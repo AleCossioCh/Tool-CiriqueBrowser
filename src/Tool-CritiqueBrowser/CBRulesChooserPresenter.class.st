@@ -26,21 +26,23 @@ CBRulesChooserPresenter class >> items [
 { #category : #'instance creation' }
 CBRulesChooserPresenter class >> open [
 
-	self openOn: { 
-			(RPackageOrganizer default packages sorted: #packageName ascending).
-			{ (RPackageOrganizer default packageNamed: 'Refactoring-Core') }.
-			#packageName }
+	<example>
+	| packages env |
+	packages := RPackageOrganizer default packages.
+	env := RBPackageEnvironment new packages: packages.
+	^ (self openWithEnvironment: env removeTestCase: false)
 ]
 
 { #category : #'instance creation' }
 CBRulesChooserPresenter class >> openWithEnvironment: anEnvironment removeTestCase: aBoolean [
 
-	self new
+	^ self new
 		items: self items;
 		environment: anEnvironment;
 		removeTestCase: aBoolean;
-		openWithSpec;
-		updateTree
+		updateTree;
+		openWithSpec
+		
 ]
 
 { #category : #adding }
