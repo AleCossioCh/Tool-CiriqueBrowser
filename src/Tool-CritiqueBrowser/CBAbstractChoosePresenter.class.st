@@ -17,19 +17,6 @@ Class {
 	#category : #'Tool-CritiqueBrowser-Applier'
 }
 
-{ #category : #'instance creation' }
-CBAbstractChoosePresenter class >> openOn: aCollection [
-
-	^ (self on: aCollection) openWithSpec 
-]
-
-{ #category : #'instance creation' }
-CBAbstractChoosePresenter class >> openOn: aCollection onAccept: aBlock [
-	^ (self on: aCollection)
-		onAccept: aBlock;
-		openModalWithSpec
-]
-
 { #category : #accessing }
 CBAbstractChoosePresenter >> addAll [
 self subclassResponsibility 
