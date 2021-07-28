@@ -16,8 +16,7 @@ CBPackagesChooserPresenterTest >> setUp [
 
 	super setUp.
 	packagesChooserPresenter := CBPackagesChooserPresenter new.
-	packagesChooserPresenter setModelBeforeInitialization:
-		CBPackagesChooserPresenter items.
+	packagesChooserPresenter setModelBeforeInitialization: CBPackagesChooserPresenter items.
 	packagesChooserWithSelectedItems := CBPackagesChooserPresenter openWithSelectedItems.
 ]
 
@@ -25,8 +24,7 @@ CBPackagesChooserPresenterTest >> setUp [
 CBPackagesChooserPresenterTest >> testAddAll [
 
 	| selectedList |
-	selectedList := RBBrowserEnvironment new packages sorted:
-		                #packageName ascending.
+	selectedList := RBBrowserEnvironment new packages sorted: #packageName ascending.
 	packagesChooserPresenter list items: selectedList.
 	packagesChooserPresenter addAllButton click.
 	self
@@ -38,11 +36,9 @@ CBPackagesChooserPresenterTest >> testAddAll [
 CBPackagesChooserPresenterTest >> testAddSelected [
 
 	| packageSelected |
-	packageSelected := RPackageOrganizer default packageNamed:
-		                   'AST-Core-Tests'.
+	packageSelected := RPackageOrganizer default packageNamed: 'AST-Core-Tests'.
 	self assert:
-		(packagesChooserWithSelectedItems list items includes:
-			 packageSelected).
+		(packagesChooserWithSelectedItems list items includes: packageSelected).
 	packagesChooserWithSelectedItems list selectItem: packageSelected.
 	packagesChooserWithSelectedItems addButton click.
 	self deny:
@@ -73,7 +69,7 @@ CBPackagesChooserPresenterTest >> testOpen [
 CBPackagesChooserPresenterTest >> testRemoveAll [
 
 	| emptyList packagesSelected |
-	emptyList := #(  ).
+	emptyList := #().
 	packagesSelected := RBBrowserEnvironment new forPackageNames:
 		                   (Array
 			                    with: 'Epicea'
@@ -93,8 +89,7 @@ CBPackagesChooserPresenterTest >> testRemoveSelected [
 	packageSelected := RPackageOrganizer default packageNamed: 'AST-Core'.
 	"packagesChooserWithSelectedItems selectedList selectedItem: packageSelected."
 	self deny:
-		(packagesChooserWithSelectedItems list items includes:
-			 packageSelected).
+		(packagesChooserWithSelectedItems list items includes: packageSelected).
 	packagesChooserWithSelectedItems selectedList selectItem:
 		packagesChooserWithSelectedItems selectedList items first.
 	packagesChooserWithSelectedItems removeButton click.
