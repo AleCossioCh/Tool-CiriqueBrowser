@@ -186,6 +186,18 @@ CBRulesChooserPresenter >> selectedItems [
 	^ selectedItems ifNil: [ selectedItems := #() ]
 ]
 
+{ #category : #accessing }
+CBRulesChooserPresenter >> selectedRules [
+
+	^ selectedRules
+]
+
+{ #category : #accessing }
+CBRulesChooserPresenter >> selectedRules: anObject [
+
+	selectedRules := anObject
+]
+
 { #category : #initialization }
 CBRulesChooserPresenter >> title [
 
