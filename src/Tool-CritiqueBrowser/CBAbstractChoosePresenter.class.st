@@ -195,6 +195,12 @@ CBAbstractChoosePresenter >> list [
 ]
 
 { #category : #accessing }
+CBAbstractChoosePresenter >> list: anObject [
+
+	list := anObject
+]
+
+{ #category : #accessing }
 CBAbstractChoosePresenter >> methodName [
 
 	^ methodName
@@ -251,12 +257,18 @@ CBAbstractChoosePresenter >> selectedList [
 	^ selectedList
 ]
 
+{ #category : #accessing }
+CBAbstractChoosePresenter >> selectedList: anObject [
+
+	selectedList := anObject
+]
+
 { #category : #actions }
 CBAbstractChoosePresenter >> setModelBeforeInitialization: aCollection [
 
 	items := aCollection first.
 	selectedItems := aCollection second.
-	methodName :=  aCollection third.
+	methodName := aCollection third
 ]
 
 { #category : #accessing }
