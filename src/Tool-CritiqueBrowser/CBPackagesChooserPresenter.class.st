@@ -5,12 +5,29 @@ Class {
 }
 
 { #category : #'instance creation' }
+CBPackagesChooserPresenter class >> items [
+
+	^ { 
+		  (RBBrowserEnvironment new packages sorted: #packageName ascending).
+		  { }.
+		  #packageName }
+]
+
+{ #category : #'instance creation' }
 CBPackagesChooserPresenter class >> open [
 
-	self openOn: { 
-			(RPackageOrganizer default packages sorted: #packageName ascending).
-			{ }.
-			#packageName }
+	<example>
+	^ (self on: self items) openWithSpec
+]
+
+{ #category : #'instance creation' }
+CBPackagesChooserPresenter class >> openWithSelectedItems [
+
+	^ self on: { 
+			  (RPackageOrganizer default packages sorted:
+				   #packageName ascending).
+			  { (RPackageOrganizer default packageNamed: 'AST-Core') }.
+			  #packageName }
 ]
 
 { #category : #adding }
@@ -68,7 +85,7 @@ CBPackagesChooserPresenter >> nextAction [
 	| packages env |
 	packages := selectedList items.
 	env := RBPackageEnvironment new packages: packages.
-	CBRulesChooserPresenter openWithEnvironment: env removeTestCase: true.
+	CBRulesChooserPresenter openWithEnvironment: env removeTestCase: false.
 	self delete
 ]
 
@@ -81,15 +98,18 @@ CBPackagesChooserPresenter >> removeAll [
 
 { #category : #actions }
 CBPackagesChooserPresenter >> removeSelected [
-
-	list items: ((list unfilteredItems, selectedList selectedItems) sorted: self methodName ascending).
+	list items:
+		(list unfilteredItems , selectedList selectedItems sorted:
+			 self methodName ascending).
 	list applyFilter: list filterText.
-	selectedList items: ((selectedList unfilteredItems \ selectedList selectedItems) sorted: self methodName ascending).
+	selectedList items:
+		(selectedList unfilteredItems \ selectedList selectedItems sorted:
+			 self methodName ascending).
 	selectedList applyFilter: selectedList filterText.
-	selectedList selectItems: #()
+	selectedList selectItems: #(  )
 ]
 
-{ #category : #actions }
+{ #category : #accessing }
 CBPackagesChooserPresenter >> selectedItems [
 
 	^ selectedItems ifNil: [ selectedItems := {  } ]
