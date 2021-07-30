@@ -75,6 +75,19 @@ CBResetWindow >> initializeWindow: aWindowPresenter [
 		initialExtent: 450@30
 ]
 
+{ #category : #initialization }
+CBResetWindow >> openCurrentConfiguration [
+
+	CBCritiqueBrowser openOnWorkingConfiguration:
+		  CBCritiqueWorkingConfiguration current
+]
+
+{ #category : #initialization }
+CBResetWindow >> openPackagesChooser [
+
+	^ CBPackagesChooserPresenter open
+]
+
 { #category : #accessing }
 CBResetWindow >> resetModel [
 	^ resetModel
@@ -86,10 +99,7 @@ CBResetWindow >> setCurrentConfigurationModel [
 	currentConfigurationModel
 		state: false;
 		label: 'Uses Current Configuration';
-		action: [ 
-			CBCritiqueBrowser openOnWorkingConfiguration:
-					CBCritiqueWorkingConfiguration current.
-			self delete ]
+		action: [ self openCurrentConfiguration. self delete ]
 ]
 
 { #category : #initialization }
@@ -107,6 +117,6 @@ CBResetWindow >> setResetModel [
 		state: false;
 		label: 'Reset Current Configurartion';
 		action: [ 
-			CBPackagesChooserPresenter open.
+			self openPackagesChooser.
 			self delete ]
 ]
