@@ -101,8 +101,25 @@ CBRulesChooserPresenterTest >> testRemoveSelectedComposite [
 	styleRules := styleGroup first rules.
 	rulesChooserPresenter items: rulesByGroup.
 	rulesChooserPresenter selectedList selectPath:
-		(rulesChooserPresenter selectedList pathIndexOf: styleGroup).
+ 		(rulesChooserPresenter selectedList pathIndexOf: styleGroup).
 	rulesChooserPresenter selectedRules: styleRules.
+	rulesChooserPresenter removeButton click.
+	self assert: rulesChooserPresenter selectedRules isEmpty
+]
+
+{ #category : #tests }
+CBRulesChooserPresenterTest >> testRemoveSelectedRule [
+
+	| apiGroup apiRule |
+	rulesChooserPresenter := CBRulesChooserPresenter new.
+	apiGroup := rulesByGroup select: [ :item | item name = 'API Hints' ].
+	apiRule := apiGroup first rules first.
+	rulesChooserPresenter items: rulesByGroup.
+	rulesChooserPresenter selectedRules: { apiRule } asSet.
+	rulesChooserPresenter selectedList selection selectItem: apiRule.
+	self
+		assert: rulesChooserPresenter selectedRules
+		equals: { apiRule } asSet.
 	rulesChooserPresenter removeButton click.
 	self assert: rulesChooserPresenter selectedRules isEmpty
 ]
