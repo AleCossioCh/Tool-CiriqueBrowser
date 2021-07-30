@@ -165,12 +165,11 @@ CBRulesChooserPresenter >> removeAll [
 
 { #category : #accessing }
 CBRulesChooserPresenter >> removeSelected [
-
-	selectedList selectedItem ifNotNil: [ :item |
+	
+	selectedList selectedItem ifNotNil: [ :item | 
 		(self groupRules includes: item name)
-		ifTrue:[ selectedRules removeAllFoundIn: item ]
-		ifFalse: [ selectedRules remove: item ].
-		 ].
+			ifTrue: [ selectedRules removeAll: item rules]
+			ifFalse: [ selectedRules remove: item ] ].
 	self update
 ]
 
