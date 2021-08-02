@@ -1,3 +1,16 @@
+"
+I am a presenter that allows to select items from a list of rules organized by group in my left column and put that items on a selected list in my rigth column. I support selection for SpTreeTablePresenter. 
+
+If you click on '>', I can add a group rules or a singe rule to selected list.
+If you click on '<', I can remove a group rules or a singe rule from selected list.
+
+If you click on 'Next', I will open the CBCritiqueBrowser.
+I send selected rules from selected list to CBCritiqueBrowser. 
+
+You can open me whit:
+`CBRulesChooserPresenter open`
+
+"
 Class {
 	#name : #CBRulesChooserPresenter,
 	#superclass : #CBAbstractChoosePresenter,

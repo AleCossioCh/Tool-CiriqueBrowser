@@ -1,3 +1,12 @@
+"
+I am a presenter that allows to select items from a list in my left column and put that items on a selected list on my rigth column. I am an abstract class.
+
+* If you select an item or many items from list and click on '>', I will add selected items to selected list.
+* If you click on '>>', I will add all items to selected list.
+* If you select an item or many items from list and click on '<', I will remove selected items from selected list.
+* If you click on '<<', I will add all items from selected list.
+
+"
 Class {
 	#name : #CBAbstractChoosePresenter,
 	#superclass : #SpPresenter,

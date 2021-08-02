@@ -1,3 +1,14 @@
+"
+I am a presenter that allows to select items from a list of packages in my left column and put that items on a selected list in my rigth column. I support selection for checkBox. 
+
+If you click on 'Next', I will open the CBRulesChooserPresenter.
+I send selected packages from selected list to CBCritiqueBrowser. 
+
+You can open me whit:
+`CBPackagesChooserPresenter open`
+
+
+"
 Class {
 	#name : #CBPackagesChooserPresenter,
 	#superclass : #CBAbstractChoosePresenter,
