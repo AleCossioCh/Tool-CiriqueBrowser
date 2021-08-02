@@ -4,7 +4,8 @@ I am a presenter that allows to select items from a list in my left column and p
 * If you select an item or many items from list and click on '>', I will add selected items to selected list.
 * If you click on '>>', I will add all items to selected list.
 * If you select an item or many items from list and click on '<', I will remove selected items from selected list.
-* If you click on '<<', I will add all items from selected list.
+* If you click on '<<', I will remove all items from selected list.
+* If you write in the filter at the bottom of my left column, I will display packages with that name.
 
 "
 Class {
