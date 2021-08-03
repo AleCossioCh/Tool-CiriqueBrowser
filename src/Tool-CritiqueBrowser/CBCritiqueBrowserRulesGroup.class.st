@@ -1,3 +1,6 @@
+"
+I represent a group of rules in CBCritiqueBrowser tree view
+"
 Class {
 	#name : #CBCritiqueBrowserRulesGroup,
 	#superclass : #Object,

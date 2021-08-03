@@ -1,29 +1,17 @@
 "
 I display everything about critiques:
 	- critiques violating the selected rule
-	- options to do in critiques
+	- options to do with the critiques
 	- source code for selected critique
 
-Public API and Key Messages
+I interact with CBCritiqueToolbar to make actions on critiques. 
+I interact with CBCritiqueBrowser to get selected rules and display critiques.
 
-- message one   
-- message two 
-- (for bonus points) how to create instances.
-
-   One simple example is simply gorgeous.
- 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	cache:		<Object>
-	criticsModel:		<Object>
-	rule:		<Object>
-	sourceCodeModel:		<Object>
-	thread:		<Object>
-	toolbarModel:		<Object>
+You can open me whit:
+`CBSingleCodeCritiqueResultList open`.
 
 
-    Implementation Points
+
 "
 Class {
 	#name : #CBSingleCodeCritiqueResultList,

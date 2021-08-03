@@ -1,3 +1,7 @@
+"
+I am a cache for the critiques, false positives critiques and to-do critiques.
+
+"
 Class {
 	#name : #CBCritiquesCache,
 	#superclass : #Object,

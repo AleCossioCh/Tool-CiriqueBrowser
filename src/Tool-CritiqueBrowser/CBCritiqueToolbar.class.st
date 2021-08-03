@@ -1,27 +1,15 @@
 "
 I am the toolbar for displayed critiques in the critique browser.
 
-Public API and Key Messages
+* If you select 'Browse', I will open system browser with the location of the critique.
+* If you select 'Mark as wrong', I will put in grey color the selected critique and it will be saved as false positive.
+* If you select Transfrom, I will open changes browser presenter if the selected critique has the automatically resolve option.
 
-- message one   
-- message two 
-- (for bonus points) how to create instances.
+I interact with CBSingleCodeCritiqueResultList and it's displayed critiques. 
 
-There is an example in class side.
- 
-Internal Representation and Key Implementation Points.
+You can open me whit:
+`CBCritiqueToolbar open`.
 
-    Instance Variables
-	browseButton:		<Object>
-	cache:		<Object>
-	criticHolder:		<Object>
-	falsePositiveButton:		<Object>
-	ruleHolder:		<Object>
-	selectDiffButton:		<Object>
-	transformButton:		<Object>
-
-
-    Implementation Points
 "
 Class {
 	#name : #CBCritiqueToolbar,

@@ -1,22 +1,11 @@
 "
 I am a UI to reset the currently analysed model.
 
-Public API and Key Messages
+* If you select 'Reset Current Configuration', I will open a CBPackagesChooserPresenter to set a new configuration.
+* If you select 'Uses Current Configuration', I will open a CBCritiqueBrowser with the last configuration of selected packages and selected rules.
 
-- message one   
-- message two 
-- (for bonus points) how to create instances.
-
-   One simple example is simply gorgeous.
- 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	currentConfigurationModel:		<Object>
-	resetModel:		<Object>
-
-
-    Implementation Points
+You can open me whit:
+`CBResetWindow open`.
 "
 Class {
 	#name : #CBResetWindow,

@@ -66,14 +66,16 @@ CBPackagesChooserPresenter >> addSelected [
 CBPackagesChooserPresenter >> initalizeSelectedList [
 
 	selectedList := SpFilteringSelectableListPresenter new.
-	selectedList display: [ :each | each perform: self methodName ]
+	selectedList display: [ :each | each perform: self methodName ].
+	selectedList displayIcon: [ self iconNamed: #packageIcon ]
 ]
 
 { #category : #initialization }
 CBPackagesChooserPresenter >> initializeList [
 
 	list := SpFilteringSelectableListPresenter new.
-	list display: [ :each | each perform: self methodName ]
+	list display: [ :each | each perform: self methodName ].
+	list displayIcon: [ self iconNamed: #packageIcon ].
 ]
 
 { #category : #initialization }
