@@ -1,3 +1,6 @@
+"
+A CBResetWindowTest is a test class for testing the behaivor of CBResetWindowTest
+"
 Class {
 	#name : #CBResetWindowTest,
 	#superclass : #TestCase,
@@ -12,6 +15,17 @@ CBResetWindowTest >> setUp [
 
 	super setUp.
 	resetWindow := CBResetWindow new
+]
+
+{ #category : #tests }
+CBResetWindowTest >> testInitializePresenters [
+self
+		assert: resetWindow resetModel class
+		equals: SpButtonPresenter.
+	self
+		assert: resetWindow currentConfigurationModel class
+		equals: SpButtonPresenter.
+	
 ]
 
 { #category : #tests }

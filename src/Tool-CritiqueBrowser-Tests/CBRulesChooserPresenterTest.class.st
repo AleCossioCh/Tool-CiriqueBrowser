@@ -1,3 +1,6 @@
+"
+A CBRulesChooserPresenterTest is a test class for testing the behaivor of CBRulesChooserPresenter
+"
 Class {
 	#name : #CBRulesChooserPresenterTest,
 	#superclass : #TestCase,
