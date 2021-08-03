@@ -1,37 +1,13 @@
 "
-I am a graphical tool that allows developers:
-	- select a list of software packages where he/she is working
-	- select a quality rules-group
-	- get a list of critiques that broken the selected rules-group. 
+I am a presenter that allows get a list of critiques that broken the selected rules in the selected packages. 
 
-I interact with CBSelectBrowser to select packages and CBResetWindow to open a new window of CBCritiqueBrowser. 
+I interact with CBPackagesChooserPresenter to get the list of selected packages.
+I interact with CBRulesChooserPresenter to get the list of selected packages.
+I interact with CBritiquesCache to get the critiques saved as 'To-do' and marked as 'false positive'.
 
-There are examples in class side. 
+You can open me whit:
+`CBCritiqueBrowser open`
 
-Public API and Key Messages
-
-- message one   
-- message two 
- 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	cache:		<Object>
-	checker:		<Object>
-	criticModel:		<Object>
-	criticsModel:		<Object>
-	logButton:		<Object>
-	rbEnvironment:		<Object>
-	removeTestCase:		<Object>
-	resetButton:		<Object>
-	rulesModel:		<Object>
-	sourceCodeModel:		<Object>
-	title:		<Object>
-	toolbarModel:		<Object>
-	updateButton:		<Object>
-
-
-    Implementation Points
 "
 Class {
 	#name : #CBCritiqueBrowser,
@@ -142,18 +118,6 @@ CBCritiqueBrowser class >> openOnWorkingConfiguration: aWorkingConfiguration [
 	cbr rulesModel  changed:  #listElementAt:
 ]
 
-{ #category : #'instance creation' }
-CBCritiqueBrowser class >> openWindow [
-	<script>
-	
-	| env rules |
-	rules :=  RBCompositeLintRule allGoodRules rules.
-	env := RBBrowserEnvironment default.
-	self openOnRule: rules onEnvironment: env
-	
-	
-]
-
 { #category : #icons }
 CBCritiqueBrowser class >> taskbarIconName [
 
@@ -208,7 +172,7 @@ CBCritiqueBrowser >> applyRules [
 { #category : #private }
 CBCritiqueBrowser >> browseRule [
 
-	rulesModel selectedItem ifNotNil: [ :item | item browse ]
+	rulesModel selectedItem ifNotNil: [ :item | ^ item browse ]
 ]
 
 { #category : #private }
@@ -261,12 +225,14 @@ CBCritiqueBrowser >> classRemoved: aClass [
 
 { #category : #private }
 CBCritiqueBrowser >> colorForRule: aRule [
+
 	| total |
 	^ (total := cache criticsOf: aRule)
-		ifEmpty: [ criticModel falsePositiveColor ]
-		ifNotEmpty: [ (cache falsePositiveOf: aRule) = total
-				ifTrue: [ criticModel falsePositiveColor ]
-				ifFalse: [ self class theme textColor  ]]
+		  ifEmpty: [ criticModel falsePositiveColor ]
+		  ifNotEmpty: [ 
+			  (cache falsePositiveOf: aRule) = total
+				  ifTrue: [ criticModel falsePositiveColor ]
+				  ifFalse: [ self class theme textColor ] ]
 ]
 
 { #category : #initialization }
@@ -614,7 +580,8 @@ CBCritiqueBrowser >> sourceCodeModel [
 
 { #category : #private }
 CBCritiqueBrowser >> stringMorphForRule: rule [
-
+	
+	"set the amount of critiques per rule"
 	| unclassified falsePositives toDos text total |
 	falsePositives := (cache falsePositiveOf: rule) size.
 	toDos := (cache toDosOf: rule) size.
