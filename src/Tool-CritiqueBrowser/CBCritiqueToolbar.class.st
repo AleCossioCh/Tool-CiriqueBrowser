@@ -71,9 +71,9 @@ CBCritiqueToolbar >> addCriticToFalsePositive [
 
 { #category : #accessing }
 CBCritiqueToolbar >> browseCritique [
-
+	
 	criticHolder value ifNotNil: [ :elem | 
-		elem sourceAnchor entity browse ]
+		^ elem sourceAnchor entity browse ]
 ]
 
 { #category : #accessing }
@@ -83,11 +83,29 @@ CBCritiqueToolbar >> cache: aCache [
 ]
 
 { #category : #accessing }
+CBCritiqueToolbar >> criticHolder [
+
+	^ criticHolder
+]
+
+{ #category : #accessing }
+CBCritiqueToolbar >> criticHolder: anObject [
+
+	criticHolder := anObject
+]
+
+{ #category : #accessing }
 CBCritiqueToolbar >> critique: aCritique [
 
 	criticHolder value: aCritique.
 	transformButton visibleIf:
 		(aCritique isNotNil and: [ aCritique providesChange ])
+]
+
+{ #category : #accessing }
+CBCritiqueToolbar >> falsePositiveButton [
+
+	^ falsePositiveButton
 ]
 
 { #category : #initialization }
@@ -124,16 +142,6 @@ CBCritiqueToolbar >> newFalsePositiveButton [
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> newSelectDiffButton [
-
-	^ self newDropList
-		  display: [ :options | options name ];
-		  help: 'Select diff view';
-		  whenSelectedItemChangedDo: [ :aClass | aClass crTrace ];
-		  yourself
-]
-
-{ #category : #accessing }
 CBCritiqueToolbar >> newTransformButton [
 
 	^ self newButton
@@ -151,6 +159,18 @@ CBCritiqueToolbar >> rule: aRule [
 ]
 
 { #category : #accessing }
+CBCritiqueToolbar >> ruleHolder [
+
+	^ ruleHolder
+]
+
+{ #category : #accessing }
+CBCritiqueToolbar >> ruleHolder: anObject [
+
+	ruleHolder := anObject
+]
+
+{ #category : #accessing }
 CBCritiqueToolbar >> setFocusOrder [
 
 	self focusOrder
@@ -161,9 +181,15 @@ CBCritiqueToolbar >> setFocusOrder [
 ]
 
 { #category : #accessing }
+CBCritiqueToolbar >> transformButton [
+
+	^ transformButton
+]
+
+{ #category : #accessing }
 CBCritiqueToolbar >> transformCritique [
 
 	criticHolder value ifNotNil: [ :critique | 
-		(CBRewriteCritiqueChangesBrowser changes: { critique change})
-			open ]
+		(CBRewriteCritiqueChangesBrowser changes: { critique change })
+			  open ]
 ]
