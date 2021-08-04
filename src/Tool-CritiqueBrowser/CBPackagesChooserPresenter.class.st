@@ -43,9 +43,9 @@ CBPackagesChooserPresenter class >> openWithSelectedItems [
 
 { #category : #adding }
 CBPackagesChooserPresenter >> addAll [
-
+	
 	selectedList items:
-		(selectedList unfilteredItems , list unfilteredItems sorted:
+		(selectedList unfilteredItems , list items sorted:
 			 self methodName ascending).
 	list items: #(  ).
 	list selectItems: #(  )
