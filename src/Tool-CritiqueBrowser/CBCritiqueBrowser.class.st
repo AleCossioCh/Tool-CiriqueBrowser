@@ -348,14 +348,8 @@ CBCritiqueBrowser >> initializePresenters [
 	criticsModel := self criticsModel.
 	sourceCodeModel := self sourceCodeModel.
 	toolbarModel := self toolbarModel.
-	rulesModel children: [ :rule | 
-		rule isComposite
-			ifTrue: [ rule rules asArray ]
-			ifFalse: [ #(  ) ] ].
-
-	rulesModel addColumn: ((SpStringTableColumn evaluated: [ :rule | 
-			  self stringMorphForRule: rule ]) title: 'Rules Group').
-	rulesModel contextMenu: self buildRuleMenu.
+	
+	self setRulesModel.
 
 	self focusOrder
 		add: rulesModel;
@@ -434,9 +428,10 @@ CBCritiqueBrowser >> open [
 
 { #category : #private }
 CBCritiqueBrowser >> reapplyAllRules [
-	
+
 	cache initialize.
-	self applyRules 
+	checker resetResult.
+	self applyRules
 ]
 
 { #category : #private }
@@ -553,6 +548,18 @@ CBCritiqueBrowser >> setResetButton [
 		icon: (self iconNamed: #smallUpdate);
 		label: 'Run new configuration';
 		action: self setActionResetButton
+]
+
+{ #category : #'system annoucements' }
+CBCritiqueBrowser >> setRulesModel [ 
+rulesModel children: [ :rule | 
+		rule isComposite
+			ifTrue: [ rule rules asArray ]
+			ifFalse: [ #(  ) ] ].
+
+	rulesModel addColumn: ((SpStringTableColumn evaluated: [ :rule | 
+			  self stringMorphForRule: rule ]) title: 'Rules Group').
+	rulesModel contextMenu: self buildRuleMenu.
 ]
 
 { #category : #api }
