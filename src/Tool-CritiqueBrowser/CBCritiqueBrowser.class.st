@@ -163,8 +163,10 @@ CBCritiqueBrowser >> applyRules [
 	self setTitle: self defaultTitle.
 	cache packages: rbEnvironment.
 	cache initCache.
-	self updateTree.
-	self registerToAnnouncements ] newProcess.
+	self rules: (self allRules select: [ :r | self hasBrokenRules: r]).
+    self rulesModel refresh.
+    self rebuildLayout.
+	self updateTree. ] newProcess.
 	process name: 'SmallLint'.
 	process resume
 ]
@@ -317,6 +319,16 @@ CBCritiqueBrowser >> handleMethodRemoved: anAnnouncement [
 
 	self methodRemoved: anAnnouncement methodRemoved
 
+]
+
+{ #category : #'system annoucements' }
+CBCritiqueBrowser >> hasBrokenRules: rule [
+    | unclassified falsePositives toDos total |
+    falsePositives := (cache falsePositiveOf: rule) size.
+    toDos := (cache toDosOf: rule) size.
+    total := (cache criticsOf: rule) size.
+    unclassified := total - falsePositives - toDos.
+    ^ unclassified > 0
 ]
 
 { #category : #initialization }
