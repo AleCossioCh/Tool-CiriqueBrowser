@@ -43,12 +43,13 @@ CBPackagesChooserPresenter class >> openWithSelectedItems [
 
 { #category : #adding }
 CBPackagesChooserPresenter >> addAll [
-	
+
 	selectedList items:
 		(selectedList unfilteredItems , list items sorted:
 			 self methodName ascending).
 	list items: #(  ).
-	list selectItems: #(  )
+	list selectItems: #(  ).
+	nextButton enabled: selectedList items isNotEmpty 
 ]
 
 { #category : #adding }
@@ -59,7 +60,8 @@ CBPackagesChooserPresenter >> addSelected [
 	list items: (list unfilteredItems \ list selectedItems sorted:
 			 self methodName ascending).
 	list applyFilter: list filterText.
-	list selectItems: #(  )
+	list selectItems: #(  ).
+	nextButton enabled: selectedList items isNotEmpty
 ]
 
 { #category : #initialization }
@@ -105,12 +107,14 @@ CBPackagesChooserPresenter >> nextAction [
 { #category : #actions }
 CBPackagesChooserPresenter >> removeAll [
 
-	selectedList items: #().
-	list items: self items
+	selectedList items: #(  ).
+	list items: self items.
+	nextButton enabled: selectedList items isNotEmpty
 ]
 
 { #category : #actions }
 CBPackagesChooserPresenter >> removeSelected [
+
 	list items:
 		(list unfilteredItems , selectedList selectedItems sorted:
 			 self methodName ascending).
@@ -119,7 +123,8 @@ CBPackagesChooserPresenter >> removeSelected [
 		(selectedList unfilteredItems \ selectedList selectedItems sorted:
 			 self methodName ascending).
 	selectedList applyFilter: selectedList filterText.
-	selectedList selectItems: #(  )
+	selectedList selectItems: #(  ).
+	nextButton enabled: selectedList items isNotEmpty
 ]
 
 { #category : #accessing }

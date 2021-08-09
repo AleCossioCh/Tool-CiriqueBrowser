@@ -163,6 +163,7 @@ CBAbstractChoosePresenter >> initializeNextButton [
 	nextButton
 		icon: (self iconNamed: #smallOk);
 		label: 'Next';
+		enabled: false;
 		action: [ self nextAction ]
 ]
 
@@ -205,6 +206,7 @@ CBAbstractChoosePresenter >> methodName [
 
 { #category : #adding }
 CBAbstractChoosePresenter >> nextAction [
+	
 	self subclassResponsibility
 ]
 

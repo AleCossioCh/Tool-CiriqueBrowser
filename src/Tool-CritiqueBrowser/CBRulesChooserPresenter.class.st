@@ -62,7 +62,8 @@ CBRulesChooserPresenter class >> openWithEnvironment: anEnvironment removeTestCa
 CBRulesChooserPresenter >> addAll [
 
 	selectedList roots do: [ :group | selectedRules addAll: group rules ].
-	self update
+	self update.
+	nextButton enabled: selectedRules isNotEmpty.
 ]
 
 { #category : #adding }
@@ -72,7 +73,8 @@ CBRulesChooserPresenter >> addSelected [
 		item isComposite
 			ifFalse: [ selectedRules add: item ]
 			ifTrue: [ selectedRules addAll: item rules ] ].
-	self update
+	self update.
+	nextButton enabled: selectedRules isNotEmpty.
 ]
 
 { #category : #initialization }
@@ -173,17 +175,19 @@ CBRulesChooserPresenter >> removeAll [
 
 	selectedList roots do: [ :item | 
 		selectedRules removeAllFoundIn: item value ].
-	self update
+	self update.
+	nextButton enabled: selectedRules isNotEmpty
 ]
 
 { #category : #accessing }
 CBRulesChooserPresenter >> removeSelected [
-	
+
 	selectedList selectedItem ifNotNil: [ :item | 
 		(self groupRules includes: item name)
-			ifTrue: [ selectedRules removeAll: item rules]
+			ifTrue: [ selectedRules removeAll: item rules ]
 			ifFalse: [ selectedRules remove: item ] ].
-	self update
+	self update.
+	nextButton enabled: selectedRules isNotEmpty
 ]
 
 { #category : #initialization }
