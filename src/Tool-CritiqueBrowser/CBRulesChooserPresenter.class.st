@@ -192,7 +192,7 @@ CBRulesChooserPresenter >> removeTestCase: aBoolean [
 	removeTestCase := aBoolean
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 CBRulesChooserPresenter >> selectedItems [
 
 	^ selectedItems ifNil: [ selectedItems := #() ]

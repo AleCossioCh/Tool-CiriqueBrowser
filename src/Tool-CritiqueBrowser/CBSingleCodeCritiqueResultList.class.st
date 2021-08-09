@@ -129,15 +129,9 @@ CBSingleCodeCritiqueResultList >> addCritiqueToDo [
 { #category : #private }
 CBSingleCodeCritiqueResultList >> applyTransformation [
 
-	| crit changesBrowser |
-	crit := criticsModel selectedItem.
-	changesBrowser := (ChangesBrowser changes: { crit change })
-		                  extent: 500 @ 400;
-		                  yourself.
-
-	changesBrowser openDialogWithSpec
-		okAction: [ changesBrowser accept ];
-		centered
+	criticsModel selectedItem ifNotNil: [ :critique | 
+		(CBRewriteCritiqueChangesBrowser changes: { critique change })
+			  open ]
 ]
 
 { #category : #initialization }
