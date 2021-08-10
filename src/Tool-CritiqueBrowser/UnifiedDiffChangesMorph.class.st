@@ -1,5 +1,5 @@
 "
-I am a Morph to display changes in a uniffied view.
+I am a Morph to display changes for visualising differences between two strings in a uniffied view.
 
 I interact with CBRewriteCritiqueChangesBrowser.
 
