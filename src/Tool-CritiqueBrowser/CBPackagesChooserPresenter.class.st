@@ -11,137 +11,85 @@ You can open me whit:
 "
 Class {
 	#name : #CBPackagesChooserPresenter,
-	#superclass : #CBAbstractChoosePresenter,
+	#superclass : #SpPresenter,
+	#instVars : [
+		'nextButton',
+		'chooserPackages'
+	],
 	#category : #'Tool-CritiqueBrowser-Applier'
 }
-
-{ #category : #'instance creation' }
-CBPackagesChooserPresenter class >> items [
-
-	^ { 
-		  (RBBrowserEnvironment new packages sorted: #packageName ascending).
-		  { }.
-		  #packageName }
-]
 
 { #category : #'instance creation' }
 CBPackagesChooserPresenter class >> open [
 
 	<example>
-	^ (self on: self items) openWithSpec
-]
-
-{ #category : #'instance creation' }
-CBPackagesChooserPresenter class >> openWithSelectedItems [
-
-	^ self on: { 
-			  (RPackageOrganizer default packages sorted:
-				   #packageName ascending).
-			  { (RPackageOrganizer default packageNamed: 'AST-Core') }.
-			  #packageName }
-]
-
-{ #category : #adding }
-CBPackagesChooserPresenter >> addAll [
-
-	selectedList items:
-		(selectedList unfilteredItems , list items sorted:
-			 self methodName ascending).
-	list items: #(  ).
-	list selectItems: #(  ).
-	nextButton enabled: selectedList items isNotEmpty 
-]
-
-{ #category : #adding }
-CBPackagesChooserPresenter >> addSelected [
-
-	selectedList items: selectedList items
-		, (list selectedItems sorted: self methodName ascending).
-	list items: (list unfilteredItems \ list selectedItems sorted:
-			 self methodName ascending).
-	list applyFilter: list filterText.
-	list selectItems: #(  ).
-	nextButton enabled: selectedList items isNotEmpty
+	^ self new openWithSpec
 ]
 
 { #category : #initialization }
-CBPackagesChooserPresenter >> initalizeSelectedList [
+CBPackagesChooserPresenter >> initializeLayout [
 
-	selectedList := SpFilteringSelectableListPresenter new.
-	selectedList display: [ :each | each perform: self methodName ].
-	selectedList displayIcon: [ self iconNamed: #packageIcon ]
+	self layout: (SpBoxLayout newTopToBottom
+			add: #chooserPackages;
+			add: (SpBoxLayout newLeftToRight
+					  addLast: #nextButton;
+					  yourself)
+			 height: 25;
+			 yourself)
 ]
 
 { #category : #initialization }
-CBPackagesChooserPresenter >> initializeList [
+CBPackagesChooserPresenter >> initializeNextButton [
 
-	list := SpFilteringSelectableListPresenter new.
-	list display: [ :each | each perform: self methodName ].
-	list displayIcon: [ self iconNamed: #packageIcon ].
+	nextButton := self newButton.
+	nextButton
+		icon: (self iconNamed: #smallOk);
+		label: 'Next';
+		action: [ self nextAction ]
 ]
 
 { #category : #initialization }
 CBPackagesChooserPresenter >> initializePresenters [
 
-	super initializePresenters.
-	self initializeList.
-	self initalizeSelectedList.
+	chooserPackages := self setChooserPackages.
+	self initializeNextButton.
+	self initializeLayout
 ]
 
 { #category : #initialization }
-CBPackagesChooserPresenter >> items [
+CBPackagesChooserPresenter >> initializeWindow: aWindowPresenter [
 
-	^ items ifNil: [ items := {  } ]
+	aWindowPresenter 
+		title: self title;
+		initialExtent: 450@360
 ]
 
-{ #category : #initialization }
+{ #category : #adding }
 CBPackagesChooserPresenter >> nextAction [
 
 	| packages env |
-	packages := selectedList items.
+	packages := chooserPackages targetList items.
 	env := RBPackageEnvironment new packages: packages.
 	CBRulesChooserPresenter openWithEnvironment: env removeTestCase: false.
 	self delete
 ]
 
-{ #category : #actions }
-CBPackagesChooserPresenter >> removeAll [
-
-	selectedList items: #(  ).
-	list items: self items.
-	nextButton enabled: selectedList items isNotEmpty
-]
-
-{ #category : #actions }
-CBPackagesChooserPresenter >> removeSelected [
-
-	list items:
-		(list unfilteredItems , selectedList selectedItems sorted:
-			 self methodName ascending).
-	list applyFilter: list filterText.
-	selectedList items:
-		(selectedList unfilteredItems \ selectedList selectedItems sorted:
-			 self methodName ascending).
-	selectedList applyFilter: selectedList filterText.
-	selectedList selectItems: #(  ).
-	nextButton enabled: selectedList items isNotEmpty
-]
-
-{ #category : #accessing }
-CBPackagesChooserPresenter >> selectedItems [
-
-	^ selectedItems ifNil: [ selectedItems := {  } ]
+{ #category : #initialization }
+CBPackagesChooserPresenter >> setChooserPackages [
+	
+	| chooser |
+	chooser := SpChooserPresenter
+		   sourceItems: RPackageOrganizer default packages
+		   chosenItems:
+		   {  }
+		   displayBlock: #packageName.
+	chooser sourceList displayIcon: [ self iconNamed: #packageIcon ].
+	chooser targetList displayIcon: [ self iconNamed: #packageIcon ].
+	^ chooser 
 ]
 
 { #category : #initialization }
 CBPackagesChooserPresenter >> title [
 
 	^ 'Select packages'
-]
-
-{ #category : #adding }
-CBPackagesChooserPresenter >> updatePresenter [
-
-	list items: self items \ self selectedItems.
-	selectedList items: self selectedItems.
 ]
