@@ -4,10 +4,6 @@ A CBPackagesChooserPresenterTest is a test class for testing the behaivor of CBP
 Class {
 	#name : #CBPackagesChooserPresenterTest,
 	#superclass : #TestCase,
-	#instVars : [
-		'packagesChooserPresenter',
-		'packagesChooserWithSelectedItems'
-	],
 	#category : #'Tool-CritiqueBrowser-Tests'
 }
 
@@ -16,6 +12,20 @@ CBPackagesChooserPresenterTest >> setUp [
 
 	super setUp.
 	
+]
+
+{ #category : #initialization }
+CBPackagesChooserPresenterTest >> testInitializePresenters [
+
+	| packagesChooserPresenter |
+	
+	packagesChooserPresenter := CBPackagesChooserPresenter new.
+	self
+		assert: packagesChooserPresenter chooserPackages class
+		equals: SpChooserPresenter.
+	self
+		assert: packagesChooserPresenter nextButton class
+		equals: SpButtonPresenter.
 ]
 
 { #category : #initialization }

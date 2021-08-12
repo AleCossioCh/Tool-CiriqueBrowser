@@ -26,6 +26,12 @@ CBPackagesChooserPresenter class >> open [
 	^ self new openWithSpec
 ]
 
+{ #category : #'as yet unclassified' }
+CBPackagesChooserPresenter >> chooserPackages [
+
+	^chooserPackages 
+]
+
 { #category : #initialization }
 CBPackagesChooserPresenter >> initializeLayout [
 
@@ -72,6 +78,12 @@ CBPackagesChooserPresenter >> nextAction [
 	env := RBPackageEnvironment new packages: packages.
 	CBRulesChooserPresenter openWithEnvironment: env removeTestCase: false.
 	self delete
+]
+
+{ #category : #initialization }
+CBPackagesChooserPresenter >> nextButton [
+
+	^nextButton
 ]
 
 { #category : #initialization }
