@@ -8,11 +8,11 @@ If you click on 'Next', I will open the CBCritiqueBrowser.
 I send selected rules from selected list to CBCritiqueBrowser. 
 
 You can open me whit:
-`CBRulesChooserPresenter open`
+`CBSelectRule open`
 
 "
 Class {
-	#name : #CBRulesChooserPresenter,
+	#name : #CBSelectRule,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'selectedList',
@@ -34,7 +34,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-CBRulesChooserPresenter class >> items [
+CBSelectRule class >> items [
 
 	| rules rulesByGroup |
 	rules := (ReRuleManager visibleRuleClasses collect: [ :aClass | 
@@ -48,7 +48,7 @@ CBRulesChooserPresenter class >> items [
 ]
 
 { #category : #'instance creation' }
-CBRulesChooserPresenter class >> open [
+CBSelectRule class >> open [
 
 	<example>
 	| packages env |
@@ -58,7 +58,7 @@ CBRulesChooserPresenter class >> open [
 ]
 
 { #category : #'instance creation' }
-CBRulesChooserPresenter class >> openWithEnvironment: anEnvironment removeTestCase: aBoolean [
+CBSelectRule class >> openWithEnvironment: anEnvironment removeTestCase: aBoolean [
 
 	^ self new
 		items: self items;
@@ -70,7 +70,7 @@ CBRulesChooserPresenter class >> openWithEnvironment: anEnvironment removeTestCa
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> addAll [
+CBSelectRule >> addAll [
 
 	selectedList roots do: [ :group | selectedRules addAll: group rules ].
 	self update.
@@ -78,19 +78,19 @@ CBRulesChooserPresenter >> addAll [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> addAllButton [
+CBSelectRule >> addAllButton [
 
 	^ addAllButton
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> addButton [
+CBSelectRule >> addButton [
 
 	^ addButton
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> addSelected [
+CBSelectRule >> addSelected [
 
 	list selectedItem ifNotNil: [ :item | 
 		item isComposite
@@ -101,13 +101,13 @@ CBRulesChooserPresenter >> addSelected [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> environment: aEnviroment [
+CBSelectRule >> environment: aEnviroment [
 
 	environment := aEnviroment
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> groupRules [
+CBSelectRule >> groupRules [
 	^ #(
 	#'API Change'
 	#'API Hints'
@@ -124,13 +124,13 @@ CBRulesChooserPresenter >> groupRules [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> initalizeSelectedList [
+CBSelectRule >> initalizeSelectedList [
 
 	selectedList := self instantiate: SpTreePresenter
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> initialize [
+CBSelectRule >> initialize [
 
 	| wrappingBlock selectedRulesChildrenBlock rulesToSelectChildrenBlock |
 	super initialize.
@@ -159,7 +159,7 @@ CBRulesChooserPresenter >> initialize [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> initializeButtonBar [
+CBSelectRule >> initializeButtonBar [
 
 	buttonBar 
 		add: self addButton 
@@ -173,7 +173,7 @@ CBRulesChooserPresenter >> initializeButtonBar [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> initializeButtons [
+CBSelectRule >> initializeButtons [
 
 	addButton := self newButton
 				addStyle: 'small';
@@ -201,7 +201,7 @@ CBRulesChooserPresenter >> initializeButtons [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> initializeLayout [
+CBSelectRule >> initializeLayout [
 
 	self layout: (SpBoxLayout newTopToBottom
 			 add: (SpBoxLayout newTopToBottom
@@ -224,7 +224,7 @@ CBRulesChooserPresenter >> initializeLayout [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> initializeList [
+CBSelectRule >> initializeList [
 
 	list := self instantiate: SpTreePresenter.
 	removeButton := self newButton
@@ -241,7 +241,7 @@ CBRulesChooserPresenter >> initializeList [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> initializeNextButton [
+CBSelectRule >> initializeNextButton [
 
 	nextButton := self newButton.
 	nextButton
@@ -252,7 +252,7 @@ CBRulesChooserPresenter >> initializeNextButton [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> initializePresenters [
+CBSelectRule >> initializePresenters [
 
 	self initializeLayout.
 	self initializeList.
@@ -263,7 +263,7 @@ CBRulesChooserPresenter >> initializePresenters [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> initializeWindow: aWindowPresenter [
+CBSelectRule >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter 
 		title: self title;
@@ -271,7 +271,7 @@ CBRulesChooserPresenter >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> isSelected: aRule [
+CBSelectRule >> isSelected: aRule [
 
 	"Check the rule identifier to not run twice the same rule"
 
@@ -280,32 +280,32 @@ CBRulesChooserPresenter >> isSelected: aRule [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> items: aCollection [
+CBSelectRule >> items: aCollection [
 
 	list roots: aCollection.
 	selectedList roots: aCollection
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> list [
+CBSelectRule >> list [
 	
 	^ list
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> list: anObject [
+CBSelectRule >> list: anObject [
 
 	list := anObject
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> methodName [
+CBSelectRule >> methodName [
 
 	^ methodName
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> nextAction [
+CBSelectRule >> nextAction [
 
 	self delete.
 
@@ -318,7 +318,7 @@ CBRulesChooserPresenter >> nextAction [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> removeAll [
+CBSelectRule >> removeAll [
 
 	selectedList roots do: [ :item | 
 		selectedRules removeAllFoundIn: item value ].
@@ -327,19 +327,19 @@ CBRulesChooserPresenter >> removeAll [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> removeAllButton [
+CBSelectRule >> removeAllButton [
 
 	^ removeAllButton
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> removeButton [
+CBSelectRule >> removeButton [
 
 	^ removeButton
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> removeSelected [
+CBSelectRule >> removeSelected [
 
 	selectedList selectedItem ifNotNil: [ :item | 
 		(self groupRules includes: item name)
@@ -350,43 +350,43 @@ CBRulesChooserPresenter >> removeSelected [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> removeTestCase: aBoolean [
+CBSelectRule >> removeTestCase: aBoolean [
 
 	removeTestCase := aBoolean
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> selectedItems [
+CBSelectRule >> selectedItems [
 
 	^ selectedItems ifNil: [ selectedItems := #() ]
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> selectedList [
+CBSelectRule >> selectedList [
 
 	^ selectedList
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> selectedList: anObject [
+CBSelectRule >> selectedList: anObject [
 
 	selectedList := anObject
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> selectedRules [
+CBSelectRule >> selectedRules [
 
 	^ selectedRules
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> selectedRules: anObject [
+CBSelectRule >> selectedRules: anObject [
 
 	selectedRules := anObject
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> setModelBeforeInitialization: aCollection [
+CBSelectRule >> setModelBeforeInitialization: aCollection [
 
 	items := aCollection first.
 	selectedItems := aCollection second.
@@ -394,13 +394,13 @@ CBRulesChooserPresenter >> setModelBeforeInitialization: aCollection [
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> title [
+CBSelectRule >> title [
 
 	^ 'Select rules'
 ]
 
 { #category : #adding }
-CBRulesChooserPresenter >> updateTree [
+CBSelectRule >> updateTree [
 
 	list update.
 	selectedList update

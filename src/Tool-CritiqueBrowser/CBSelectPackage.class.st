@@ -1,16 +1,16 @@
 "
 I am a presenter that allows to select items from a list of packages in my left column and put that items on a selected list in my rigth column. I support selection for checkBox. 
 
-If you click on 'Next', I will open the CBRulesChooserPresenter.
+If you click on 'Next', I will open the CBSelectRule.
 I send selected packages from selected list to CBCritiqueBrowser. 
 
 You can open me whit:
-`CBPackagesChooserPresenter open`
+`CBSelectPackage open`
 
 
 "
 Class {
-	#name : #CBPackagesChooserPresenter,
+	#name : #CBSelectPackage,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'nextButton',
@@ -20,20 +20,20 @@ Class {
 }
 
 { #category : #'instance creation' }
-CBPackagesChooserPresenter class >> open [
+CBSelectPackage class >> open [
 
 	<example>
 	^ self new openWithSpec
 ]
 
 { #category : #'as yet unclassified' }
-CBPackagesChooserPresenter >> chooserPackages [
+CBSelectPackage >> chooserPackages [
 
 	^chooserPackages 
 ]
 
 { #category : #initialization }
-CBPackagesChooserPresenter >> initializeLayout [
+CBSelectPackage >> initializeLayout [
 
 	self layout: (SpBoxLayout newTopToBottom
 			add: #chooserPackages;
@@ -45,7 +45,7 @@ CBPackagesChooserPresenter >> initializeLayout [
 ]
 
 { #category : #initialization }
-CBPackagesChooserPresenter >> initializeNextButton [
+CBSelectPackage >> initializeNextButton [
 
 	nextButton := self newButton.
 	nextButton
@@ -55,7 +55,7 @@ CBPackagesChooserPresenter >> initializeNextButton [
 ]
 
 { #category : #initialization }
-CBPackagesChooserPresenter >> initializePresenters [
+CBSelectPackage >> initializePresenters [
 
 	chooserPackages := self setChooserPackages.
 	self initializeNextButton.
@@ -63,7 +63,7 @@ CBPackagesChooserPresenter >> initializePresenters [
 ]
 
 { #category : #initialization }
-CBPackagesChooserPresenter >> initializeWindow: aWindowPresenter [
+CBSelectPackage >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter 
 		title: self title;
@@ -71,23 +71,23 @@ CBPackagesChooserPresenter >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : #adding }
-CBPackagesChooserPresenter >> nextAction [
+CBSelectPackage >> nextAction [
 
 	| packages env |
 	packages := chooserPackages targetList items.
 	env := RBPackageEnvironment new packages: packages.
-	CBRulesChooserPresenter openWithEnvironment: env removeTestCase: false.
+	CBSelectRule openWithEnvironment: env removeTestCase: false.
 	self delete
 ]
 
 { #category : #initialization }
-CBPackagesChooserPresenter >> nextButton [
+CBSelectPackage >> nextButton [
 
 	^nextButton
 ]
 
 { #category : #initialization }
-CBPackagesChooserPresenter >> setChooserPackages [
+CBSelectPackage >> setChooserPackages [
 	
 	| chooser |
 	chooser := SpChooserPresenter
@@ -101,7 +101,7 @@ CBPackagesChooserPresenter >> setChooserPackages [
 ]
 
 { #category : #initialization }
-CBPackagesChooserPresenter >> title [
+CBSelectPackage >> title [
 
 	^ 'Select packages'
 ]

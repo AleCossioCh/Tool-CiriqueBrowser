@@ -3,7 +3,7 @@ A join section usable for unified diff
 
 "
 Class {
-	#name : #UnifiedDiffJoinSection,
+	#name : #CBUnifiedDiffJoinSection,
 	#superclass : #JoinSection,
 	#instVars : [
 		'copy'
@@ -12,24 +12,24 @@ Class {
 }
 
 { #category : #copying }
-UnifiedDiffJoinSection >> copy1 [
+CBUnifiedDiffJoinSection >> copy1 [
 	^ copy
 ]
 
 { #category : #copying }
-UnifiedDiffJoinSection >> copy: anObject [
+CBUnifiedDiffJoinSection >> copy: anObject [
 	copy := anObject
 ]
 
 { #category : #copying }
-UnifiedDiffJoinSection >> copyLineRange: anInterval [
+CBUnifiedDiffJoinSection >> copyLineRange: anInterval [
 	"Set the src lneRange."
 
 	self copy1 lineRange: anInterval
 ]
 
 { #category : #copying }
-UnifiedDiffJoinSection >> copyRange: anInterval [
+CBUnifiedDiffJoinSection >> copyRange: anInterval [
 	"Set the  copy range"
 
 	self copy1 range: anInterval.
@@ -37,7 +37,7 @@ UnifiedDiffJoinSection >> copyRange: anInterval [
 ]
 
 { #category : #copying }
-UnifiedDiffJoinSection >> createHighlights [
+CBUnifiedDiffJoinSection >> createHighlights [
 	"Create and store the src and dst highlights."
 
 	|s d c|
@@ -65,7 +65,7 @@ UnifiedDiffJoinSection >> createHighlights [
 ]
 
 { #category : #copying }
-UnifiedDiffJoinSection >> createHighlightsFrom: srcPara to: dstPara withCopy: copyPara flagRemove: aNumber [
+CBUnifiedDiffJoinSection >> createHighlightsFrom: srcPara to: dstPara withCopy: copyPara flagRemove: aNumber [
 	"Create and store the src and dst highlights.
 	Use the given paragraphs to determine inline
 	diffs."
@@ -136,7 +136,7 @@ UnifiedDiffJoinSection >> createHighlightsFrom: srcPara to: dstPara withCopy: co
 ]
 
 { #category : #copying }
-UnifiedDiffJoinSection >> initialize [ 
+CBUnifiedDiffJoinSection >> initialize [ 
 	super initialize .
 	self copy: JoinSide new.
 ]

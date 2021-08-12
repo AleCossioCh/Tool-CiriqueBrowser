@@ -19,7 +19,7 @@ CBPackagesChooserPresenterTest >> testInitializePresenters [
 
 	| packagesChooserPresenter |
 	
-	packagesChooserPresenter := CBPackagesChooserPresenter new.
+	packagesChooserPresenter := CBSelectPackage new.
 	self
 		assert: packagesChooserPresenter chooserPackages class
 		equals: SpChooserPresenter.
@@ -32,7 +32,7 @@ CBPackagesChooserPresenterTest >> testInitializePresenters [
 CBPackagesChooserPresenterTest >> testOpen [
 
 	| window |
-	window := CBPackagesChooserPresenter open.
+	window := CBSelectPackage open.
 	self assert: window isBuilt.
 	window close
 ]

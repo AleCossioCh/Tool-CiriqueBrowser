@@ -74,7 +74,7 @@ CBResetWindow >> openCurrentConfiguration [
 { #category : #initialization }
 CBResetWindow >> openPackagesChooser [
 
-	^ CBPackagesChooserPresenter open
+	^ CBSelectPackage open
 ]
 
 { #category : #accessing }

@@ -17,7 +17,7 @@ Class {
 CBRulesChooserPresenterTest >> setUp [
 
 	super setUp.
-	rulesChooserPresenter := CBRulesChooserPresenter new.
+	rulesChooserPresenter := CBSelectRule new.
 	rules := (ReRuleManager visibleRuleClasses collect: [ :aClass | 
 		          aClass new ]) sorted: [ :a :b | a name < b name ].
 	rulesByGroup := (rules groupedBy: #group) associations collect: [ :as | 
@@ -81,7 +81,7 @@ CBRulesChooserPresenterTest >> testInitialize [
 CBRulesChooserPresenterTest >> testOpen [
 
 	| window |
-	window := CBRulesChooserPresenter open.
+	window := CBSelectRule open.
 	self assert: window isBuilt.
 	window close
 ]
@@ -99,7 +99,7 @@ CBRulesChooserPresenterTest >> testRemoveAll [
 CBRulesChooserPresenterTest >> testRemoveSelectedComposite [
 
 	| styleGroup styleRules |
-	rulesChooserPresenter := CBRulesChooserPresenter new.
+	rulesChooserPresenter := CBSelectRule new.
 	styleGroup := rulesByGroup select: [ :item | item name = 'Style' ].
 	styleRules := styleGroup first rules.
 	rulesChooserPresenter items: rulesByGroup.
@@ -114,7 +114,7 @@ CBRulesChooserPresenterTest >> testRemoveSelectedComposite [
 CBRulesChooserPresenterTest >> testRemoveSelectedRule [
 
 	| apiGroup apiRule |
-	rulesChooserPresenter := CBRulesChooserPresenter new.
+	rulesChooserPresenter := CBSelectRule new.
 	apiGroup := rulesByGroup select: [ :item | item name = 'API Hints' ].
 	apiRule := apiGroup first rules first.
 	rulesChooserPresenter items: rulesByGroup.

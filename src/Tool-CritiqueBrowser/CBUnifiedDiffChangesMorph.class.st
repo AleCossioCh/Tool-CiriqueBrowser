@@ -6,7 +6,7 @@ I interact with CBRewriteCritiqueChangesBrowser.
 
 "
 Class {
-	#name : #UnifiedDiffChangesMorph,
+	#name : #CBUnifiedDiffChangesMorph,
 	#superclass : #DiffMorph,
 	#instVars : [
 		'unifiedText',
@@ -16,7 +16,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-UnifiedDiffChangesMorph class >> from: old to: new [
+CBUnifiedDiffChangesMorph class >> from: old to: new [
 	"Answer a new instance of the receiver with the given
 	old and new text."
 
@@ -26,7 +26,7 @@ UnifiedDiffChangesMorph class >> from: old to: new [
 ]
 
 { #category : #actions }
-UnifiedDiffChangesMorph >> calculatedJoinMappings [
+CBUnifiedDiffChangesMorph >> calculatedJoinMappings [
 	"Calculate the join parameters between src and dst and answer"
 
 	| sourceLine destinationLine copyLine joins destinationRunStart sourceRunStart copyRunStart destinationRunEnd sourceRunEnd copyRunEnd matchDestinationStart matchSourceStart type lineRemove |
@@ -153,7 +153,7 @@ UnifiedDiffChangesMorph >> calculatedJoinMappings [
 ]
 
 { #category : #actions }
-UnifiedDiffChangesMorph >> from: old to: new [
+CBUnifiedDiffChangesMorph >> from: old to: new [
 	"Set the old (src) and new (dst) text."
 	self sourceTextModel setText: old.
 	self destTextModel setText: new.
@@ -170,7 +170,7 @@ UnifiedDiffChangesMorph >> from: old to: new [
 ]
 
 { #category : #actions }
-UnifiedDiffChangesMorph >> from: old to: new contextClass: aClass [
+CBUnifiedDiffChangesMorph >> from: old to: new contextClass: aClass [
 
 	"Set the old (src) and new (dst) text."
 	self contextClass: aClass.
@@ -189,7 +189,7 @@ UnifiedDiffChangesMorph >> from: old to: new contextClass: aClass [
 ]
 
 { #category : #actions }
-UnifiedDiffChangesMorph >> initialize [
+CBUnifiedDiffChangesMorph >> initialize [
 	"Initialize the receiver."
 
 	super initialize.
@@ -197,14 +197,14 @@ UnifiedDiffChangesMorph >> initialize [
 ]
 
 { #category : #actions }
-UnifiedDiffChangesMorph >> joinSectionClass [
+CBUnifiedDiffChangesMorph >> joinSectionClass [
 	"Answer the class to use for a new join section."
 
-	^UnifiedDiffJoinSection
+	^CBUnifiedDiffJoinSection
 ]
 
 { #category : #actions }
-UnifiedDiffChangesMorph >> newCopyMorph [
+CBUnifiedDiffChangesMorph >> newCopyMorph [
 	"Answer a new dst text morph."
 	|copy|
 	copy := RubScrolledTextModel new interactionModel: self.
@@ -217,7 +217,7 @@ UnifiedDiffChangesMorph >> newCopyMorph [
 ]
 
 { #category : #actions }
-UnifiedDiffChangesMorph >> newDstMorph [
+CBUnifiedDiffChangesMorph >> newDstMorph [
 	"Answer a new dst text morph."
 
 	^ self destTextModel newScrolledText
@@ -229,7 +229,7 @@ UnifiedDiffChangesMorph >> newDstMorph [
 ]
 
 { #category : #actions }
-UnifiedDiffChangesMorph >> newJoinSectionFrom: srcRange to: dstRange copyRange: copyRange withType: aType flagRemove: aNumber [ 
+CBUnifiedDiffChangesMorph >> newJoinSectionFrom: srcRange to: dstRange copyRange: copyRange withType: aType flagRemove: aNumber [ 
 	"Answer a new join section."
 	
 	|sourceParagraphLines destinationParagraphLines copyParagraphLines sourceTopPixelPosition sourceBottomPixelPosition destinationTopPixelPosition destinationBottomPixelPosition type rectangleColor copyTopPixelPosition copyBottomPixelPosition|
@@ -285,7 +285,7 @@ UnifiedDiffChangesMorph >> newJoinSectionFrom: srcRange to: dstRange copyRange: 
 ]
 
 { #category : #actions }
-UnifiedDiffChangesMorph >> newStringOfDifference [
+CBUnifiedDiffChangesMorph >> newStringOfDifference [
 	unifiedText := String streamContents: [:s | (self difference  collect: #value) asStringOn: s delimiter: String cr].
 	copyDstMorph :=  self newCopyMorph.
 	self destTextModel setText: unifiedText.

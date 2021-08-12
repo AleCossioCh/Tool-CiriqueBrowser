@@ -1,8 +1,8 @@
 "
 I am a presenter that allows get a list of critiques that broken the selected rules in the selected packages. 
 
-I interact with CBPackagesChooserPresenter to get the list of selected packages.
-I interact with CBRulesChooserPresenter to get the list of selected packages.
+I interact with CBSelectPackage to get the list of selected packages.
+I interact with CBSelectRule to get the list of selected rules.
 I interact with CBritiquesCache to get the critiques saved as 'To-do' and marked as 'false positive'.
 
 You can open me whit:
@@ -86,7 +86,7 @@ CBCritiqueBrowser class >> openOnCurrentWorkingConfiguration [
 	<script>
 	CBCritiqueWorkingConfiguration exists
 		ifTrue: [ CBResetWindow new openWithSpec ]
-		ifFalse: [ CBPackagesChooserPresenter open ]
+		ifFalse: [ CBSelectPackage open ]
 ]
 
 { #category : #'instance creation' }
@@ -534,7 +534,7 @@ CBCritiqueBrowser >> setActionResetButton [
 		   'Do you want to delete the current configuration
  and create a new configuration ?') ifTrue: [ 
 		  self delete.
-		  CBPackagesChooserPresenter open ] ]
+		  CBSelectPackage open ] ]
 ]
 
 { #category : #initialization }
