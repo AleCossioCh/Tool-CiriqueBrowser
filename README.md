@@ -24,7 +24,7 @@ Next step is selecting packages and rules, as example:
 
 ## GSoC'21 - Refining code critics
 
-The migration of this tool as well as the improvements to the UI are part of my project to GSoC21; For more information, see the [Refining code critics proposal](https://summerofcode.withgoogle.com/projects/#6095801345900544).
+The migration of this tool as well as the improvements to the UI are part of my project to GSoC21; For more information, see the [Refining code critics proposal](https://summerofcode.withgoogle.com/projects/#6095801345900544). About the work and some tutorials, you can visit the [GSoC'21 summary blog](https://alecossioch.github.io/gsoc21/).
 
 ## About the name
 
