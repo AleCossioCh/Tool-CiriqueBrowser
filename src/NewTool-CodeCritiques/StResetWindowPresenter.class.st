@@ -1,24 +1,24 @@
 "
-I am a UI to reset the currently analysed model.
+I am a UI with two options to reset the currently analysed model.
 
-* If you select 'Reset Current Configuration', I will open a CBPackagesChooserPresenter to set a new configuration.
-* If you select 'Uses Current Configuration', I will open a CBCritiqueBrowser with the last configuration of selected packages and selected rules.
+* If you select 'Reset Current Configuration', I will open the StCritiquePackageSelectorPresenter to set a new configuration.
+* If you select 'Uses Current Configuration', I will open the StCritiqueBrowserPresenter with the last configuration of selected packages and selected rules.
 
 You can open me whit:
-`CBResetWindow open`.
+`StResetWindowPresenter open`.
 "
 Class {
-	#name : #CBResetWindow,
+	#name : #StResetWindowPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'resetModel',
 		'currentConfigurationModel'
 	],
-	#category : #'Tool-CritiqueBrowser-Parts'
+	#category : #'NewTool-CodeCritiques-Parts'
 }
 
 { #category : #specs }
-CBResetWindow class >> defaultSpec [
+StResetWindowPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
 		  add: (SpBoxLayout newLeftToRight
@@ -29,24 +29,24 @@ CBResetWindow class >> defaultSpec [
 ]
 
 { #category : #specs }
-CBResetWindow class >> open [
+StResetWindowPresenter class >> open [
 
 	<example>
 	^ self new openWithSpec
 ]
 
 { #category : #specs }
-CBResetWindow class >> title [
+StResetWindowPresenter class >> title [
 	^ 'Critique Browser' 
 ]
 
 { #category : #accessing }
-CBResetWindow >> currentConfigurationModel [
+StResetWindowPresenter >> currentConfigurationModel [
 	^ currentConfigurationModel
 ]
 
 { #category : #initialization }
-CBResetWindow >> initializePresenters [
+StResetWindowPresenter >> initializePresenters [
 
 	resetModel := self newButton.
 	currentConfigurationModel := self newButton.
@@ -57,7 +57,7 @@ CBResetWindow >> initializePresenters [
 ]
 
 { #category : #api }
-CBResetWindow >> initializeWindow: aWindowPresenter [
+StResetWindowPresenter >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter
 		title:  self title;
@@ -65,25 +65,25 @@ CBResetWindow >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : #initialization }
-CBResetWindow >> openCurrentConfiguration [
+StResetWindowPresenter >> openCurrentConfiguration [
 
-	CBCritiqueBrowser openOnWorkingConfiguration:
-		  CBCritiqueWorkingConfiguration current
+	StCritiqueBrowserPresenter openOnWorkingConfiguration:
+		  StCritiqueWorkingConfiguration current
 ]
 
 { #category : #initialization }
-CBResetWindow >> openPackagesChooser [
+StResetWindowPresenter >> openPackagesChooser [
 
-	^ CBSelectPackage open
+	^ StCritiquePackageSelectorPresenter open
 ]
 
 { #category : #accessing }
-CBResetWindow >> resetModel [
+StResetWindowPresenter >> resetModel [
 	^ resetModel
 ]
 
 { #category : #initialization }
-CBResetWindow >> setCurrentConfigurationModel [
+StResetWindowPresenter >> setCurrentConfigurationModel [
 
 	currentConfigurationModel
 		state: false;
@@ -92,7 +92,7 @@ CBResetWindow >> setCurrentConfigurationModel [
 ]
 
 { #category : #initialization }
-CBResetWindow >> setFocusOrder [
+StResetWindowPresenter >> setFocusOrder [
 
 	self focusOrder
 		add: resetModel;
@@ -100,7 +100,7 @@ CBResetWindow >> setFocusOrder [
 ]
 
 { #category : #initialization }
-CBResetWindow >> setResetModel [
+StResetWindowPresenter >> setResetModel [
 
 	resetModel
 		state: false;

@@ -1,39 +1,45 @@
 "
 I am a presenter that allows to select items from a list of packages in my left column and put that items on a selected list in my rigth column. I support selection for checkBox. 
 
-If you click on 'Next', I will open the CBSelectRule.
-I send selected packages from selected list to CBCritiqueBrowser. 
+If you click on 'Next', I will open the StCritiqueRuleSelectorPresenter.
+I send selected packages from selected list to StCritiqueBrowserPresenter. 
 
 You can open me whit:
-`CBSelectPackage open`
+`StCritiquePackageSelectorPresenter open`
 
 
 "
 Class {
-	#name : #CBSelectPackage,
+	#name : #StCritiquePackageSelectorPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'nextButton',
 		'chooserPackages'
 	],
-	#category : #'Tool-CritiqueBrowser-Applier'
+	#category : #'NewTool-CodeCritiques-Applier'
 }
 
 { #category : #'instance creation' }
-CBSelectPackage class >> open [
+StCritiquePackageSelectorPresenter class >> open [
 
 	<example>
 	^ self new openWithSpec
 ]
 
-{ #category : #'as yet unclassified' }
-CBSelectPackage >> chooserPackages [
+{ #category : #accessing }
+StCritiquePackageSelectorPresenter >> chooserPackages [
 
 	^chooserPackages 
 ]
 
 { #category : #initialization }
-CBSelectPackage >> initializeLayout [
+StCritiquePackageSelectorPresenter >> defaultTitle [
+
+	^ 'Select packages'
+]
+
+{ #category : #initialization }
+StCritiquePackageSelectorPresenter >> initializeLayout [
 
 	self layout: (SpBoxLayout newTopToBottom
 			add: #chooserPackages;
@@ -45,7 +51,7 @@ CBSelectPackage >> initializeLayout [
 ]
 
 { #category : #initialization }
-CBSelectPackage >> initializeNextButton [
+StCritiquePackageSelectorPresenter >> initializeNextButton [
 
 	nextButton := self newButton.
 	nextButton
@@ -55,7 +61,7 @@ CBSelectPackage >> initializeNextButton [
 ]
 
 { #category : #initialization }
-CBSelectPackage >> initializePresenters [
+StCritiquePackageSelectorPresenter >> initializePresenters [
 
 	chooserPackages := self setChooserPackages.
 	self initializeNextButton.
@@ -63,31 +69,31 @@ CBSelectPackage >> initializePresenters [
 ]
 
 { #category : #initialization }
-CBSelectPackage >> initializeWindow: aWindowPresenter [
+StCritiquePackageSelectorPresenter >> initializeWindow: aWindowPresenter [
 
-	aWindowPresenter 
-		title: self title;
-		initialExtent: 450@360
+	aWindowPresenter
+		title: self defaultTitle;
+		initialExtent: 450 @ 360
 ]
 
 { #category : #adding }
-CBSelectPackage >> nextAction [
+StCritiquePackageSelectorPresenter >> nextAction [
 
 	| packages env |
 	packages := chooserPackages targetList items.
 	env := RBPackageEnvironment new packages: packages.
-	CBSelectRule openWithEnvironment: env removeTestCase: false.
+	StCritiqueRuleSelectorPresenter openWithEnvironment: env removeTestCase: false.
 	self delete
 ]
 
 { #category : #initialization }
-CBSelectPackage >> nextButton [
+StCritiquePackageSelectorPresenter >> nextButton [
 
 	^nextButton
 ]
 
 { #category : #initialization }
-CBSelectPackage >> setChooserPackages [
+StCritiquePackageSelectorPresenter >> setChooserPackages [
 	
 	| chooser |
 	chooser := SpChooserPresenter
@@ -98,10 +104,4 @@ CBSelectPackage >> setChooserPackages [
 	chooser sourceList displayIcon: [ self iconNamed: #packageIcon ].
 	chooser targetList displayIcon: [ self iconNamed: #packageIcon ].
 	^ chooser 
-]
-
-{ #category : #initialization }
-CBSelectPackage >> title [
-
-	^ 'Select packages'
 ]

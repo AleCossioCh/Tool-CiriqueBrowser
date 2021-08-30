@@ -5,23 +5,23 @@ If you click on 'Split', I will display a SpDiffPresenter with changes for resol
 If you click on 'Uniffied', I will display a CBUnifiedDiffChangesMorph with changes for resolve the selected critique.
 
 You can open me whit:
-`CBRewriteCritiqueChangesBrowser open`.
+`StRewriteCritiqueChangesBrowserPresenter open`.
 
 
 
 "
 Class {
-	#name : #CBRewriteCritiqueChangesBrowser,
+	#name : #StRewriteCritiqueChangesBrowserPresenter,
 	#superclass : #RewriteRuleChangesBrowser,
 	#instVars : [
 		'changeUnifiedOption',
 		'changeSplitOption'
 	],
-	#category : #'Tool-CritiqueBrowser-Transform '
+	#category : #'NewTool-CodeCritiques-Transform '
 }
 
 { #category : #specs }
-CBRewriteCritiqueChangesBrowser class >> defaultSpec [
+StRewriteCritiqueChangesBrowserPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
 		  add: (SpPanedLayout newTopToBottom
@@ -52,14 +52,14 @@ CBRewriteCritiqueChangesBrowser class >> defaultSpec [
 ]
 
 { #category : #specs }
-CBRewriteCritiqueChangesBrowser class >> open [
+StRewriteCritiqueChangesBrowserPresenter class >> open [
 
 	<example>
 	^ self new openWithSpec
 ]
 
 { #category : #accessing }
-CBRewriteCritiqueChangesBrowser >> applyChangesInSplit [
+StRewriteCritiqueChangesBrowserPresenter >> applyChangesInSplit [
    changeTree selectedItem ifNotNil: [ 
 	diffView := self newDiff.
 	self buildDiffFor: changeTree selectedItem.
@@ -67,23 +67,23 @@ CBRewriteCritiqueChangesBrowser >> applyChangesInSplit [
 ]
 
 { #category : #accessing }
-CBRewriteCritiqueChangesBrowser >> applyChangesInUnified [
+StRewriteCritiqueChangesBrowserPresenter >> applyChangesInUnified [
 changeTree selectedItem ifNotNil: [ 
-	diffView := SpMorphPresenter new morph: (CBUnifiedDiffChangesMorph
+	diffView := SpMorphPresenter new morph: (StUnifiedDiffChangesMorph
 			             from: changeTree selectedItem oldVersionTextToDisplay
 			             to: changeTree selectedItem textToDisplay).
 	self update].
 ]
 
 { #category : #accessing }
-CBRewriteCritiqueChangesBrowser >> changes: anObject [
+StRewriteCritiqueChangesBrowserPresenter >> changes: anObject [
 	changes := anObject.
 	selectedChanges := OrderedCollection with: changes first.
 	self updateChanges
 ]
 
 { #category : #initialization }
-CBRewriteCritiqueChangesBrowser >> connectPresenters [
+StRewriteCritiqueChangesBrowserPresenter >> connectPresenters [
 
 	super connectPresenters.
 		changeUnifiedOption whenActivatedDo: [ self applyChangesInUnified ].
@@ -94,7 +94,7 @@ CBRewriteCritiqueChangesBrowser >> connectPresenters [
 ]
 
 { #category : #initialization }
-CBRewriteCritiqueChangesBrowser >> initializePresenters [
+StRewriteCritiqueChangesBrowserPresenter >> initializePresenters [
 
 	super initializePresenters.
 	changeUnifiedOption := self newUnifiedRadioButton.
@@ -105,21 +105,21 @@ CBRewriteCritiqueChangesBrowser >> initializePresenters [
 ]
 
 { #category : #accessing }
-CBRewriteCritiqueChangesBrowser >> newSplitRadioButton [
+StRewriteCritiqueChangesBrowserPresenter >> newSplitRadioButton [
 	^ self newRadioButton
 	label: 'Split Diff';
 	state: false.
 ]
 
 { #category : #accessing }
-CBRewriteCritiqueChangesBrowser >> newUnifiedRadioButton [
+StRewriteCritiqueChangesBrowserPresenter >> newUnifiedRadioButton [
 	^ self newRadioButton
 	label: 'Unified Diff';
 		state: false.
 ]
 
 { #category : #update }
-CBRewriteCritiqueChangesBrowser >> updateChanges [ 
+StRewriteCritiqueChangesBrowserPresenter >> updateChanges [ 
 	super updateChanges.
 	changeTree roots
         ifNotEmpty: [ changeTree selectItem: changeTree roots first ].

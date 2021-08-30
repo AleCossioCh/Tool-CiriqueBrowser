@@ -2,23 +2,23 @@
 A CBResetWindowTest is a test class for testing the behaivor of CBResetWindowTest
 "
 Class {
-	#name : #CBResetWindowTest,
+	#name : #StResetWindowPresenterTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'resetWindow'
 	],
-	#category : #'Tool-CritiqueBrowser-Tests'
+	#category : #'NewTool-CodeCritiques-Tests'
 }
 
 { #category : #running }
-CBResetWindowTest >> setUp [
+StResetWindowPresenterTest >> setUp [
 
 	super setUp.
-	resetWindow := CBResetWindow new
+	resetWindow := StResetWindowPresenter new
 ]
 
 { #category : #tests }
-CBResetWindowTest >> testInitializePresenters [
+StResetWindowPresenterTest >> testInitializePresenters [
 self
 		assert: resetWindow resetModel class
 		equals: SpButtonPresenter.
@@ -29,16 +29,16 @@ self
 ]
 
 { #category : #tests }
-CBResetWindowTest >> testOpen [
+StResetWindowPresenterTest >> testOpen [
 
-	| resetWindow |
-	resetWindow := CBResetWindow open.
-	self assert: resetWindow isBuilt.
-	resetWindow close
+	| resetPresenter |
+ 	resetPresenter := StResetWindowPresenter open.
+ 	self assert: resetPresenter isBuilt.
+ 	resetPresenter close
 ]
 
 { #category : #tests }
-CBResetWindowTest >> testOpenPackagesChooser [
+StResetWindowPresenterTest >> testOpenPackagesChooser [
 
 	| applier |
 	applier := resetWindow openPackagesChooser.

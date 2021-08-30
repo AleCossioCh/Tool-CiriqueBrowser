@@ -4,15 +4,15 @@ I am a presenter that allows to select items from a list of rules organized by g
 If you click on '>', I can add a group rules or a singe rule to selected list.
 If you click on '<', I can remove a group rules or a singe rule from selected list.
 
-If you click on 'Next', I will open the CBCritiqueBrowser.
-I send selected rules from selected list to CBCritiqueBrowser. 
+If you click on 'Next', I will open the StCritiqueBrowserPresenter.
+I send selected rules from selected list to StCritiqueBrowserPresenter. 
 
 You can open me whit:
-`CBSelectRule open`
+`StCritiqueRuleSelectorPresenter open`
 
 "
 Class {
-	#name : #CBSelectRule,
+	#name : #StCritiqueRuleSelectorPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'selectedList',
@@ -30,17 +30,17 @@ Class {
 		'environment',
 		'removeTestCase'
 	],
-	#category : #'Tool-CritiqueBrowser-Applier'
+	#category : #'NewTool-CodeCritiques-Applier'
 }
 
 { #category : #'instance creation' }
-CBSelectRule class >> items [
+StCritiqueRuleSelectorPresenter class >> items [
 
 	| rules rulesByGroup |
 	rules := (ReRuleManager visibleRuleClasses collect: [ :aClass | 
 		          aClass new ]) sorted: [ :a :b | a name < b name ].
 	rulesByGroup := (rules groupedBy: #group) associations collect: [ :as | 
-		                CBCritiqueBrowserRulesGroup
+		                StCritiqueBrowserRulesGroup
 			                named: as key
 			                rules: as value ].
 	rulesByGroup sort: [ :a :b | a name < b name ].
@@ -48,7 +48,7 @@ CBSelectRule class >> items [
 ]
 
 { #category : #'instance creation' }
-CBSelectRule class >> open [
+StCritiqueRuleSelectorPresenter class >> open [
 
 	<example>
 	| packages env |
@@ -58,7 +58,7 @@ CBSelectRule class >> open [
 ]
 
 { #category : #'instance creation' }
-CBSelectRule class >> openWithEnvironment: anEnvironment removeTestCase: aBoolean [
+StCritiqueRuleSelectorPresenter class >> openWithEnvironment: anEnvironment removeTestCase: aBoolean [
 
 	^ self new
 		items: self items;
@@ -70,7 +70,7 @@ CBSelectRule class >> openWithEnvironment: anEnvironment removeTestCase: aBoolea
 ]
 
 { #category : #adding }
-CBSelectRule >> addAll [
+StCritiqueRuleSelectorPresenter >> addAll [
 
 	selectedList roots do: [ :group | selectedRules addAll: group rules ].
 	self update.
@@ -78,19 +78,19 @@ CBSelectRule >> addAll [
 ]
 
 { #category : #adding }
-CBSelectRule >> addAllButton [
+StCritiqueRuleSelectorPresenter >> addAllButton [
 
 	^ addAllButton
 ]
 
 { #category : #adding }
-CBSelectRule >> addButton [
+StCritiqueRuleSelectorPresenter >> addButton [
 
 	^ addButton
 ]
 
 { #category : #adding }
-CBSelectRule >> addSelected [
+StCritiqueRuleSelectorPresenter >> addSelected [
 
 	list selectedItem ifNotNil: [ :item | 
 		item isComposite
@@ -101,13 +101,19 @@ CBSelectRule >> addSelected [
 ]
 
 { #category : #adding }
-CBSelectRule >> environment: aEnviroment [
+StCritiqueRuleSelectorPresenter >> defaultTitle [
+
+	^ 'Select rules'
+]
+
+{ #category : #adding }
+StCritiqueRuleSelectorPresenter >> environment: aEnviroment [
 
 	environment := aEnviroment
 ]
 
 { #category : #adding }
-CBSelectRule >> groupRules [
+StCritiqueRuleSelectorPresenter >> groupRules [
 	^ #(
 	#'API Change'
 	#'API Hints'
@@ -124,13 +130,13 @@ CBSelectRule >> groupRules [
 ]
 
 { #category : #adding }
-CBSelectRule >> initalizeSelectedList [
+StCritiqueRuleSelectorPresenter >> initalizeSelectedList [
 
 	selectedList := self instantiate: SpTreePresenter
 ]
 
 { #category : #adding }
-CBSelectRule >> initialize [
+StCritiqueRuleSelectorPresenter >> initialize [
 
 	| wrappingBlock selectedRulesChildrenBlock rulesToSelectChildrenBlock |
 	super initialize.
@@ -159,7 +165,7 @@ CBSelectRule >> initialize [
 ]
 
 { #category : #adding }
-CBSelectRule >> initializeButtonBar [
+StCritiqueRuleSelectorPresenter >> initializeButtonBar [
 
 	buttonBar 
 		add: self addButton 
@@ -173,7 +179,7 @@ CBSelectRule >> initializeButtonBar [
 ]
 
 { #category : #adding }
-CBSelectRule >> initializeButtons [
+StCritiqueRuleSelectorPresenter >> initializeButtons [
 
 	addButton := self newButton
 				addStyle: 'small';
@@ -201,7 +207,7 @@ CBSelectRule >> initializeButtons [
 ]
 
 { #category : #adding }
-CBSelectRule >> initializeLayout [
+StCritiqueRuleSelectorPresenter >> initializeLayout [
 
 	self layout: (SpBoxLayout newTopToBottom
 			 add: (SpBoxLayout newTopToBottom
@@ -224,7 +230,7 @@ CBSelectRule >> initializeLayout [
 ]
 
 { #category : #adding }
-CBSelectRule >> initializeList [
+StCritiqueRuleSelectorPresenter >> initializeList [
 
 	list := self instantiate: SpTreePresenter.
 	removeButton := self newButton
@@ -241,7 +247,7 @@ CBSelectRule >> initializeList [
 ]
 
 { #category : #adding }
-CBSelectRule >> initializeNextButton [
+StCritiqueRuleSelectorPresenter >> initializeNextButton [
 
 	nextButton := self newButton.
 	nextButton
@@ -252,7 +258,7 @@ CBSelectRule >> initializeNextButton [
 ]
 
 { #category : #adding }
-CBSelectRule >> initializePresenters [
+StCritiqueRuleSelectorPresenter >> initializePresenters [
 
 	self initializeLayout.
 	self initializeList.
@@ -262,16 +268,16 @@ CBSelectRule >> initializePresenters [
 	self initializeNextButton
 ]
 
-{ #category : #adding }
-CBSelectRule >> initializeWindow: aWindowPresenter [
+{ #category : #initialization }
+StCritiqueRuleSelectorPresenter >> initializeWindow: aWindowPresenter [
 
-	aWindowPresenter 
-		title: self title;
-		initialExtent: 450@360
+	aWindowPresenter
+		title: self defaultTitle;
+		initialExtent: 450 @ 360
 ]
 
 { #category : #adding }
-CBSelectRule >> isSelected: aRule [
+StCritiqueRuleSelectorPresenter >> isSelected: aRule [
 
 	"Check the rule identifier to not run twice the same rule"
 
@@ -280,45 +286,45 @@ CBSelectRule >> isSelected: aRule [
 ]
 
 { #category : #adding }
-CBSelectRule >> items: aCollection [
+StCritiqueRuleSelectorPresenter >> items: aCollection [
 
 	list roots: aCollection.
 	selectedList roots: aCollection
 ]
 
 { #category : #adding }
-CBSelectRule >> list [
+StCritiqueRuleSelectorPresenter >> list [
 	
 	^ list
 ]
 
 { #category : #adding }
-CBSelectRule >> list: anObject [
+StCritiqueRuleSelectorPresenter >> list: anObject [
 
 	list := anObject
 ]
 
 { #category : #adding }
-CBSelectRule >> methodName [
+StCritiqueRuleSelectorPresenter >> methodName [
 
 	^ methodName
 ]
 
 { #category : #adding }
-CBSelectRule >> nextAction [
+StCritiqueRuleSelectorPresenter >> nextAction [
 
 	self delete.
 
-	CBCritiqueWorkingConfiguration current
+	StCritiqueWorkingConfiguration current
 		rule: selectedRules;
 		environment: environment;
 		removeTestCase: removeTestCase.
-	CBCritiqueBrowser openOnWorkingConfiguration:
-		CBCritiqueWorkingConfiguration current
+	StCritiqueBrowserPresenter openOnWorkingConfiguration:
+		StCritiqueWorkingConfiguration current
 ]
 
 { #category : #adding }
-CBSelectRule >> removeAll [
+StCritiqueRuleSelectorPresenter >> removeAll [
 
 	selectedList roots do: [ :item | 
 		selectedRules removeAllFoundIn: item value ].
@@ -327,19 +333,19 @@ CBSelectRule >> removeAll [
 ]
 
 { #category : #adding }
-CBSelectRule >> removeAllButton [
+StCritiqueRuleSelectorPresenter >> removeAllButton [
 
 	^ removeAllButton
 ]
 
 { #category : #adding }
-CBSelectRule >> removeButton [
+StCritiqueRuleSelectorPresenter >> removeButton [
 
 	^ removeButton
 ]
 
 { #category : #adding }
-CBSelectRule >> removeSelected [
+StCritiqueRuleSelectorPresenter >> removeSelected [
 
 	selectedList selectedItem ifNotNil: [ :item | 
 		(self groupRules includes: item name)
@@ -350,43 +356,43 @@ CBSelectRule >> removeSelected [
 ]
 
 { #category : #adding }
-CBSelectRule >> removeTestCase: aBoolean [
+StCritiqueRuleSelectorPresenter >> removeTestCase: aBoolean [
 
 	removeTestCase := aBoolean
 ]
 
 { #category : #adding }
-CBSelectRule >> selectedItems [
+StCritiqueRuleSelectorPresenter >> selectedItems [
 
 	^ selectedItems ifNil: [ selectedItems := #() ]
 ]
 
 { #category : #adding }
-CBSelectRule >> selectedList [
+StCritiqueRuleSelectorPresenter >> selectedList [
 
 	^ selectedList
 ]
 
 { #category : #adding }
-CBSelectRule >> selectedList: anObject [
+StCritiqueRuleSelectorPresenter >> selectedList: anObject [
 
 	selectedList := anObject
 ]
 
 { #category : #adding }
-CBSelectRule >> selectedRules [
+StCritiqueRuleSelectorPresenter >> selectedRules [
 
 	^ selectedRules
 ]
 
 { #category : #adding }
-CBSelectRule >> selectedRules: anObject [
+StCritiqueRuleSelectorPresenter >> selectedRules: anObject [
 
 	selectedRules := anObject
 ]
 
 { #category : #adding }
-CBSelectRule >> setModelBeforeInitialization: aCollection [
+StCritiqueRuleSelectorPresenter >> setModelBeforeInitialization: aCollection [
 
 	items := aCollection first.
 	selectedItems := aCollection second.
@@ -394,13 +400,7 @@ CBSelectRule >> setModelBeforeInitialization: aCollection [
 ]
 
 { #category : #adding }
-CBSelectRule >> title [
-
-	^ 'Select rules'
-]
-
-{ #category : #adding }
-CBSelectRule >> updateTree [
+StCritiqueRuleSelectorPresenter >> updateTree [
 
 	list update.
 	selectedList update

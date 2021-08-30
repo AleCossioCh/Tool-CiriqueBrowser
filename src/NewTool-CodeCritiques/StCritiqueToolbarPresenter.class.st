@@ -2,17 +2,17 @@
 I am the toolbar for displayed critiques in the critique browser.
 
 * If you select 'Browse', I will open system browser with the location of the critique.
-* If you select 'Mark as wrong', I will put in grey color the selected critique and it will be saved as false positive.
-* If you select Transfrom, I will open changes browser presenter if the selected critique has the automatically resolve option.
+* If you select 'Mark as wrong', I will put in grey color the selected critique and it will be saved as false positive in cache.
+* If you select Transfrom, I will open StRewriteCritiqueChangesBrowserPresenter, just if the selected critique has the automatically resolve option.
 
-I interact with CBSingleCodeCritiqueResultList and it's displayed critiques. 
+I interact with StSingleCritiqueResultListPresenter and it's displayed critiques. 
 
 You can open me whit:
 `CBCritiqueToolbar open`.
 
 "
 Class {
-	#name : #CBCritiqueToolbar,
+	#name : #StCritiqueToolbarPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'criticHolder',
@@ -23,11 +23,11 @@ Class {
 		'cache',
 		'ruleHolder'
 	],
-	#category : #'Tool-CritiqueBrowser-Parts'
+	#category : #'NewTool-CodeCritiques-Parts'
 }
 
 { #category : #specs }
-CBCritiqueToolbar class >> defaultSpec [
+StCritiqueToolbarPresenter class >> defaultSpec [
 
 	<spec>
 	^ SpBoxLayout newLeftToRight
@@ -38,52 +38,52 @@ CBCritiqueToolbar class >> defaultSpec [
 ]
 
 { #category : #specs }
-CBCritiqueToolbar class >> open [
+StCritiqueToolbarPresenter class >> open [
 
 	<example>
 	^ self new openWithSpec
 ]
 
 { #category : #specs }
-CBCritiqueToolbar class >> title [
+StCritiqueToolbarPresenter class >> title [
 
 	^ 'Critique Toolbar'
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> addCriticToFalsePositive [
+StCritiqueToolbarPresenter >> addCriticToFalsePositive [
 
 	criticHolder value ifNotNil: [ :item |
 		cache addFalsePositive: item forRule: ruleHolder value ]
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> browseCritique [
+StCritiqueToolbarPresenter >> browseCritique [
 	
 	criticHolder value ifNotNil: [ :elem | 
 		^ elem sourceAnchor entity browse ]
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> cache: aCache [
+StCritiqueToolbarPresenter >> cache: aCache [
 
 	cache := aCache
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> criticHolder [
+StCritiqueToolbarPresenter >> criticHolder [
 
 	^ criticHolder
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> criticHolder: anObject [
+StCritiqueToolbarPresenter >> criticHolder: anObject [
 
 	criticHolder := anObject
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> critique: aCritique [
+StCritiqueToolbarPresenter >> critique: aCritique [
 
 	criticHolder value: aCritique.
 	transformButton visibleIf:
@@ -91,13 +91,13 @@ CBCritiqueToolbar >> critique: aCritique [
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> falsePositiveButton [
+StCritiqueToolbarPresenter >> falsePositiveButton [
 
 	^ falsePositiveButton
 ]
 
 { #category : #initialization }
-CBCritiqueToolbar >> initialize [
+StCritiqueToolbarPresenter >> initialize [
 
 	super initialize.
 	criticHolder := nil asValueHolder.
@@ -109,7 +109,7 @@ CBCritiqueToolbar >> initialize [
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> newBrowseButton [
+StCritiqueToolbarPresenter >> newBrowseButton [
 
 	^ self newButton
 		  label: 'Browse';
@@ -120,7 +120,7 @@ CBCritiqueToolbar >> newBrowseButton [
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> newFalsePositiveButton [
+StCritiqueToolbarPresenter >> newFalsePositiveButton [
 
 	^ self newButton
 		  label: 'Mark as wrong';
@@ -130,7 +130,7 @@ CBCritiqueToolbar >> newFalsePositiveButton [
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> newTransformButton [
+StCritiqueToolbarPresenter >> newTransformButton [
 
 	^ self newButton
 		  label: 'Transform';
@@ -141,25 +141,25 @@ CBCritiqueToolbar >> newTransformButton [
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> rule: aRule [
+StCritiqueToolbarPresenter >> rule: aRule [
 
 	ruleHolder value: aRule
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> ruleHolder [
+StCritiqueToolbarPresenter >> ruleHolder [
 
 	^ ruleHolder
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> ruleHolder: anObject [
+StCritiqueToolbarPresenter >> ruleHolder: anObject [
 
 	ruleHolder := anObject
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> setFocusOrder [
+StCritiqueToolbarPresenter >> setFocusOrder [
 
 	self focusOrder
 		add: browseButton;
@@ -169,15 +169,15 @@ CBCritiqueToolbar >> setFocusOrder [
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> transformButton [
+StCritiqueToolbarPresenter >> transformButton [
 
 	^ transformButton
 ]
 
 { #category : #accessing }
-CBCritiqueToolbar >> transformCritique [
+StCritiqueToolbarPresenter >> transformCritique [
 
 	criticHolder value ifNotNil: [ :critique | 
-		(CBRewriteCritiqueChangesBrowser changes: { critique change })
+		(StRewriteCritiqueChangesBrowserPresenter changes: { critique change })
 			  open ]
 ]

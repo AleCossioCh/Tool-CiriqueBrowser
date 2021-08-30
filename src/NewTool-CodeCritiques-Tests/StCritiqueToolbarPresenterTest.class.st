@@ -2,23 +2,23 @@
 A CBCritiqueToolbarTest is a test class for testing the behaivor of CBCritiqueToolbar
 "
 Class {
-	#name : #CBCritiqueToolbarTest,
+	#name : #StCritiqueToolbarPresenterTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'critiqueToolbar'
 	],
-	#category : #'Tool-CritiqueBrowser-Tests'
+	#category : #'NewTool-CodeCritiques-Tests'
 }
 
-{ #category : #initialization }
-CBCritiqueToolbarTest >> setUp [
+{ #category : #running }
+StCritiqueToolbarPresenterTest >> setUp [
 
 	super setUp.
-	critiqueToolbar := CBCritiqueToolbar new.
+	critiqueToolbar := StCritiqueToolbarPresenter new.
 ]
 
 { #category : #initialization }
-CBCritiqueToolbarTest >> testInitialize [
+StCritiqueToolbarPresenterTest >> testInitialize [
 
 	self assert: critiqueToolbar criticHolder value isNil.
 	self assert: critiqueToolbar ruleHolder value isNil.
@@ -26,10 +26,10 @@ CBCritiqueToolbarTest >> testInitialize [
 ]
 
 { #category : #initialization }
-CBCritiqueToolbarTest >> testOpen [
+StCritiqueToolbarPresenterTest >> testOpen [
 
 	| window |
-	window := CBCritiqueToolbar open.
+	window := StCritiqueToolbarPresenter open.
 	self assert: window isBuilt.
 	window close
 ]

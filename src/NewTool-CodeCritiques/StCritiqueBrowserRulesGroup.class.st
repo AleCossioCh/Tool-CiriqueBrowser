@@ -1,18 +1,18 @@
 "
-I represent a group of rules in CBCritiqueBrowser tree view
+I represent a group of rules in CBCritiqueBrowser tree view.
 "
 Class {
-	#name : #CBCritiqueBrowserRulesGroup,
+	#name : #StCritiqueBrowserRulesGroup,
 	#superclass : #Object,
 	#instVars : [
 		'name',
 		'rules'
 	],
-	#category : #'Tool-CritiqueBrowser-Utilities'
+	#category : #'NewTool-CodeCritiques-Utilities'
 }
 
 { #category : #'instance creation' }
-CBCritiqueBrowserRulesGroup class >> named: aString rules: aCollection [
+StCritiqueBrowserRulesGroup class >> named: aString rules: aCollection [
 	^ self new
 		  name: aString;
 		  rules: (aCollection sorted: [ :a :b | a name < b name ]);
@@ -20,33 +20,33 @@ CBCritiqueBrowserRulesGroup class >> named: aString rules: aCollection [
 ]
 
 { #category : #enumerating }
-CBCritiqueBrowserRulesGroup >> do: aBlock [
+StCritiqueBrowserRulesGroup >> do: aBlock [
 
 	rules do: aBlock
 ]
 
 { #category : #testing }
-CBCritiqueBrowserRulesGroup >> isComposite [
+StCritiqueBrowserRulesGroup >> isComposite [
 
 	^ true
 ]
 
 { #category : #accessing }
-CBCritiqueBrowserRulesGroup >> name [
+StCritiqueBrowserRulesGroup >> name [
 	^ name
 ]
 
 { #category : #accessing }
-CBCritiqueBrowserRulesGroup >> name: anObject [
+StCritiqueBrowserRulesGroup >> name: anObject [
 	name := anObject
 ]
 
 { #category : #accessing }
-CBCritiqueBrowserRulesGroup >> rules [
+StCritiqueBrowserRulesGroup >> rules [
 	^ rules
 ]
 
 { #category : #accessing }
-CBCritiqueBrowserRulesGroup >> rules: anObject [
+StCritiqueBrowserRulesGroup >> rules: anObject [
 	rules := anObject
 ]

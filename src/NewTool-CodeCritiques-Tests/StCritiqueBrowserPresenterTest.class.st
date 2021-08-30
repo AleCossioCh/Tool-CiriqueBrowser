@@ -2,32 +2,32 @@
 A CBCritiqueBrowserTest is a test class for testing the behaivor of CBCritiqueBrowser
 "
 Class {
-	#name : #CBCritiqueBrowserTest,
+	#name : #StCritiqueBrowserPresenterTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'critiqueBrowser',
 		'rules'
 	],
-	#category : #'Tool-CritiqueBrowser-Tests'
+	#category : #'NewTool-CodeCritiques-Tests'
 }
 
 { #category : #initialization }
-CBCritiqueBrowserTest >> classToTest [
+StCritiqueBrowserPresenterTest >> classToTest [
 
-	^ CBCritiqueBrowser
+	^ StCritiqueBrowserPresenter
 ]
 
-{ #category : #initialization }
-CBCritiqueBrowserTest >> setUp [
+{ #category : #running }
+StCritiqueBrowserPresenterTest >> setUp [
 
 	super setUp.
-	critiqueBrowser := CBCritiqueBrowser new.
+	critiqueBrowser := StCritiqueBrowserPresenter new.
 	rules := (ReRuleManager visibleRuleClasses collect: [ :aClass | 
 		          aClass new ]) sorted: [ :a :b | a name < b name ].
 ]
 
 { #category : #initialization }
-CBCritiqueBrowserTest >> testBrowseRule [
+StCritiqueBrowserPresenterTest >> testBrowseRule [
 
 	| windowBrowser singleRule |
 	singleRule := rules first.
@@ -40,7 +40,7 @@ CBCritiqueBrowserTest >> testBrowseRule [
 ]
 
 { #category : #initialization }
-CBCritiqueBrowserTest >> testInitializePresenters [
+StCritiqueBrowserPresenterTest >> testInitializePresenters [
 
 	self
 		assert: critiqueBrowser rulesModel class
@@ -50,7 +50,7 @@ CBCritiqueBrowserTest >> testInitializePresenters [
 		equals: SpCodePresenter.
 	self
 		assert: critiqueBrowser toolbarModel class
-		equals: CBCritiqueToolbar.
+		equals: StCritiqueToolbarPresenter.
 	self
 		assert: critiqueBrowser criticsModel class
 		equals: SpListPresenter.
@@ -59,7 +59,7 @@ CBCritiqueBrowserTest >> testInitializePresenters [
 ]
 
 { #category : #initialization }
-CBCritiqueBrowserTest >> testOpen [
+StCritiqueBrowserPresenterTest >> testOpen [
 
 	| window |
 	window := self classToTest open.

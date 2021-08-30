@@ -2,10 +2,10 @@
 I display everything about critiques:
 	- critiques violating the selected rule
 	- options to do with the critiques
-	- source code for selected critique
+	- source code for the selected critique
 
-I interact with CBCritiqueToolbar to make actions on critiques. 
-I interact with CBCritiqueBrowser to get selected rules and display critiques.
+I interact with StCritiqueToolbarPresenter to make actions on critiques. 
+I interact with StCritiqueBrowserPresenter to get selected rules and show critiques.
 
 You can open me whit:
 `CBSingleCodeCritiqueResultList open`.
@@ -14,7 +14,7 @@ You can open me whit:
 
 "
 Class {
-	#name : #CBSingleCodeCritiqueResultList,
+	#name : #StSingleCritiqueResultListPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
 		'rule',
@@ -27,11 +27,11 @@ Class {
 	#classInstVars : [
 		'icons'
 	],
-	#category : #'Tool-CritiqueBrowser-Parts'
+	#category : #'NewTool-CodeCritiques-Parts'
 }
 
 { #category : #specs }
-CBSingleCodeCritiqueResultList class >> defaultSpec [
+StSingleCritiqueResultListPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
 		  add: #criticsModel;
@@ -41,7 +41,7 @@ CBSingleCodeCritiqueResultList class >> defaultSpec [
 ]
 
 { #category : #icons }
-CBSingleCodeCritiqueResultList class >> exclamationIcon [ 
+StSingleCritiqueResultListPresenter class >> exclamationIcon [ 
 
 	^  icons
 			at: #'exclamationIcon'
@@ -50,7 +50,7 @@ CBSingleCodeCritiqueResultList class >> exclamationIcon [
 ]
 
 { #category : #icons }
-CBSingleCodeCritiqueResultList class >> exclamationIconContents [
+StSingleCritiqueResultListPresenter class >> exclamationIconContents [
 	"Private - Method generated"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0
 RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJPSURBVDjLpZPLS5RhFMYfv9QJ
@@ -68,26 +68,26 @@ e48/+xD8oxcAYPzs4QaS7RR2kbLTTOTQieczfzfTv8QPldGvTGoF6/8AAAAASUVORK5CYII='
 ]
 
 { #category : #'class initialization' }
-CBSingleCodeCritiqueResultList class >> initialize [
+StSingleCritiqueResultListPresenter class >> initialize [
 	
 	icons := IdentityDictionary new
 ]
 
 { #category : #icons }
-CBSingleCodeCritiqueResultList class >> open [
+StSingleCritiqueResultListPresenter class >> open [
 
 	<example>
 	^ self new openWithSpec
 ]
 
 { #category : #specs }
-CBSingleCodeCritiqueResultList class >> title [
+StSingleCritiqueResultListPresenter class >> title [
 
 	^ 'Critique Browser'
 ]
 
 { #category : #icons }
-CBSingleCodeCritiqueResultList class >> wrenchOrangeIcon [
+StSingleCritiqueResultListPresenter class >> wrenchOrangeIcon [
 
 	^  icons
 			at: #'wrenchOrangeIcon'
@@ -96,7 +96,7 @@ CBSingleCodeCritiqueResultList class >> wrenchOrangeIcon [
 ]
 
 { #category : #icons }
-CBSingleCodeCritiqueResultList class >> wrenchOrangeIconContents [
+StSingleCritiqueResultListPresenter class >> wrenchOrangeIconContents [
 	"Private - Method generated"
 	^ 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0
 RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAHaSURBVDjLlZO7a1NRHMfzfzhI
@@ -112,7 +112,7 @@ QewSrJyeCd4P0bnwXYISy3MCn5oZNtsf3pH46e7XBJcAAAAASUVORK5CYII='
 ]
 
 { #category : #menu }
-CBSingleCodeCritiqueResultList >> addCriticToFalsePositive [
+StSingleCritiqueResultListPresenter >> addCriticToFalsePositive [
 
 	criticsModel selectedItems ifNotNil: [ :items | 
 		items do: [ :item | 
@@ -120,22 +120,22 @@ CBSingleCodeCritiqueResultList >> addCriticToFalsePositive [
 ]
 
 { #category : #menu }
-CBSingleCodeCritiqueResultList >> addCritiqueToDo [
+StSingleCritiqueResultListPresenter >> addCritiqueToDo [
 
 	criticsModel selectedItems ifNotNil: [ :items | 
 		items do: [ :item | cache addToDo: item forRule: rule ] ]
 ]
 
 { #category : #private }
-CBSingleCodeCritiqueResultList >> applyTransformation [
+StSingleCritiqueResultListPresenter >> applyTransformation [
 
 	criticsModel selectedItem ifNotNil: [ :critique | 
-		(CBRewriteCritiqueChangesBrowser changes: { critique change })
+		(StRewriteCritiqueChangesBrowserPresenter changes: { critique change })
 			  open ]
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> banRule [
+StSingleCritiqueResultListPresenter >> banRule [
 
 	| crit |
 						  crit := criticsModel selectedItem.
@@ -143,7 +143,7 @@ CBSingleCodeCritiqueResultList >> banRule [
 ]
 
 { #category : #menu }
-CBSingleCodeCritiqueResultList >> browseCritic [
+StSingleCritiqueResultListPresenter >> browseCritic [
 	criticsModel selectedItem
 		ifNotNil: [ :element |
 			| entity |
@@ -154,7 +154,7 @@ CBSingleCodeCritiqueResultList >> browseCritic [
 ]
 
 { #category : #accessing }
-CBSingleCodeCritiqueResultList >> buildMenuCritique [
+StSingleCritiqueResultListPresenter >> buildMenuCritique [
 
 	^ SpMenuPresenter new
 		  addGroup: [ :group | 
@@ -201,24 +201,24 @@ CBSingleCodeCritiqueResultList >> buildMenuCritique [
 ]
 
 { #category : #accessing }
-CBSingleCodeCritiqueResultList >> cache: aCache [
+StSingleCritiqueResultListPresenter >> cache: aCache [
 
 	cache := aCache
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> connectPresenters [
+StSingleCritiqueResultListPresenter >> connectPresenters [
 
 	self whenSelectedItemChangesOnListModel
 ]
 
 { #category : #accessing }
-CBSingleCodeCritiqueResultList >> criticsModel [
+StSingleCritiqueResultListPresenter >> criticsModel [
 	^ criticsModel
 ]
 
 { #category : #private }
-CBSingleCodeCritiqueResultList >> criticsOf: aRule [
+StSingleCritiqueResultListPresenter >> criticsOf: aRule [
 	cache ifNil: [^ {}].
 	criticsModel items: ((cache criticsOf: aRule)
 				sorted: [ :a :b | 
@@ -226,12 +226,12 @@ CBSingleCodeCritiqueResultList >> criticsOf: aRule [
 ]
 
 { #category : #private }
-CBSingleCodeCritiqueResultList >> defaultColor [
+StSingleCritiqueResultListPresenter >> defaultColor [
 	^ Color red 
 ]
 
 { #category : #private }
-CBSingleCodeCritiqueResultList >> diffSeparator [
+StSingleCritiqueResultListPresenter >> diffSeparator [
 
 	^ '——————————————————
 	
@@ -239,7 +239,7 @@ CBSingleCodeCritiqueResultList >> diffSeparator [
 ]
 
 { #category : #private }
-CBSingleCodeCritiqueResultList >> diffTextForChange: aRefactoryChange [
+StSingleCritiqueResultListPresenter >> diffTextForChange: aRefactoryChange [
 
 	| text builder |
 	text := Text new.
@@ -254,19 +254,19 @@ CBSingleCodeCritiqueResultList >> diffTextForChange: aRefactoryChange [
 ]
 
 { #category : #private }
-CBSingleCodeCritiqueResultList >> falsePositiveColor [
+StSingleCritiqueResultListPresenter >> falsePositiveColor [
 	^ Color darkGray
 ]
 
 { #category : #private }
-CBSingleCodeCritiqueResultList >> formatCritic: aCritic [
+StSingleCritiqueResultListPresenter >> formatCritic: aCritic [
 	
 	^  String streamContents: [:s | aCritic sourceAnchor entity criticNameOn: s ]
 
 ]
 
 { #category : #private }
-CBSingleCodeCritiqueResultList >> iconFor: anItem [
+StSingleCritiqueResultListPresenter >> iconFor: anItem [
 
 	^ (cache isFalsePositive: anItem forRule: rule) ifFalse: [ 
 		  (cache isToDo: anItem forRule: rule)
@@ -283,14 +283,14 @@ CBSingleCodeCritiqueResultList >> iconFor: anItem [
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> initialize [
+StSingleCritiqueResultListPresenter >> initialize [
 
 	super initialize.
 	self initializeShortcuts
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> initializeDisplayCritic: aCritic forRule: aRule [
+StSingleCritiqueResultListPresenter >> initializeDisplayCritic: aCritic forRule: aRule [
 
 	| criticRepresentation |
 	criticRepresentation := (self formatCritic: aCritic) asMorph.
@@ -303,11 +303,11 @@ CBSingleCodeCritiqueResultList >> initializeDisplayCritic: aCritic forRule: aRul
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> initializePresenters [
+StSingleCritiqueResultListPresenter >> initializePresenters [
 
 	criticsModel := self newList.
 	sourceCodeModel := self newSourceCodeCritique.
-	toolbarModel := CBCritiqueToolbar new.
+	toolbarModel := StCritiqueToolbarPresenter new.
 	criticsModel beMultipleSelection.
 	criticsModel display: [ :selec | 
 		self initializeDisplayCritic: selec forRule: rule ].
@@ -320,30 +320,30 @@ CBSingleCodeCritiqueResultList >> initializePresenters [
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> initializeShortcuts [
+StSingleCritiqueResultListPresenter >> initializeShortcuts [
 	criticsModel bindKeyCombination: PharoShortcuts current browseShortcut toAction: [ self browseCritic ]
 ]
 
 { #category : #private }
-CBSingleCodeCritiqueResultList >> isCritiqueFalsePositive [ 
+StSingleCritiqueResultListPresenter >> isCritiqueFalsePositive [ 
 	^ criticsModel selectedItems anySatisfy: [ :critic | 
 								  (cache isFalsePositive: critic forRule: rule)]
 ]
 
 { #category : #menu }
-CBSingleCodeCritiqueResultList >> isCritiqueToDo [
+StSingleCritiqueResultListPresenter >> isCritiqueToDo [
 ^ criticsModel selectedItems anySatisfy: [ :critic | 
 		 cache isToDo: critic forRule: rule ]
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> newSourceCodeCritique [
+StSingleCritiqueResultListPresenter >> newSourceCodeCritique [
 	
 	^ SpCodePresenter new beNotEditable.
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> rationaleOfRule [
+StSingleCritiqueResultListPresenter >> rationaleOfRule [
 
 	| crit |
 						  crit := criticsModel selectedItem.
@@ -354,14 +354,14 @@ CBSingleCodeCritiqueResultList >> rationaleOfRule [
 ]
 
 { #category : #menu }
-CBSingleCodeCritiqueResultList >> removeCriticToDo [
+StSingleCritiqueResultListPresenter >> removeCriticToDo [
 
 	criticsModel selectedItems ifNotNil: [ :items | 
 		items do: [ :item | cache removeToDo: item forRule: rule ] ]
 ]
 
 { #category : #menu }
-CBSingleCodeCritiqueResultList >> removeCriticToFalsePositive [
+StSingleCritiqueResultListPresenter >> removeCriticToFalsePositive [
 
 	criticsModel selectedItems ifNotNil: [ :items | 
 		items do: [ :item | 
@@ -369,17 +369,17 @@ CBSingleCodeCritiqueResultList >> removeCriticToFalsePositive [
 ]
 
 { #category : #api }
-CBSingleCodeCritiqueResultList >> resetSelection [
+StSingleCritiqueResultListPresenter >> resetSelection [
 	self criticsModel resetListSelection
 ]
 
 { #category : #accessing }
-CBSingleCodeCritiqueResultList >> rule [
+StSingleCritiqueResultListPresenter >> rule [
 	^ rule
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> rule: aRule [
+StSingleCritiqueResultListPresenter >> rule: aRule [
 
 	rule := aRule.
 	(rule isNil or: [ rule isComposite ]) ifTrue: [ ^ self ].
@@ -388,17 +388,17 @@ CBSingleCodeCritiqueResultList >> rule: aRule [
 ]
 
 { #category : #'smartSuggestions - support' }
-CBSingleCodeCritiqueResultList >> selectedMessage [
+StSingleCritiqueResultListPresenter >> selectedMessage [
 	^ nil
 ]
 
 { #category : #private }
-CBSingleCodeCritiqueResultList >> selectionIntervalFor: aString [
+StSingleCritiqueResultListPresenter >> selectionIntervalFor: aString [
 	^ rule result selectionIntervalFor: aString
 ]
 
 { #category : #accessing }
-CBSingleCodeCritiqueResultList >> setFocusOrder [
+StSingleCritiqueResultListPresenter >> setFocusOrder [
 
 	self focusOrder
 		add: criticsModel;
@@ -406,7 +406,7 @@ CBSingleCodeCritiqueResultList >> setFocusOrder [
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> setTextModelForClassOrMethod: aCritique [
+StSingleCritiqueResultListPresenter >> setTextModelForClassOrMethod: aCritique [
 
 	| entity |
 	entity := aCritique sourceAnchor entity.
@@ -423,7 +423,7 @@ CBSingleCodeCritiqueResultList >> setTextModelForClassOrMethod: aCritique [
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> setTextModelForNil [
+StSingleCritiqueResultListPresenter >> setTextModelForNil [
 
 	| text |
 	text := rule rationale isEmpty
@@ -435,7 +435,7 @@ CBSingleCodeCritiqueResultList >> setTextModelForNil [
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> setTextModelForTransformationRule: selection [
+StSingleCritiqueResultListPresenter >> setTextModelForTransformationRule: selection [
 	
 	sourceCodeModel behavior: nil.
 	sourceCodeModel text: (
@@ -446,24 +446,24 @@ CBSingleCodeCritiqueResultList >> setTextModelForTransformationRule: selection [
 ]
 
 { #category : #accessing }
-CBSingleCodeCritiqueResultList >> sourceCodeModel [ 
+StSingleCritiqueResultListPresenter >> sourceCodeModel [ 
 
 	^ sourceCodeModel
 ]
 
 { #category : #private }
-CBSingleCodeCritiqueResultList >> toDoColor [
+StSingleCritiqueResultListPresenter >> toDoColor [
 	^ Color orange
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> toolbarModel [
+StSingleCritiqueResultListPresenter >> toolbarModel [
 
 	^ toolbarModel
 ]
 
 { #category : #thread }
-CBSingleCodeCritiqueResultList >> updateList [
+StSingleCritiqueResultListPresenter >> updateList [
 
 	self criticsOf: rule.
 	thread ifNotNil: [ thread terminate ].
@@ -471,7 +471,7 @@ CBSingleCodeCritiqueResultList >> updateList [
 ]
 
 { #category : #initialization }
-CBSingleCodeCritiqueResultList >> whenSelectedItemChangesOnListModel [
+StSingleCritiqueResultListPresenter >> whenSelectedItemChangesOnListModel [
 
 	criticsModel whenSelectionChangedDo: [ :aSelection | 
 		| critique |
