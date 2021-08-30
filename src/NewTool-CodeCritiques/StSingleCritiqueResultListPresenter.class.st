@@ -8,7 +8,7 @@ I interact with StCritiqueToolbarPresenter to make actions on critiques.
 I interact with StCritiqueBrowserPresenter to get selected rules and show critiques.
 
 You can open me whit:
-`CBSingleCodeCritiqueResultList open`.
+`StSingleCritiqueResultListPresenter open`.
 
 
 

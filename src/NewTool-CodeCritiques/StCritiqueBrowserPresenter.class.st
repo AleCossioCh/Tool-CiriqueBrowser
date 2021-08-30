@@ -3,7 +3,7 @@ I am a presenter that allows get a list of critiques that broken the selected ru
 
 I interact with StCritiquePackageSelectorPresenter to get the list of selected packages.
 I interact with StCritiqueRuleSelectorPresenter to get the list of selected rules.
-I interact with CBritiquesCache to get the critiques saved as 'To-do' and marked as 'false positive'.
+I interact with StCritiquesCache to get the critiques saved as 'To-do' and marked as 'false positive'.
 
 You can open me whit:
 `StCritiqueBrowserPresenter open`

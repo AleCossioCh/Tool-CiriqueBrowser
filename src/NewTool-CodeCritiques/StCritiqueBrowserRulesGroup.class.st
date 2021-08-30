@@ -1,5 +1,5 @@
 "
-I represent a group of rules in CBCritiqueBrowser tree view.
+I represent a group of rules in StCritiqueBrowserPresenter tree view.
 "
 Class {
 	#name : #StCritiqueBrowserRulesGroup,
