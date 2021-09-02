@@ -2,7 +2,7 @@
 I represent a group of rules in StCritiqueBrowserPresenter tree view.
 "
 Class {
-	#name : #StCritiqueBrowserRulesGroup,
+	#name : #CBCritiquesRuleGroup,
 	#superclass : #Object,
 	#instVars : [
 		'name',
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-StCritiqueBrowserRulesGroup class >> named: aString rules: aCollection [
+CBCritiquesRuleGroup class >> named: aString rules: aCollection [
 	^ self new
 		  name: aString;
 		  rules: (aCollection sorted: [ :a :b | a name < b name ]);
@@ -20,33 +20,33 @@ StCritiqueBrowserRulesGroup class >> named: aString rules: aCollection [
 ]
 
 { #category : #enumerating }
-StCritiqueBrowserRulesGroup >> do: aBlock [
+CBCritiquesRuleGroup >> do: aBlock [
 
 	rules do: aBlock
 ]
 
 { #category : #testing }
-StCritiqueBrowserRulesGroup >> isComposite [
+CBCritiquesRuleGroup >> isComposite [
 
 	^ true
 ]
 
 { #category : #accessing }
-StCritiqueBrowserRulesGroup >> name [
+CBCritiquesRuleGroup >> name [
 	^ name
 ]
 
 { #category : #accessing }
-StCritiqueBrowserRulesGroup >> name: anObject [
+CBCritiquesRuleGroup >> name: anObject [
 	name := anObject
 ]
 
 { #category : #accessing }
-StCritiqueBrowserRulesGroup >> rules [
+CBCritiquesRuleGroup >> rules [
 	^ rules
 ]
 
 { #category : #accessing }
-StCritiqueBrowserRulesGroup >> rules: anObject [
+CBCritiquesRuleGroup >> rules: anObject [
 	rules := anObject
 ]

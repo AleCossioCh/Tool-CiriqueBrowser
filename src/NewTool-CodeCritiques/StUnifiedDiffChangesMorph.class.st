@@ -200,7 +200,7 @@ StUnifiedDiffChangesMorph >> initialize [
 StUnifiedDiffChangesMorph >> joinSectionClass [
 	"Answer the class to use for a new join section."
 
-	^StUnifiedDiffJoinSection
+	^CBUnifiedDiffJoinSection
 ]
 
 { #category : #actions }

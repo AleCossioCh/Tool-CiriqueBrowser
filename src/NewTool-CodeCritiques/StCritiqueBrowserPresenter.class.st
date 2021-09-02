@@ -84,7 +84,7 @@ StCritiqueBrowserPresenter class >> open [
 StCritiqueBrowserPresenter class >> openOnCurrentWorkingConfiguration [
 
 	<script>
-	StCritiqueWorkingConfiguration exists
+	CBCritiqueWorkingConfiguration exists
 		ifTrue: [ StResetWindowPresenter new openWithSpec ]
 		ifFalse: [ StCritiquePackageSelectorPresenter open ]
 ]
@@ -335,7 +335,7 @@ StCritiqueBrowserPresenter >> hasBrokenRules: rule [
 StCritiqueBrowserPresenter >> initialize [
 
 	super initialize.
-	cache := StCritiquesCache new.
+	cache := CBCritiquesCache new.
 	checker := ReSmalllintChecker new.
 	cache checker: checker.
 	cache browser: self.
@@ -506,7 +506,7 @@ StCritiqueBrowserPresenter >> rules: rulesCollection [
 
 	self rulesModel roots:
 		(((rulesCollection groupedBy: #group) associations collect: [ :as | 
-			  StCritiqueBrowserRulesGroup named: as key rules: as value ]) sorted: [ 
+			  CBCritiquesRuleGroup named: as key rules: as value ]) sorted: [ 
 			 :a 
 			 :b | a name < b name ])
 ]

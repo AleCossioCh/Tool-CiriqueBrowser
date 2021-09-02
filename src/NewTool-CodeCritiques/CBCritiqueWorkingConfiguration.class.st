@@ -4,7 +4,7 @@ A CritiqueWorkspace holds the current worspace for the StCritiqueBrowserPresente
 It's composed of the set of rules to check (as a composite rule) and the environment to work in.
 "
 Class {
-	#name : #StCritiqueWorkingConfiguration,
+	#name : #CBCritiqueWorkingConfiguration,
 	#superclass : #Object,
 	#instVars : [
 		'rule',
@@ -19,65 +19,65 @@ Class {
 }
 
 { #category : #'instance creation' }
-StCritiqueWorkingConfiguration class >> current [
+CBCritiqueWorkingConfiguration class >> current [
 
 	^ Current ifNil: [ Current  := self basicNew initialize ].
 ]
 
 { #category : #testing }
-StCritiqueWorkingConfiguration class >> exists [
+CBCritiqueWorkingConfiguration class >> exists [
 
 	^ Current notNil
 ]
 
 { #category : #'instance creation' }
-StCritiqueWorkingConfiguration class >> new [
+CBCritiqueWorkingConfiguration class >> new [
 
 	^ self shouldNotImplement
 ]
 
 { #category : #initialization }
-StCritiqueWorkingConfiguration class >> reset [
+CBCritiqueWorkingConfiguration class >> reset [
 
 	Current := nil
 ]
 
 { #category : #accessing }
-StCritiqueWorkingConfiguration >> environment [
+CBCritiqueWorkingConfiguration >> environment [
 	^ environment
 ]
 
 { #category : #accessing }
-StCritiqueWorkingConfiguration >> environment: anObject [
+CBCritiqueWorkingConfiguration >> environment: anObject [
 	environment := anObject
 ]
 
 { #category : #accessing }
-StCritiqueWorkingConfiguration >> logInManifest [
+CBCritiqueWorkingConfiguration >> logInManifest [
 	^ logInManifest
 ]
 
 { #category : #accessing }
-StCritiqueWorkingConfiguration >> logInManifest: anObject [
+CBCritiqueWorkingConfiguration >> logInManifest: anObject [
 	logInManifest := anObject
 ]
 
 { #category : #accessing }
-StCritiqueWorkingConfiguration >> removeTestCase [
+CBCritiqueWorkingConfiguration >> removeTestCase [
 	^ removeTestCase
 ]
 
 { #category : #accessing }
-StCritiqueWorkingConfiguration >> removeTestCase: aBoolean [
+CBCritiqueWorkingConfiguration >> removeTestCase: aBoolean [
 	removeTestCase := aBoolean
 ]
 
 { #category : #accessing }
-StCritiqueWorkingConfiguration >> rule [
+CBCritiqueWorkingConfiguration >> rule [
 	^ rule
 ]
 
 { #category : #accessing }
-StCritiqueWorkingConfiguration >> rule: anObject [
+CBCritiqueWorkingConfiguration >> rule: anObject [
 	rule := anObject
 ]

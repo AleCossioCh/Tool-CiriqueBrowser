@@ -68,7 +68,7 @@ StResetWindowPresenter >> initializeWindow: aWindowPresenter [
 StResetWindowPresenter >> openCurrentConfiguration [
 
 	StCritiqueBrowserPresenter openOnWorkingConfiguration:
-		  StCritiqueWorkingConfiguration current
+		  CBCritiqueWorkingConfiguration current
 ]
 
 { #category : #initialization }

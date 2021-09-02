@@ -20,7 +20,7 @@ StCritiqueRuleSelectorPresenterTest >> setUp [
 	rules := (ReRuleManager visibleRuleClasses collect: [ :aClass | 
 		          aClass new ]) sorted: [ :a :b | a name < b name ].
 	rulesByGroup := (rules groupedBy: #group) associations collect: [ :as | 
-		                StCritiqueBrowserRulesGroup
+		                CBCritiquesRuleGroup
 			                named: as key
 			                rules: as value ]
 ]
