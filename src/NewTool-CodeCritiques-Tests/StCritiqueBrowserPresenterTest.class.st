@@ -1,5 +1,5 @@
 "
-A CBCritiqueBrowserTest is a test class for testing the behaivor of CBCritiqueBrowser
+A StCritiqueBrowserTest is a test class for testing the behaivor of StCritiqueBrowserPresenter
 "
 Class {
 	#name : #StCritiqueBrowserPresenterTest,
@@ -52,10 +52,8 @@ StCritiqueBrowserPresenterTest >> testInitializePresenters [
 		assert: critiqueBrowser toolbarModel class
 		equals: StCritiqueToolbarPresenter.
 	self
-		assert: critiqueBrowser criticsModel class
-		equals: SpListPresenter.
-
-		
+		assert: critiqueBrowser critiquesModel class
+		equals: SpListPresenter
 ]
 
 { #category : #initialization }

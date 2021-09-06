@@ -36,7 +36,7 @@ CBUnifiedDiffJoinSection >> copyRange: anInterval [
 	self updateShape
 ]
 
-{ #category : #copying }
+{ #category : #actions }
 CBUnifiedDiffJoinSection >> createHighlights [
 	"Create and store the src and dst highlights."
 
@@ -135,7 +135,7 @@ CBUnifiedDiffJoinSection >> createHighlightsFrom: srcPara to: dstPara withCopy: 
 						color: self removalHighlightColor ]  ]
 ]
 
-{ #category : #copying }
+{ #category : #initialization }
 CBUnifiedDiffJoinSection >> initialize [ 
 	super initialize .
 	self copy: JoinSide new.

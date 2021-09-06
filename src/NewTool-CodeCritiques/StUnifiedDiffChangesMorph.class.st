@@ -152,7 +152,7 @@ StUnifiedDiffChangesMorph >> calculatedJoinMappings [
 	^ joins
 ]
 
-{ #category : #actions }
+{ #category : #'instance creation' }
 StUnifiedDiffChangesMorph >> from: old to: new [
 	"Set the old (src) and new (dst) text."
 	self sourceTextModel setText: old.
@@ -169,7 +169,7 @@ StUnifiedDiffChangesMorph >> from: old to: new [
 		applyMap
 ]
 
-{ #category : #actions }
+{ #category : #'instance creation' }
 StUnifiedDiffChangesMorph >> from: old to: new contextClass: aClass [
 
 	"Set the old (src) and new (dst) text."
@@ -188,7 +188,7 @@ StUnifiedDiffChangesMorph >> from: old to: new contextClass: aClass [
 		applyMap
 ]
 
-{ #category : #actions }
+{ #category : #initialization }
 StUnifiedDiffChangesMorph >> initialize [
 	"Initialize the receiver."
 
@@ -216,7 +216,7 @@ StUnifiedDiffChangesMorph >> newCopyMorph [
 		yourself
 ]
 
-{ #category : #actions }
+{ #category : #'instance creation' }
 StUnifiedDiffChangesMorph >> newDstMorph [
 	"Answer a new dst text morph."
 

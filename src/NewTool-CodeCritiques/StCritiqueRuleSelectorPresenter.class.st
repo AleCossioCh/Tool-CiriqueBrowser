@@ -135,7 +135,7 @@ StCritiqueRuleSelectorPresenter >> initalizeSelectedList [
 	selectedList := self instantiate: SpTreePresenter
 ]
 
-{ #category : #adding }
+{ #category : #initialization }
 StCritiqueRuleSelectorPresenter >> initialize [
 
 	| wrappingBlock selectedRulesChildrenBlock rulesToSelectChildrenBlock |
@@ -257,7 +257,7 @@ StCritiqueRuleSelectorPresenter >> initializeNextButton [
 		action: [ self nextAction ]
 ]
 
-{ #category : #adding }
+{ #category : #initialization }
 StCritiqueRuleSelectorPresenter >> initializePresenters [
 
 	self initializeLayout.
@@ -391,7 +391,7 @@ StCritiqueRuleSelectorPresenter >> selectedRules: anObject [
 	selectedRules := anObject
 ]
 
-{ #category : #adding }
+{ #category : #'accessing - model' }
 StCritiqueRuleSelectorPresenter >> setModelBeforeInitialization: aCollection [
 
 	items := aCollection first.

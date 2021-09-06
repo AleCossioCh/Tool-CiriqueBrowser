@@ -1,5 +1,5 @@
 "
-A CBRulesChooserPresenterTest is a test class for testing the behaivor of CBRulesChooserPresenter
+A CStCritiqueRuleSelectorPresenterTest is a test class for testing the behaivor of StCritiqueRuleSelectorPresenter
 "
 Class {
 	#name : #StCritiqueRuleSelectorPresenterTest,

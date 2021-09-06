@@ -18,7 +18,7 @@ Class {
 	#superclass : #SpPresenter,
 	#instVars : [
 		'rule',
-		'criticsModel',
+		'critiquesModel',
 		'sourceCodeModel',
 		'cache',
 		'thread',
@@ -34,7 +34,7 @@ Class {
 StSingleCritiqueResultListPresenter class >> defaultSpec [
 
 	^ SpBoxLayout newTopToBottom
-		  add: #criticsModel;
+		  add: #critiquesModel;
 		  add: #toolbarModel height: 25;
 		  add: #sourceCodeModel;
 		  yourself
@@ -112,45 +112,44 @@ QewSrJyeCd4P0bnwXYISy3MCn5oZNtsf3pH46e7XBJcAAAAASUVORK5CYII='
 ]
 
 { #category : #menu }
-StSingleCritiqueResultListPresenter >> addCriticToFalsePositive [
+StSingleCritiqueResultListPresenter >> addCritiqueToDo [
 
-	criticsModel selectedItems ifNotNil: [ :items | 
-		items do: [ :item | 
-			cache addFalsePositive: item forRule: rule ] ]
+	critiquesModel selectedItems ifNotNil: [ :items | 
+		items do: [ :item | cache addToDo: item forRule: rule ] ]
 ]
 
 { #category : #menu }
-StSingleCritiqueResultListPresenter >> addCritiqueToDo [
+StSingleCritiqueResultListPresenter >> addCritiqueToFalsePositive [
 
-	criticsModel selectedItems ifNotNil: [ :items | 
-		items do: [ :item | cache addToDo: item forRule: rule ] ]
+	critiquesModel selectedItems ifNotNil: [ :items | 
+		items do: [ :item | cache addFalsePositive: item forRule: rule ] ]
 ]
 
 { #category : #private }
 StSingleCritiqueResultListPresenter >> applyTransformation [
 
-	criticsModel selectedItem ifNotNil: [ :critique | 
-		(StRewriteCritiqueChangesBrowserPresenter changes: { critique change })
-			  open ]
+	critiquesModel selectedItem ifNotNil: [ :critique | 
+		(StRewriteCritiqueChangesBrowserPresenter changes:
+			 { critique change }) open ]
 ]
 
 { #category : #initialization }
 StSingleCritiqueResultListPresenter >> banRule [
 
 	| crit |
-						  crit := criticsModel selectedItem.
-						  crit guidedBan
+	crit := critiquesModel selectedItem.
+	crit guidedBan
 ]
 
 { #category : #menu }
-StSingleCritiqueResultListPresenter >> browseCritic [
-	criticsModel selectedItem
-		ifNotNil: [ :element |
-			| entity |
-			entity := element sourceAnchor entity.
-			entity isBehavior 
-				ifTrue: [ entity instanceSide browse ]
-				ifFalse: [ entity browse ] ] 
+StSingleCritiqueResultListPresenter >> browseCritique [
+
+	critiquesModel selectedItem ifNotNil: [ :element | 
+		| entity |
+		entity := element sourceAnchor entity.
+		entity isBehavior
+			ifTrue: [ entity instanceSide browse ]
+			ifFalse: [ entity browse ] ]
 ]
 
 { #category : #accessing }
@@ -161,23 +160,23 @@ StSingleCritiqueResultListPresenter >> buildMenuCritique [
 			  group addItem: [ :item | 
 					  item
 						  name: 'Browse' translated;
-						  action: [ self browseCritic ] ] ];
+						  action: [ self browseCritique ] ] ];
 		  addGroup: [ :group | 
 			  group addItem: [ :item | 
 				  item
 					  name: 'Mark as wrong' translated;
 					  visibleIf: [ self isCritiqueFalsePositive not ];
-					  action: [ self addCriticToFalsePositive ] ].
+					  action: [ self addCritiqueToFalsePositive ] ].
 			  group addItem: [ :item | 
 				  item
 					  name: 'Unmark as wrong' translated;
 					  visibleIf: [ self isCritiqueFalsePositive ];
-					  action: [ self removeCriticToFalsePositive ] ].
+					  action: [ self removeCritiqueToFalsePositive ] ].
 			  group addItem: [ :item | 
 				  item
 					  name: 'Unmark as To Do' translated;
 					  visibleIf: [ self isCritiqueToDo ];
-					  action: [ self removeCriticToDo ] ].
+					  action: [ self removeCritiqueToDo ] ].
 			  group addItem: [ :item | 
 				  item
 					  name: 'Mark as To Do' translated;
@@ -191,7 +190,7 @@ StSingleCritiqueResultListPresenter >> buildMenuCritique [
 			  group addItem: [ :item | 
 				  item
 					  name: 'Automatically resolve the issue' translated;
-					  visibleIf: [ criticsModel selectedItem providesChange ];
+					  visibleIf: [ critiquesModel selectedItem providesChange ];
 					  action: [ self applyTransformation ] ].
 			  group addItem: [ :item | 
 				  item
@@ -213,16 +212,17 @@ StSingleCritiqueResultListPresenter >> connectPresenters [
 ]
 
 { #category : #accessing }
-StSingleCritiqueResultListPresenter >> criticsModel [
-	^ criticsModel
+StSingleCritiqueResultListPresenter >> critiquesModel [
+
+	^ critiquesModel
 ]
 
 { #category : #private }
-StSingleCritiqueResultListPresenter >> criticsOf: aRule [
-	cache ifNil: [^ {}].
-	criticsModel items: ((cache criticsOf: aRule)
-				sorted: [ :a :b | 
-					a printString < b printString ]).
+StSingleCritiqueResultListPresenter >> critiquesOf: aRule [
+
+	cache ifNil: [ ^ {  } ].
+	critiquesModel items: ((cache critiquesOf: aRule) sorted: [ :a :b | 
+			 a printString < b printString ])
 ]
 
 { #category : #private }
@@ -259,10 +259,10 @@ StSingleCritiqueResultListPresenter >> falsePositiveColor [
 ]
 
 { #category : #private }
-StSingleCritiqueResultListPresenter >> formatCritic: aCritic [
-	
-	^  String streamContents: [:s | aCritic sourceAnchor entity criticNameOn: s ]
+StSingleCritiqueResultListPresenter >> formatCritique: aCritique [
 
+	^ String streamContents: [ :s | 
+		  aCritique sourceAnchor entity criticNameOn: s ]
 ]
 
 { #category : #private }
@@ -290,50 +290,56 @@ StSingleCritiqueResultListPresenter >> initialize [
 ]
 
 { #category : #initialization }
-StSingleCritiqueResultListPresenter >> initializeDisplayCritic: aCritic forRule: aRule [
+StSingleCritiqueResultListPresenter >> initializeDisplayCritique: aCritique forRule: aRule [
 
-	| criticRepresentation |
-	criticRepresentation := (self formatCritic: aCritic) asMorph.
-	^ (cache isFalsePositive: aCritic forRule: aRule)
-		  ifTrue: [ criticRepresentation color: self falsePositiveColor ]
+	| critiqueRepresentation |
+	critiqueRepresentation := (self formatCritique: aCritique) asMorph.
+	^ (cache isFalsePositive: aCritique forRule: aRule)
+		  ifTrue: [ critiqueRepresentation color: self falsePositiveColor ]
 		  ifFalse: [ 
-			  (cache isToDo: aCritic forRule: aRule)
-				  ifTrue: [ criticRepresentation color: self toDoColor ]
-				  ifFalse: [ criticRepresentation color: self class theme textColor ] ]
+			  (cache isToDo: aCritique forRule: aRule)
+				  ifTrue: [ critiqueRepresentation color: self toDoColor ]
+				  ifFalse: [ 
+				  critiqueRepresentation color: self class theme textColor ] ]
 ]
 
 { #category : #initialization }
 StSingleCritiqueResultListPresenter >> initializePresenters [
 
-	criticsModel := self newList.
+	critiquesModel := self newList.
 	sourceCodeModel := self newSourceCodeCritique.
 	toolbarModel := StCritiqueToolbarPresenter new.
-	criticsModel beMultipleSelection.
-	criticsModel display: [ :selec | 
-		self initializeDisplayCritic: selec forRule: rule ].
-	criticsModel contextMenu: self buildMenuCritique.
-	criticsModel displayIcon: [ :item | self iconFor: item ].
+	critiquesModel beMultipleSelection.
+	critiquesModel display: [ :selec | 
+		self initializeDisplayCritique: selec forRule: rule ].
+	critiquesModel contextMenu: self buildMenuCritique.
+	critiquesModel displayIcon: [ :item | self iconFor: item ].
 	self focusOrder
-		add: criticsModel;
+		add: critiquesModel;
 		add: toolbarModel;
 		add: sourceCodeModel
 ]
 
 { #category : #initialization }
 StSingleCritiqueResultListPresenter >> initializeShortcuts [
-	criticsModel bindKeyCombination: PharoShortcuts current browseShortcut toAction: [ self browseCritic ]
+
+	critiquesModel
+		bindKeyCombination: PharoShortcuts current browseShortcut
+		toAction: [ self browseCritique ]
 ]
 
 { #category : #private }
-StSingleCritiqueResultListPresenter >> isCritiqueFalsePositive [ 
-	^ criticsModel selectedItems anySatisfy: [ :critic | 
-								  (cache isFalsePositive: critic forRule: rule)]
+StSingleCritiqueResultListPresenter >> isCritiqueFalsePositive [
+
+	^ critiquesModel selectedItems anySatisfy: [ :critique | 
+		  cache isFalsePositive: critique forRule: rule ]
 ]
 
 { #category : #menu }
 StSingleCritiqueResultListPresenter >> isCritiqueToDo [
-^ criticsModel selectedItems anySatisfy: [ :critic | 
-		 cache isToDo: critic forRule: rule ]
+
+	^ critiquesModel selectedItems anySatisfy: [ :critique | 
+		  cache isToDo: critique forRule: rule ]
 ]
 
 { #category : #initialization }
@@ -346,31 +352,31 @@ StSingleCritiqueResultListPresenter >> newSourceCodeCritique [
 StSingleCritiqueResultListPresenter >> rationaleOfRule [
 
 	| crit |
-						  crit := criticsModel selectedItem.
-						  crit popDescriptionUp.
-						  ReSystemAnnouncer uniqueInstance
-							  notifyCritique: crit
-							  descriptionViewedFor: crit sourceAnchor entity 
+	crit := critiquesModel selectedItem.
+	crit popDescriptionUp.
+	ReSystemAnnouncer uniqueInstance
+		notifyCritique: crit
+		descriptionViewedFor: crit sourceAnchor entity
 ]
 
 { #category : #menu }
-StSingleCritiqueResultListPresenter >> removeCriticToDo [
+StSingleCritiqueResultListPresenter >> removeCritiqueToDo [
 
-	criticsModel selectedItems ifNotNil: [ :items | 
+	critiquesModel selectedItems ifNotNil: [ :items | 
 		items do: [ :item | cache removeToDo: item forRule: rule ] ]
 ]
 
 { #category : #menu }
-StSingleCritiqueResultListPresenter >> removeCriticToFalsePositive [
+StSingleCritiqueResultListPresenter >> removeCritiqueToFalsePositive [
 
-	criticsModel selectedItems ifNotNil: [ :items | 
-		items do: [ :item | 
-			cache removeFalsePositive: item forRule: rule ] ]
+	critiquesModel selectedItems ifNotNil: [ :items | 
+		items do: [ :item | cache removeFalsePositive: item forRule: rule ] ]
 ]
 
 { #category : #api }
 StSingleCritiqueResultListPresenter >> resetSelection [
-	self criticsModel resetListSelection
+
+	self critiquesModel resetListSelection
 ]
 
 { #category : #accessing }
@@ -383,8 +389,8 @@ StSingleCritiqueResultListPresenter >> rule: aRule [
 
 	rule := aRule.
 	(rule isNil or: [ rule isComposite ]) ifTrue: [ ^ self ].
-	self criticsOf: aRule.
-	toolbarModel rule: aRule.
+	self critiquesOf: aRule.
+	toolbarModel rule: aRule
 ]
 
 { #category : #'smartSuggestions - support' }
@@ -401,7 +407,7 @@ StSingleCritiqueResultListPresenter >> selectionIntervalFor: aString [
 StSingleCritiqueResultListPresenter >> setFocusOrder [
 
 	self focusOrder
-		add: criticsModel;
+		add: critiquesModel;
 		add: sourceCodeModel
 ]
 
@@ -465,21 +471,22 @@ StSingleCritiqueResultListPresenter >> toolbarModel [
 { #category : #thread }
 StSingleCritiqueResultListPresenter >> updateList [
 
-	self criticsOf: rule.
+	self critiquesOf: rule.
 	thread ifNotNil: [ thread terminate ].
-	thread := [ UIManager default defer:  [ criticsModel updateList ]] fork.
+	thread := [ UIManager default defer: [ critiquesModel updateList ] ]
+		          fork
 ]
 
 { #category : #initialization }
 StSingleCritiqueResultListPresenter >> whenSelectedItemChangesOnListModel [
 
-	criticsModel whenSelectionChangedDo: [ :aSelection | 
+	critiquesModel whenSelectionChangedDo: [ :aSelection | 
 		| critique |
 		critique := aSelection selectedItem.
 		sourceCodeModel selectionInterval: (0 to: 0).
 		rule ifNotNil: [ 
 			critique ifNil: [ self setTextModelForNil ] ifNotNil: [ 
-				toolbarModel critique: critique. 
+				toolbarModel critique: critique.
 				critique providesChange
 					ifTrue: [ self setTextModelForTransformationRule: critique ]
 					ifFalse: [ self setTextModelForClassOrMethod: critique ] ] ] ]

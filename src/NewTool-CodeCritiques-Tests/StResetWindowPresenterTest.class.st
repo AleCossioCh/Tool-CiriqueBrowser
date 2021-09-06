@@ -1,5 +1,5 @@
 "
-A CBResetWindowTest is a test class for testing the behaivor of CBResetWindowTest
+A StResetWindowPresenterTest is a test class for testing the behaivor of StResetWindowPresenter
 "
 Class {
 	#name : #StResetWindowPresenterTest,

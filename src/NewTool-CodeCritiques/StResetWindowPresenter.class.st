@@ -56,7 +56,7 @@ StResetWindowPresenter >> initializePresenters [
 	self setCurrentConfigurationModel
 ]
 
-{ #category : #api }
+{ #category : #initialization }
 StResetWindowPresenter >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter

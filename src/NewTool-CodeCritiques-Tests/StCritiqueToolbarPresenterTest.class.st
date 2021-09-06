@@ -1,5 +1,5 @@
 "
-A CBCritiqueToolbarTest is a test class for testing the behaivor of CBCritiqueToolbar
+A StCritiqueToolbarPresenterTest is a test class for testing the behaivor of StCritiqueToolbarPresenter
 "
 Class {
 	#name : #StCritiqueToolbarPresenterTest,
@@ -20,9 +20,8 @@ StCritiqueToolbarPresenterTest >> setUp [
 { #category : #initialization }
 StCritiqueToolbarPresenterTest >> testInitialize [
 
-	self assert: critiqueToolbar criticHolder value isNil.
-	self assert: critiqueToolbar ruleHolder value isNil.
-	
+	self assert: critiqueToolbar critiqueHolder value isNil.
+	self assert: critiqueToolbar ruleHolder value isNil
 ]
 
 { #category : #initialization }

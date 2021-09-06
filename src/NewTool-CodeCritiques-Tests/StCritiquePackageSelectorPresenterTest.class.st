@@ -1,5 +1,5 @@
 "
-A CBPackagesChooserPresenterTest is a test class for testing the behaivor of CBPackagesChooserPresenter
+A StCritiquePackageSelectorPresenterTest is a test class for testing the behaivor of StCritiquePackageSelectorPresenter
 "
 Class {
 	#name : #StCritiquePackageSelectorPresenterTest,

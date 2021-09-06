@@ -13,7 +13,7 @@ Class {
 	#name : #StCritiqueBrowserPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'criticModel',
+		'critiqueModel',
 		'rulesModel',
 		'checker',
 		'title',
@@ -23,7 +23,7 @@ Class {
 		'resetButton',
 		'logButton',
 		'updateButton',
-		'criticsModel',
+		'critiquesModel',
 		'sourceCodeModel',
 		'toolbarModel'
 	],
@@ -31,11 +31,11 @@ Class {
 }
 
 { #category : #menu }
-StCritiqueBrowserPresenter class >> criticsBrowserMenuOn: aBuilder [ 
+StCritiqueBrowserPresenter class >> critiquesBrowserMenuOn: aBuilder [
+
 	<worldMenu>
-	
 	(aBuilder item: 'Critique Browser')
-		action: [ self openOnCurrentWorkingConfiguration];
+		action: [ self openOnCurrentWorkingConfiguration ];
 		order: 2;
 		parent: #Browsing;
 		help: 'To manage rule checks.';
@@ -57,9 +57,8 @@ StCritiqueBrowserPresenter class >> defaultSpec [
 						    height: 25;
 						    yourself);
 				   add: (SpBoxLayout newTopToBottom
-						    add: #criticsModel;
-						    add: #toolbarModel
-						    height: 25;
+						    add: #critiquesModel;
+						    add: #toolbarModel height: 25;
 						    yourself);
 				   yourself);
 		  add: #sourceCodeModel;
@@ -197,23 +196,22 @@ StCritiqueBrowserPresenter >> buildRuleMenu [
 StCritiqueBrowserPresenter >> classAdded: aClass [
 
 	| rules |
-
 	(rbEnvironment definesClass: aClass) ifFalse: [ ^ self ].
 
 	rules := self allRules.
 	checker
 		resetResult;
 		checkClass: aClass.
-		
-	rules do: [ :rule |		
-		(checker criticsOf: rule) do:	[ :crit |
-			cache addCritic: crit forRule: rule ].
-		(checker falsePositiveOf: rule) do:	[ :crit |
+
+	rules do: [ :rule | 
+		(checker criticsOf: rule) do: [ :crit | 
+			cache addCritique: crit forRule: rule ].
+		(checker falsePositiveOf: rule) do: [ :crit | 
 			cache addFalsePositive: crit forRule: rule ].
-		(checker toDoOf: rule) do:	[ :crit |
+		(checker toDoOf: rule) do: [ :crit | 
 			cache addToDo: crit forRule: rule ] ].
-	
-	cache updateBrowser.
+
+	cache updateBrowser
 ]
 
 { #category : #'system annoucements' }
@@ -229,11 +227,11 @@ StCritiqueBrowserPresenter >> classRemoved: aClass [
 StCritiqueBrowserPresenter >> colorForRule: aRule [
 
 	| total |
-	^ (total := cache criticsOf: aRule)
-		  ifEmpty: [ criticModel falsePositiveColor ]
+	^ (total := cache critiquesOf: aRule)
+		  ifEmpty: [ critiqueModel falsePositiveColor ]
 		  ifNotEmpty: [ 
 			  (cache falsePositiveOf: aRule) = total
-				  ifTrue: [ criticModel falsePositiveColor ]
+				  ifTrue: [ critiqueModel falsePositiveColor ]
 				  ifFalse: [ self class theme textColor ] ]
 ]
 
@@ -242,7 +240,7 @@ StCritiqueBrowserPresenter >> connectPresenters [
 
 	rulesModel whenSelectedItemChangedDo: [ :rule | 
 		(rule isNil or: [ rule isComposite ]) ifFalse: [ 
-			criticModel
+			critiqueModel
 				resetSelection;
 				rule: rule;
 				setTextModelForNil ].
@@ -251,9 +249,9 @@ StCritiqueBrowserPresenter >> connectPresenters [
 ]
 
 { #category : #accessing }
-StCritiqueBrowserPresenter >> criticsModel [
+StCritiqueBrowserPresenter >> critiquesModel [
 
-	^ criticModel criticsModel
+	^ critiqueModel critiquesModel
 ]
 
 { #category : #api }
@@ -326,7 +324,7 @@ StCritiqueBrowserPresenter >> hasBrokenRules: rule [
     | unclassified falsePositives toDos total |
     falsePositives := (cache falsePositiveOf: rule) size.
     toDos := (cache toDosOf: rule) size.
-    total := (cache criticsOf: rule) size.
+    total := (cache critiquesOf: rule) size.
     unclassified := total - falsePositives - toDos.
     ^ unclassified > 0
 ]
@@ -339,7 +337,7 @@ StCritiqueBrowserPresenter >> initialize [
 	checker := ReSmalllintChecker new.
 	cache checker: checker.
 	cache browser: self.
-	criticModel cache: cache.
+	critiqueModel cache: cache.
 	toolbarModel cache: cache
 ]
 
@@ -356,16 +354,16 @@ StCritiqueBrowserPresenter >> initializePresenters [
 	self setResetButton.
 	self setUpdateButton.
 
-	criticModel := StSingleCritiqueResultListPresenter new.
-	criticsModel := self criticsModel.
+	critiqueModel := StSingleCritiqueResultListPresenter new.
+	critiquesModel := self critiquesModel.
 	sourceCodeModel := self sourceCodeModel.
 	toolbarModel := self toolbarModel.
-	
+
 	self setRulesModel.
 
 	self focusOrder
 		add: rulesModel;
-		add: criticModel
+		add: critiqueModel
 ]
 
 { #category : #initialization }
@@ -390,23 +388,23 @@ StCritiqueBrowserPresenter >> logInManifest [
 StCritiqueBrowserPresenter >> methodAdded: aMethod [
 
 	| rules |
-
 	(rbEnvironment includesMethod: aMethod) ifFalse: [ ^ self ].
 
 	rules := self allRules.
 	checker
 		resetResult;
-		getCritiquesAbout: aMethod by: (rules select: [ :r | r class checksMethod ]).
+		getCritiquesAbout: aMethod
+		by: (rules select: [ :r | r class checksMethod ]).
 
-	rules do: [ :rule |		
-		(checker criticsOf: rule) do:	[ :crit |
-			cache addCritic: crit forRule: rule ].
-		(checker falsePositiveOf: rule) do:	[ :crit |
+	rules do: [ :rule | 
+		(checker criticsOf: rule) do: [ :crit | 
+			cache addCritique: crit forRule: rule ].
+		(checker falsePositiveOf: rule) do: [ :crit | 
 			cache addFalsePositive: crit forRule: rule ].
-		(checker toDoOf: rule) do:	[ :crit |
+		(checker toDoOf: rule) do: [ :crit | 
 			cache addToDo: crit forRule: rule ] ].
-	
-	cache updateBrowser.
+
+	cache updateBrowser
 ]
 
 { #category : #'system annoucements' }
@@ -423,13 +421,10 @@ StCritiqueBrowserPresenter >> onWindowClosed [
 
 	self unregisterFromAnnouncements.
 
-	cache cacheChange 
-		ifTrue: [	
-			(UIManager default confirm: 'Do you want log all wrong violations in the Manifests
-before closing the Critics Browser ?')
-				ifTrue: [ cache logInManifest ]].
-	
-
+	cache cacheChange ifTrue: [ 
+		(UIManager default confirm:
+			 'Do you want log all wrong violations in the Manifests
+before closing the Critiques Browser ?') ifTrue: [ cache logInManifest ] ]
 ]
 
 { #category : #display }
@@ -454,7 +449,7 @@ StCritiqueBrowserPresenter >> reapplyRule: aRule [
 	rbEnvironment packages do: [ :package | 
 		checker runRules: { aRule } onPackage: package withoutTestCase: removeTestCase ]. 
 	(checker criticsOf: aRule) do:	[ :crit |
-		cache addCritic: crit forRule: aRule ].
+		cache addCritique: crit forRule: aRule ].
 	(checker falsePositiveOf: aRule) do:	[ :crit |
 		cache addFalsePositive: crit forRule: aRule ].
 	(checker toDoOf: aRule) do:	[ :crit |
@@ -548,7 +543,7 @@ StCritiqueBrowserPresenter >> setLogButton [
 	logButton 
 		state: false;
 		icon: (self iconNamed: #smallSave);
-		label: 'Save Critics';
+		label: 'Save Critiques';
 		action: self setActionLogButton 
 ]
 
@@ -594,7 +589,7 @@ StCritiqueBrowserPresenter >> setUpdateButton [
 { #category : #accessing }
 StCritiqueBrowserPresenter >> sourceCodeModel [
 
-	^ criticModel sourceCodeModel
+	^ critiqueModel sourceCodeModel
 ]
 
 { #category : #private }
@@ -604,7 +599,7 @@ StCritiqueBrowserPresenter >> stringMorphForRule: rule [
 	| unclassified falsePositives toDos text total |
 	falsePositives := (cache falsePositiveOf: rule) size.
 	toDos := (cache toDosOf: rule) size.
-	total := (cache criticsOf: rule) size.
+	total := (cache critiquesOf: rule) size.
 	unclassified := total - falsePositives - toDos.
 	text := String streamContents: [ :s | 
 		        s
@@ -624,7 +619,7 @@ StCritiqueBrowserPresenter >> stringMorphForRule: rule [
 { #category : #accessing }
 StCritiqueBrowserPresenter >> toolbarModel [
 
-	^ criticModel toolbarModel
+	^ critiqueModel toolbarModel
 ]
 
 { #category : #'system annoucements' }
@@ -640,6 +635,7 @@ StCritiqueBrowserPresenter >> updateButton [
 
 { #category : #thread }
 StCritiqueBrowserPresenter >> updateTree [
-	criticModel updateList. 
+
+	critiqueModel updateList.
 	rulesModel update
 ]

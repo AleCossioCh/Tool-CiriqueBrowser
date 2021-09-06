@@ -15,7 +15,7 @@ Class {
 	#name : #StCritiqueToolbarPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'criticHolder',
+		'critiqueHolder',
 		'browseButton',
 		'falsePositiveButton',
 		'transformButton',
@@ -33,8 +33,8 @@ StCritiqueToolbarPresenter class >> defaultSpec [
 	^ SpBoxLayout newLeftToRight
 		  add: #browseButton;
 		  add: #falsePositiveButton;
-			  add: #transformButton;
-		  "add: #selectDiffButton height: 25;"yourself
+		  add: #transformButton;
+		  yourself
 ]
 
 { #category : #specs }
@@ -51,16 +51,16 @@ StCritiqueToolbarPresenter class >> title [
 ]
 
 { #category : #accessing }
-StCritiqueToolbarPresenter >> addCriticToFalsePositive [
+StCritiqueToolbarPresenter >> addCritiqueToFalsePositive [
 
-	criticHolder value ifNotNil: [ :item |
+	critiqueHolder value ifNotNil: [ :item | 
 		cache addFalsePositive: item forRule: ruleHolder value ]
 ]
 
 { #category : #accessing }
 StCritiqueToolbarPresenter >> browseCritique [
-	
-	criticHolder value ifNotNil: [ :elem | 
+
+	critiqueHolder value ifNotNil: [ :elem | 
 		^ elem sourceAnchor entity browse ]
 ]
 
@@ -71,23 +71,23 @@ StCritiqueToolbarPresenter >> cache: aCache [
 ]
 
 { #category : #accessing }
-StCritiqueToolbarPresenter >> criticHolder [
-
-	^ criticHolder
-]
-
-{ #category : #accessing }
-StCritiqueToolbarPresenter >> criticHolder: anObject [
-
-	criticHolder := anObject
-]
-
-{ #category : #accessing }
 StCritiqueToolbarPresenter >> critique: aCritique [
 
-	criticHolder value: aCritique.
+	critiqueHolder value: aCritique.
 	transformButton visibleIf:
 		(aCritique isNotNil and: [ aCritique providesChange ])
+]
+
+{ #category : #accessing }
+StCritiqueToolbarPresenter >> critiqueHolder [
+
+	^ critiqueHolder
+]
+
+{ #category : #accessing }
+StCritiqueToolbarPresenter >> critiqueHolder: anObject [
+
+	critiqueHolder := anObject
 ]
 
 { #category : #accessing }
@@ -100,7 +100,7 @@ StCritiqueToolbarPresenter >> falsePositiveButton [
 StCritiqueToolbarPresenter >> initialize [
 
 	super initialize.
-	criticHolder := nil asValueHolder.
+	critiqueHolder := nil asValueHolder.
 	ruleHolder := nil asValueHolder.
 	browseButton := self newBrowseButton.
 	transformButton := self newTransformButton.
@@ -125,7 +125,7 @@ StCritiqueToolbarPresenter >> newFalsePositiveButton [
 	^ self newButton
 		  label: 'Mark as wrong';
 		  icon: (self iconNamed: #stop);
-		  action: [ self addCriticToFalsePositive ];
+		  action: [ self addCritiqueToFalsePositive ];
 		  yourself
 ]
 
@@ -177,7 +177,7 @@ StCritiqueToolbarPresenter >> transformButton [
 { #category : #accessing }
 StCritiqueToolbarPresenter >> transformCritique [
 
-	criticHolder value ifNotNil: [ :critique | 
-		(StRewriteCritiqueChangesBrowserPresenter changes: { critique change })
-			  open ]
+	critiqueHolder value ifNotNil: [ :critique | 
+		(StRewriteCritiqueChangesBrowserPresenter changes:
+			 { critique change }) open ]
 ]
