@@ -226,11 +226,6 @@ StSingleCritiqueResultListPresenter >> critiquesOf: aRule [
 ]
 
 { #category : #private }
-StSingleCritiqueResultListPresenter >> defaultColor [
-	^ Color red 
-]
-
-{ #category : #private }
 StSingleCritiqueResultListPresenter >> diffSeparator [
 
 	^ '——————————————————
