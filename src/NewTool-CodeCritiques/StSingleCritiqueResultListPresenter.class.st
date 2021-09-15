@@ -21,7 +21,6 @@ Class {
 		'critiquesModel',
 		'sourceCodeModel',
 		'cache',
-		'thread',
 		'toolbarModel'
 	],
 	#classInstVars : [
@@ -466,10 +465,11 @@ StSingleCritiqueResultListPresenter >> toolbarModel [
 { #category : #thread }
 StSingleCritiqueResultListPresenter >> updateList [
 
+	| delay |
+	self halt.
 	self critiquesOf: rule.
-	thread ifNotNil: [ thread terminate ].
-	thread := [ UIManager default defer: [ critiquesModel updateList ] ]
-		          fork
+	delay := [ UIManager default defer: [ critiquesModel updateList ] ]
+		          schedule
 ]
 
 { #category : #initialization }
