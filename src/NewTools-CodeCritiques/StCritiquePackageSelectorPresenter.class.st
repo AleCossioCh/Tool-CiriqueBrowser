@@ -16,7 +16,7 @@ Class {
 		'nextButton',
 		'chooserPackages'
 	],
-	#category : #'NewTool-CodeCritiques-Applier'
+	#category : #'NewTools-CodeCritiques-Applier'
 }
 
 { #category : #'instance creation' }

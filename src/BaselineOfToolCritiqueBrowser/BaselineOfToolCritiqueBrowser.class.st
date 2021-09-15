@@ -8,5 +8,5 @@ Class {
 BaselineOfToolCritiqueBrowser >> baseline: spec [
 
 	<baseline>
-	spec for: #common do: [ spec package: #'NewTool-CodeCritiques'; package: #'NewTool-CodeCritiques-Tests' ]
+	spec for: #common do: [ spec package: #'NewTools-CodeCritiques'; package: #'NewTools-CodeCritiques-Tests' ]
 ]

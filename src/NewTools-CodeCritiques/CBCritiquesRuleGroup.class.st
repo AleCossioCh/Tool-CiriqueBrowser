@@ -8,7 +8,7 @@ Class {
 		'name',
 		'rules'
 	],
-	#category : #'NewTool-CodeCritiques-Utilities'
+	#category : #'NewTools-CodeCritiques-Utilities'
 }
 
 { #category : #'instance creation' }

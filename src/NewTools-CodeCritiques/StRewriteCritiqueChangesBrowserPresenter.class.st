@@ -17,7 +17,7 @@ Class {
 		'changeUnifiedOption',
 		'changeSplitOption'
 	],
-	#category : #'NewTool-CodeCritiques-Transform '
+	#category : #'NewTools-CodeCritiques-Transform '
 }
 
 { #category : #specs }

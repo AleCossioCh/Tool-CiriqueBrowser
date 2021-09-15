@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'resetWindow'
 	],
-	#category : #'NewTool-CodeCritiques-Tests'
+	#category : #'NewTools-CodeCritiques-Tests'
 }
 
 { #category : #running }

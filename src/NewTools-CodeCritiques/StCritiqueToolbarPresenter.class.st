@@ -23,7 +23,7 @@ Class {
 		'cache',
 		'ruleHolder'
 	],
-	#category : #'NewTool-CodeCritiques-Parts'
+	#category : #'NewTools-CodeCritiques-Parts'
 }
 
 { #category : #specs }

@@ -30,7 +30,7 @@ Class {
 		'environment',
 		'removeTestCase'
 	],
-	#category : #'NewTool-CodeCritiques-Applier'
+	#category : #'NewTools-CodeCritiques-Applier'
 }
 
 { #category : #'instance creation' }

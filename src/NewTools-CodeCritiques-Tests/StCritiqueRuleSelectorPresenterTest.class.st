@@ -9,7 +9,7 @@ Class {
 		'rules',
 		'rulesByGroup'
 	],
-	#category : #'NewTool-CodeCritiques-Tests'
+	#category : #'NewTools-CodeCritiques-Tests'
 }
 
 { #category : #running }

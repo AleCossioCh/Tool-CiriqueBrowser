@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'copyJoin'
 	],
-	#category : #'NewTool-CodeCritiques-Transform '
+	#category : #'NewTools-CodeCritiques-Transform '
 }
 
 { #category : #copying }

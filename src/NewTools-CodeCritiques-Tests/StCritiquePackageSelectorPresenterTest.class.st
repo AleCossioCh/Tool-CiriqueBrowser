@@ -4,7 +4,7 @@ A StCritiquePackageSelectorPresenterTest is a test class for testing the behaivo
 Class {
 	#name : #StCritiquePackageSelectorPresenterTest,
 	#superclass : #TestCase,
-	#category : #'NewTool-CodeCritiques-Tests'
+	#category : #'NewTools-CodeCritiques-Tests'
 }
 
 { #category : #initialization }

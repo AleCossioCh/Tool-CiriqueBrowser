@@ -8,7 +8,7 @@ Class {
 		'critiqueBrowser',
 		'rules'
 	],
-	#category : #'NewTool-CodeCritiques-Tests'
+	#category : #'NewTools-CodeCritiques-Tests'
 }
 
 { #category : #initialization }

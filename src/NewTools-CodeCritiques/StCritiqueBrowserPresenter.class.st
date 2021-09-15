@@ -27,7 +27,7 @@ Class {
 		'sourceCodeModel',
 		'toolbarModel'
 	],
-	#category : #'NewTool-CodeCritiques-Base'
+	#category : #'NewTools-CodeCritiques-Base'
 }
 
 { #category : #menu }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'critiqueToolbar'
 	],
-	#category : #'NewTool-CodeCritiques-Tests'
+	#category : #'NewTools-CodeCritiques-Tests'
 }
 
 { #category : #running }

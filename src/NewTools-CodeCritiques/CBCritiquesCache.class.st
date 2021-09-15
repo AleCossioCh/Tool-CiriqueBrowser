@@ -16,7 +16,7 @@ Class {
 		'packages',
 		'change'
 	],
-	#category : #'NewTool-CodeCritiques-Utilities'
+	#category : #'NewTools-CodeCritiques-Utilities'
 }
 
 { #category : #private }

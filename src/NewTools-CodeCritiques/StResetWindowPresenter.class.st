@@ -14,7 +14,7 @@ Class {
 		'resetModel',
 		'currentConfigurationModel'
 	],
-	#category : #'NewTool-CodeCritiques-Parts'
+	#category : #'NewTools-CodeCritiques-Parts'
 }
 
 { #category : #specs }

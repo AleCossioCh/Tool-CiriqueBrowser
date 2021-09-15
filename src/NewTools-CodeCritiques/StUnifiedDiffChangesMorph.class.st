@@ -12,7 +12,7 @@ Class {
 		'unifiedText',
 		'copyDstMorph'
 	],
-	#category : #'NewTool-CodeCritiques-Transform '
+	#category : #'NewTools-CodeCritiques-Transform '
 }
 
 { #category : #'instance creation' }
